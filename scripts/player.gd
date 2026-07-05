@@ -1,51 +1,78 @@
-extends Area2D
+extends CharacterBody2D
 
-var DEFAULT_SCALE: Vector2 = Vector2(1.0, 1.0)
+const SPEED = 200
 
-func start(initial_pos: Vector2, initial_scale: Vector2 = DEFAULT_SCALE):
+enum State {
+	IDLE,
+	RUNNING,
+	ATTACKING,
+	SLIDING
+}
+
+var state := State.	IDLE
+
+func _ready():
+	$Camera2D.zoom = Vector2(2.5, 2.5)
+	
+func start(initial_pos: Vector2):
 	self.position = initial_pos
-	self.scale = initial_scale
-	$AnimatedSprite2D.animation = "idle"
+	state = State.IDLE
 
-const SPEED = 400
-var moving: bool = false
-var attacking: bool = false
-			
-func _input(event):
+func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index ==  MOUSE_BUTTON_LEFT and event.pressed:
-			attacking = true
-			$AnimatedSprite2D.animation = "attack"
-			
-			
+		if event.is_pressed():
+			match event.button_index:
+				MOUSE_BUTTON_WHEEL_UP:
+					var new_zoom = $Camera2D.zoom + Vector2(0.1, 0.1)
+					if new_zoom <= Vector2(2.5, 2.5): 
+						$Camera2D.zoom = new_zoom
+				MOUSE_BUTTON_WHEEL_DOWN:
+					var new_zoom = $Camera2D.zoom - Vector2(0.1, 0.1)
+					if new_zoom >= Vector2(2.5, 2.5):	
+						$Camera2D.zoom = new_zoom
+				MOUSE_BUTTON_LEFT:
+					state = State.ATTACKING
+					$SwordAttackSound.play()
+
 func _process(delta: float) -> void:
-	var velocity = Vector2(0, 0)
-	moving = false
+	velocity = Input.get_vector("move_left", "move_right", "move_up", "move_down") * SPEED
+
+	if state != State.ATTACKING:
+		if velocity == Vector2.ZERO:
+			state = State.IDLE
+			if $RunningSound.playing:
+				$RunningSound.stop()
+		else:
+			state = State.RUNNING
+			if not $RunningSound.playing:
+				$RunningSound.play()
+
 	if Input.is_action_pressed("move_right"):
 		$AnimatedSprite2D.flip_h = false
-		velocity = Vector2(1.0, 0.0)
-		moving = true
 	if Input.is_action_pressed("move_left"):
 		$AnimatedSprite2D.flip_h = true
-		velocity = Vector2(-1.0, 0.0)
-		moving = true
-	if Input.is_action_pressed("move_up"):
-		velocity = Vector2(0.0, -1.0)
-		moving = true
-	if Input.is_action_pressed("move_down"):
-		velocity = Vector2(0.0, 1.0)
-		moving = true
+	if Input.is_action_pressed("player_slide"):
+		state = State.SLIDING
 	
-	if  not moving and not attacking:
-		$AnimatedSprite2D.animation = "idle"
-		
-	if moving and not attacking:
-		$AnimatedSprite2D.animation = "run"
-		
+	var animation: String = get_animation_from_state()	
+	$AnimatedSprite2D.animation = animation	
 	$AnimatedSprite2D.play()
-	position += velocity * SPEED * delta
+	
+	move_and_slide()
 
-
+func get_animation_from_state():
+	match state:
+		State.IDLE:
+			return "idle"
+		State.ATTACKING:
+			return "attack"
+		State.RUNNING:
+			return "run"
+		State.SLIDING:
+			return "slide"
+		_:
+			return "idle"
+			
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if $AnimatedSprite2D.animation == "attack":
-		attacking = false
+		state = State.IDLE

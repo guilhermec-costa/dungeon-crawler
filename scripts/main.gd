@@ -1,4 +1,8 @@
 extends Node
 
+const phase1Scene = preload("res://scenes/phase_1.tscn")
+const phase2Scene = preload("res://scenes/phase_2.tscn")
+
 func _ready() -> void:
-	$Player.start($PlayerStartPosition.position, Vector2(3, 3))
+	var phase1 = phase1Scene.instantiate()
+	add_child(phase1)

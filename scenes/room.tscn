@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://bypubdvpt3dpp"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tbgi4"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jyhfs"]
+
+[node name="Room" type="Node" unique_id=1115462353]
+
+[node name="BottomWall" type="StaticBody2D" parent="." unique_id=994474980]
+position = Vector2(2, -13)
+scale = Vector2(0.2324357, 0.13497438)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall" unique_id=1072909060]
+position = Vector2(2435.082, 3793.3125)
+scale = Vector2(1.3502436, 1.4727038)
+shape = SubResource("WorldBoundaryShape2D_tbgi4")
+
+[node name="UpWall" type="StaticBody2D" parent="." unique_id=46356050]
+scale = Vector2(0.2324357, 0.13497438)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpWall" unique_id=234130179]
+position = Vector2(2460.8955, 933.5106)
+rotation = 3.1415927
+scale = Vector2(1.3502436, 1.4727038)
+shape = SubResource("WorldBoundaryShape2D_tbgi4")
+
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=759608014]
+position = Vector2(-58, -3)
+scale = Vector2(0.2324357, 0.13497438)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=200130543]
+position = Vector2(1303.5862, 2356.003)
+rotation = 1.5707964
+shape = SubResource("WorldBoundaryShape2D_jyhfs")
+
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=644128201]
+position = Vector2(241.00002, -14)
+scale = Vector2(0.2324357, 0.13497438)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=564077369]
+position = Vector2(2766.3564, 2452.3174)
+rotation = -1.5707964
+shape = SubResource("WorldBoundaryShape2D_jyhfs")
