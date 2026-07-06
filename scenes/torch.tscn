@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://cypiubbgwu7oj"]
+
+[ext_resource type="Texture2D" uid="uid://ccw4h1krbh71b" path="res://assets/torch.png" id="1_d4v33"]
+[ext_resource type="Texture2D" uid="uid://didcdwd16o0a1" path="res://assets/knight/light.png" id="2_my26j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_my26j"]
+atlas = ExtResource("1_d4v33")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o2tjn"]
+atlas = ExtResource("1_d4v33")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3k50"]
+atlas = ExtResource("1_d4v33")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndh0a"]
+atlas = ExtResource("1_d4v33")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ktql7"]
+atlas = ExtResource("1_d4v33")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gybtl"]
+atlas = ExtResource("1_d4v33")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21l5o"]
+atlas = ExtResource("1_d4v33")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjrvc"]
+atlas = ExtResource("1_d4v33")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pn638"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_my26j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o2tjn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r3k50")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ndh0a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ktql7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gybtl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_21l5o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjrvc")
+}],
+"loop": 1,
+"name": &"flame",
+"speed": 8.0
+}]
+
+[node name="Torch" type="Node2D" unique_id=884532625]
+position = Vector2(542, 278)
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2054213394]
+sprite_frames = SubResource("SpriteFrames_pn638")
+animation = &"flame"
+autoplay = "flame"
+frame_progress = 0.4529066
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=51456426]
+scale = Vector2(0.16374531, 0.25617918)
+color = Color(0.9490196, 0.2784314, 0.019607844, 1)
+texture = ExtResource("2_my26j")
