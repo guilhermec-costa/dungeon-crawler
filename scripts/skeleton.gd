@@ -2,11 +2,15 @@ extends CharacterBody2D
 
 class_name Skeleton
 
+# PHISICS DATA
 const SPEED = 45.0
-const MAX_HEALTH = 10
-var health = MAX_HEALTH
 var SWORD_COLLIDER_OFFSET = 50.0
 
+# HEALTH DATA
+const MAX_HEALTH = 10
+var health = MAX_HEALTH
+
+# STATE DATA
 var player: Player
 var is_dead: bool = false
 var player_on_range: bool = false
@@ -18,25 +22,23 @@ enum State {
 
 var state: State = State.WALKING
 
+@onready var health_bar: HealthBar = $HealthBar
+	
 func _ready():
 	add_to_group("skeletons")
-	update_health_ui()
-	$HealthBar.max_value = MAX_HEALTH
+	health_bar.max_value = MAX_HEALTH
+	health_bar.set_health_bar_value(MAX_HEALTH)
 	$CollisionShape2D.disabled = false
 	$AnimatedSprite2D.animation = "walk"
 	$SwordArea.monitoring = true
 	$SwordArea/CollisionShape2D.disabled = true
 	$AttackTimer.timeout.connect(_on_attack_timer_timeout)
-	
-func set_health_bar():
-	$HealthBar.value = health
 
-func update_health_ui():
-	set_health_bar()
-
-func hide_health_ui():
-	$HealthBar.hide()
-
+func _draw():
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2(1, 0.6))
+	var shadow_color = Color.BLACK
+	shadow_color.a = 0.4
+	draw_circle(Vector2.DOWN * 50, 10, shadow_color)
 
 func _physics_process(delta: float) -> void:
 	if player:
@@ -74,7 +76,7 @@ func _process(delta: float) -> void:
 	$AnimatedSprite2D.play()
 
 func die():
-	hide_health_ui()
+	$HealthBar.hide_health_ui()
 	is_dead = true
 	$DieSound.play()
 	$AnimatedSprite2D.play("die")
@@ -89,7 +91,7 @@ func take_damage(damage: float) -> void:
 		die()
 		return
 	
-	update_health_ui()
+	$HealthBar.set_health_bar_value(health)
 	$AnimatedSprite2D.play("take_damage")
 	await $AnimatedSprite2D.animation_finished
 	$AnimatedSprite2D.play("walk")
@@ -102,7 +104,7 @@ func on_attack_range_body_entered(body: Node2D) -> void:
 		$AttackTimer.start()
 
 func _on_attack_timer_timeout():
-	player.take_damage(1)
+	player.take_damage(15)
 	
 func _on_attack_range_body_exited(body):
 	if body is Player:

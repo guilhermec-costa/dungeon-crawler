@@ -6,7 +6,9 @@ const SPEED = 130
 const SWORD_COLLIDER_OFFSET = 50
 const PLAYER_ATTACK_OFFSET = 20
 const PLAYER_COLLIDER_X = 0
-var health: float = 100
+
+const MAX_HEALTH = 100
+var health: float = MAX_HEALTH
 
 
 enum State {
@@ -22,8 +24,18 @@ var center: Vector2:
 	get:
 		return global_position + $AnimatedSprite2D.offset
 
+@onready var health_bar: HealthBar = $HealthBar
+
+func _draw():
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.5, 0.6))
+	var shadow_color = Color.BLACK
+	shadow_color.a = 0.4
+	draw_circle(Vector2.DOWN * 65, 10, shadow_color)
+	
 func _ready():
-	$Camera2D.zoom = Vector2(2, 2)
+	$Camera2D.zoom = Vector2(3, 3)
+	health_bar.max_value = MAX_HEALTH
+	$HealthBar.set_health_bar_value(health)
 	
 func start(initial_pos: Vector2):
 	self.position = initial_pos
@@ -31,18 +43,21 @@ func start(initial_pos: Vector2):
 	$SwordArea.monitoring = true
 	$SwordArea/CollisionShape2D.disabled = true
 
+var camera_control_enabled: bool = true
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			match event.button_index:
 				MOUSE_BUTTON_WHEEL_UP:
-					var new_zoom = $Camera2D.zoom + Vector2(0.1, 0.1)
-					if new_zoom <= Vector2(3, 3): 
-						$Camera2D.zoom = new_zoom
+					if camera_control_enabled:
+						var new_zoom = $Camera2D.zoom + Vector2(0.1, 0.1)
+						if new_zoom <= Vector2(3, 3): 
+							$Camera2D.zoom = new_zoom
 				MOUSE_BUTTON_WHEEL_DOWN:
-					var new_zoom = $Camera2D.zoom - Vector2(0.1, 0.1)
-					if new_zoom >= Vector2(1.5, 1.5):	
-						$Camera2D.zoom = new_zoom
+					if camera_control_enabled:
+						var new_zoom = $Camera2D.zoom - Vector2(0.1, 0.1)
+						if new_zoom >= Vector2(1.5, 1.5):	
+							$Camera2D.zoom = new_zoom
 				MOUSE_BUTTON_LEFT:
 					if not state == State.ATTACKING:
 						state = State.ATTACKING
@@ -103,4 +118,4 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 func take_damage(damage: float):
 	health -= damage
-	print("Player health: ", healthgit statcv)
+	$HealthBar.set_health_bar_value(health)

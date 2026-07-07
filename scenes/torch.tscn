@@ -78,6 +78,7 @@ autoplay = "flame"
 frame_progress = 0.4529066
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=51456426]
-scale = Vector2(0.16374531, 0.25617918)
+position = Vector2(-1.0000067, 22.00002)
+scale = Vector2(0.34375003, 0.21484375)
 color = Color(0.9490196, 0.2784314, 0.019607844, 1)
 texture = ExtResource("2_my26j")
