@@ -1,14 +1,11 @@
 extends CharacterBody2D
 
-class_name Skeleton
+class_name BaseSkeleton
 
-# PHISICS DATA
-const SPEED = 45.0
+@export var speed: float = 45.0
+@export var max_health: float;
+var health: float
 var SWORD_COLLIDER_OFFSET = 50.0
-
-# HEALTH DATA
-const MAX_HEALTH = 10
-var health = MAX_HEALTH
 
 # STATE DATA
 var player: Player
@@ -21,18 +18,25 @@ enum State {
 }
 
 var state: State = State.WALKING
-
+@export var damage_given: float;
 @onready var health_bar: HealthBar = $HealthBar
+@onready var pathfinder: NavigationAgent2D = $NavigationAgent2D
+var damageTakenLabel: PackedScene = preload("res://scenes/damage_label.tscn")
+
 	
 func _ready():
 	add_to_group("skeletons")
-	health_bar.max_value = MAX_HEALTH
-	health_bar.set_health_bar_value(MAX_HEALTH)
+	health = max_health
+	
+	health_bar.max_value = max_health
+	health_bar.set_health_bar_value(max_health)
+	
 	$CollisionShape2D.disabled = false
 	$AnimatedSprite2D.animation = "walk"
 	$SwordArea.monitoring = true
 	$SwordArea/CollisionShape2D.disabled = true
 	$AttackTimer.timeout.connect(_on_attack_timer_timeout)
+	$AttackTimer.wait_time = 0.8
 
 func _draw():
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2(1, 0.6))
@@ -42,11 +46,13 @@ func _draw():
 
 func _physics_process(delta: float) -> void:
 	if player:
-		var dir = (self.player.center - global_position).normalized()
+		var player_pos = self.player.global_position
+		pathfinder.target_position = Vector2(player_pos.x, player_pos.y + 10)
+		var dir = to_local(pathfinder.get_next_path_position()).normalized()
 		if player_on_range:
 			velocity = Vector2.ZERO
 		else:
-			velocity = dir * SPEED
+			velocity = dir * speed
 		move_and_slide()
 		
 
@@ -84,6 +90,15 @@ func die():
 	await $AnimatedSprite2D.animation_finished
 	
 	queue_free()
+
+func show_damage_label(damage: float):
+	var damageLabel: DamageLabel = damageTakenLabel.instantiate()
+	add_child(damageLabel)
+	damageLabel.position = Vector2(0, -20)
+	damageLabel.texture_filter = 1
+	damageLabel.modulate = Color.YELLOW
+	damageLabel.add_theme_font_size_override("font_size", 10)
+	damageLabel.show_damage_label(damage, 0.7)
 	
 func take_damage(damage: float) -> void:
 	health -= damage	
@@ -92,9 +107,12 @@ func take_damage(damage: float) -> void:
 		return
 	
 	$HealthBar.set_health_bar_value(health)
+	show_damage_label(damage)
+	
 	$AnimatedSprite2D.play("take_damage")
 	await $AnimatedSprite2D.animation_finished
 	$AnimatedSprite2D.play("walk")
+
 	
 func on_attack_range_body_entered(body: Node2D) -> void:
 	if body is Player:
@@ -104,7 +122,8 @@ func on_attack_range_body_entered(body: Node2D) -> void:
 		$AttackTimer.start()
 
 func _on_attack_timer_timeout():
-	player.take_damage(15)
+	player.take_damage(damage_given)
+	
 	
 func _on_attack_range_body_exited(body):
 	if body is Player:

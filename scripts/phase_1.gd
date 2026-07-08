@@ -1,9 +1,16 @@
 extends Node
 
-var skeletonScene = preload("res://scenes/skeleton.tscn")
+var yellowSkeletonScene = preload("res://scenes/enemies/yellow_skeleton.tscn")
+var whiteSkeletonScene = preload("res://scenes/enemies/white_skeleton.tscn")
 
 func _ready():
 	$Entities/Player.start($PlayerStartPosition.position)
-	var skeleton: Skeleton = skeletonScene.instantiate()
-	skeleton.player = $Entities/Player
-	$Entities.add_child(skeleton)
+	var yellowSkeleton: BaseSkeleton = yellowSkeletonScene.instantiate()
+	yellowSkeleton.player = $Entities/Player
+	yellowSkeleton.position =  $Entities/Player.global_position
+	$Entities.add_child(yellowSkeleton)
+	
+	var whiteSkeleton: BaseSkeleton = whiteSkeletonScene.instantiate()
+	whiteSkeleton.player = $Entities/Player
+	whiteSkeleton.position = $Entities/Player.global_position + Vector2(85, 40)
+	$Entities.add_child(whiteSkeleton)

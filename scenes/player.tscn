@@ -220,6 +220,8 @@ position = Vector2(528, 341)
 scale = Vector2(0.82, 0.82)
 collision_layer = 2
 script = ExtResource("1_g2els")
+speed = 100.0
+max_health = 50.0
 metadata/_edit_group_ = true
 
 [node name="SwordArea" type="Area2D" parent="." unique_id=87376858]
@@ -227,6 +229,7 @@ position = Vector2(-20, 0)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("2_fjrip")
+damage = 8.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwordArea" unique_id=419104898]
 position = Vector2(42.989136, 18)
@@ -272,6 +275,7 @@ volume_db = -30.131
 pitch_scale = 1.23
 
 [node name="HealthBar" parent="." unique_id=1537375787 instance=ExtResource("8_smehm")]
+z_index = 10
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

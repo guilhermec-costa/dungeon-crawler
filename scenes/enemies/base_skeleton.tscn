@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://chvckeejavhx4"]
+
+[ext_resource type="Script" uid="uid://bfp62eoh24sey" path="res://scripts/skeleton.gd" id="1_ptjri"]
+[ext_resource type="AudioStream" uid="uid://b3a4ybvaeksos" path="res://assets/audio/skeleton_die.mp3" id="2_nsc55"]
+[ext_resource type="PackedScene" uid="uid://dkmmjac80p3pr" path="res://scenes/health_bar.tscn" id="3_f16eg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7bkgt"]
+radius = 14.0
+height = 52.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i0f3v"]
+size = Vector2(11.118724, 2.9492245)
+
+[sub_resource type="GDScript" id="GDScript_w4hcs"]
+script/source = "extends Area2D
+
+func _ready() -> void:
+	body_entered.connect(_on_body_entered)
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body is Player:
+		body.take_damage(3)
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1bnh4"]
+radius = 3.0882263
+height = 34.02246
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_smehm"]
+bg_color = Color(1, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8227686, 0, 0.18088621, 1)
+
+[node name="Skeleton" type="CharacterBody2D" unique_id=582161565]
+position = Vector2(665, 292)
+scale = Vector2(0.785, 0.785)
+collision_layer = 4
+motion_mode = 1
+script = ExtResource("1_ptjri")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=599365077]
+texture_filter = 1
+position = Vector2(-3, -3)
+animation = &"attack"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=580395902]
+position = Vector2(-6, 4)
+shape = SubResource("CapsuleShape2D_7bkgt")
+
+[node name="DieSound" type="AudioStreamPlayer2D" parent="." unique_id=1581833248]
+stream = ExtResource("2_nsc55")
+
+[node name="AttackRange" type="Area2D" parent="." unique_id=1278185032]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" unique_id=1365649055]
+position = Vector2(-4.458496, -4.9999695)
+scale = Vector2(5.1557136, 4.388585)
+shape = SubResource("RectangleShape2D_i0f3v")
+debug_color = Color(18.892157, 0, 0, 0.25490198)
+
+[node name="SwordArea" type="Area2D" parent="." unique_id=1951249365]
+collision_layer = 4
+collision_mask = 3
+script = SubResource("GDScript_w4hcs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwordArea" unique_id=1993416583]
+position = Vector2(23, -5)
+rotation = -1.6757339
+shape = SubResource("CapsuleShape2D_1bnh4")
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=163856987]
+wait_time = 0.85
+
+[node name="HealthBar" parent="." unique_id=1537375787 instance=ExtResource("3_f16eg")]
+offset_left = -18.0
+offset_top = -24.0
+offset_right = 17.0
+offset_bottom = -20.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_smehm")
+max_value = 0.0
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=294389010]
+path_postprocessing = 1
+debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(0, 0.52156866, 0, 1)
+
+[connection signal="body_entered" from="AttackRange" to="." method="on_attack_range_body_entered"]
+[connection signal="body_exited" from="AttackRange" to="." method="_on_attack_range_body_exited"]
