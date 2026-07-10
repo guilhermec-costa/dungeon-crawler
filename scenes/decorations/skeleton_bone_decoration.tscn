@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://b1ia4x0n46uti"]
+
+[ext_resource type="Texture2D" uid="uid://c6skuim1qen2k" path="res://assets/bg/bones.png" id="1_jx4om"]
+
+[node name="SkeletonBoneDecoration" type="Sprite2D" unique_id=1223949128]
+texture = ExtResource("1_jx4om")
+region_enabled = true
+region_rect = Rect2(16.484001, 75.07538, 74.860565, 29.84652)

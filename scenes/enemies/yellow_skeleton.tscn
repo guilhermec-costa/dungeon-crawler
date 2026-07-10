@@ -358,12 +358,14 @@ animations = [{
 }]
 
 [node name="YellowSkeleton" unique_id=582161565 instance=ExtResource("1_ebvni")]
-speed = 20.0
-max_health = 80.0
+speed = 50.0
+max_health = 200.0
 damage_given = 15.0
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=599365077]
 sprite_frames = SubResource("SpriteFrames_rgwuv")
-animation = &"die"
-frame = 12
-frame_progress = 1.0
+animation = &"attack"
+frame = 3
+
+[node name="NavigationAgent2D" parent="." index="6" unique_id=294389010]
+debug_path_custom_color = Color(0.7529412, 0.44705883, 0, 1)

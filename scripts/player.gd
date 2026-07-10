@@ -2,9 +2,14 @@ extends CharacterBody2D
 
 class_name Player
 
+signal player_dead
+
 @export var speed: float = 30
 @export var max_health: float
+@onready var health_bar: HealthBar = $HealthBar
+
 var health: float;
+var is_dead: bool = false
 
 const SWORD_COLLIDER_OFFSET = 50
 const PLAYER_ATTACK_OFFSET = 20
@@ -19,7 +24,6 @@ enum State {
 
 var state := State.	IDLE
 
-@onready var health_bar: HealthBar = $HealthBar
 
 func _draw():
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.5, 0.6))
@@ -27,11 +31,20 @@ func _draw():
 	shadow_color.a = 0.4
 	draw_circle(Vector2.DOWN * 65, 10, shadow_color)
 	
+func die():
+	is_dead = true
+	$AnimatedSprite2D.play("death")
+	await $AnimatedSprite2D.animation_finished
+	await get_tree().create_timer(0.5).timeout
+	player_dead.emit()
+	
+	
 func _ready():
 	$Camera2D.zoom = Vector2(4, 4)
 	health_bar.max_value = max_health
 	health = max_health
 	$HealthBar.set_health_bar_value(health)
+	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	
 func start(initial_pos: Vector2):
 	self.position = initial_pos
@@ -47,7 +60,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				MOUSE_BUTTON_WHEEL_UP:
 					if camera_control_enabled:
 						var new_zoom = $Camera2D.zoom + Vector2(0.1, 0.1)
-						if new_zoom <= Vector2(3, 3): 
+						if new_zoom <= Vector2(4, 4): 
 							$Camera2D.zoom = new_zoom
 				MOUSE_BUTTON_WHEEL_DOWN:
 					if camera_control_enabled:
@@ -58,10 +71,12 @@ func _unhandled_input(event: InputEvent) -> void:
 					if not state == State.ATTACKING:
 						state = State.ATTACKING
 						$SwordAttackSound.play()
-						$SwordArea/CollisionShape2D.disabled = false
 						
 
 func _physics_process(delta: float) -> void:
+	if is_dead:
+		return
+		
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = direction * speed
 	if state != State.ATTACKING:
@@ -69,6 +84,9 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 	
 func _process(delta: float) -> void:
+	if is_dead:
+		return
+		
 	if state != State.ATTACKING:
 		if velocity == Vector2.ZERO:
 			state = State.IDLE
@@ -80,7 +98,6 @@ func _process(delta: float) -> void:
 				$RunningSound.play()
 	
 	update_animation(get_animation_from_state())
-
 
 func update_flip(direction: Vector2) -> void:
 	if direction.x > 0:
@@ -117,5 +134,16 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		$SwordArea/CollisionShape2D.disabled = true
 
 func take_damage(damage: float):
+	if is_dead: 
+		return
+		
 	health -= damage
 	$HealthBar.set_health_bar_value(health)
+	
+	if health <= 0:
+		die()
+		return
+
+func _on_frame_changed():
+	if state == State.ATTACKING and $AnimatedSprite2D.frame == 2:
+		$SwordArea/CollisionShape2D.disabled = false

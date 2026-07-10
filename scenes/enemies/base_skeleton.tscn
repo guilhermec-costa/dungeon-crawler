@@ -9,7 +9,7 @@ radius = 14.0
 height = 52.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i0f3v"]
-size = Vector2(11.118724, 2.9492245)
+size = Vector2(10.871645, 2.9492245)
 
 [sub_resource type="GDScript" id="GDScript_w4hcs"]
 script/source = "extends Area2D
@@ -35,6 +35,12 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.8227686, 0, 0.18088621, 1)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_7bkgt"]
+radius = 89.44457
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ptjri"]
+radius = 215.32054
+
 [node name="Skeleton" type="CharacterBody2D" unique_id=582161565]
 position = Vector2(665, 292)
 scale = Vector2(0.785, 0.785)
@@ -45,20 +51,21 @@ script = ExtResource("1_ptjri")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=599365077]
 texture_filter = 1
 position = Vector2(-3, -3)
-animation = &"attack"
+animation = &""
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=580395902]
 position = Vector2(-6, 4)
 shape = SubResource("CapsuleShape2D_7bkgt")
+debug_color = Color(0, 0.62352943, 0.023529412, 0.41568628)
 
 [node name="DieSound" type="AudioStreamPlayer2D" parent="." unique_id=1581833248]
 stream = ExtResource("2_nsc55")
 
 [node name="AttackRange" type="Area2D" parent="." unique_id=1278185032]
-collision_mask = 3
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" unique_id=1365649055]
-position = Vector2(-4.458496, -4.9999695)
+position = Vector2(-6.3693237, -4.9999695)
 scale = Vector2(5.1557136, 4.388585)
 shape = SubResource("RectangleShape2D_i0f3v")
 debug_color = Color(18.892157, 0, 0, 0.25490198)
@@ -73,9 +80,6 @@ position = Vector2(23, -5)
 rotation = -1.6757339
 shape = SubResource("CapsuleShape2D_1bnh4")
 
-[node name="AttackTimer" type="Timer" parent="." unique_id=163856987]
-wait_time = 0.85
-
 [node name="HealthBar" parent="." unique_id=1537375787 instance=ExtResource("3_f16eg")]
 offset_left = -18.0
 offset_top = -24.0
@@ -85,10 +89,33 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_smehm")
 max_value = 0.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=294389010]
+path_desired_distance = 3.0
+target_desired_distance = 25.0
 path_postprocessing = 1
 debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0, 0.52156866, 0, 1)
 
+[node name="StartChaseArea" type="Area2D" parent="." unique_id=1110535924]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartChaseArea" unique_id=1629236772]
+position = Vector2(-5.095541, 3.8216558)
+shape = SubResource("CircleShape2D_7bkgt")
+debug_color = Color(0.64242, 0.33631468, 1, 0.41960785)
+
+[node name="WalkTimer" type="Timer" parent="." unique_id=1376171587]
+
+[node name="LimitChaseArea" type="Area2D" parent="." unique_id=813308136]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitChaseArea" unique_id=1094554445]
+position = Vector2(-5.0955415, 3.8216515)
+shape = SubResource("CircleShape2D_ptjri")
+debug_color = Color(0.752983, 0.4295562, 0.43559608, 0.24705882)
+
 [connection signal="body_entered" from="AttackRange" to="." method="on_attack_range_body_entered"]
 [connection signal="body_exited" from="AttackRange" to="." method="_on_attack_range_body_exited"]
+[connection signal="navigation_finished" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_navigation_finished"]

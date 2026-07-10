@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bi7ndh1iuu5qi"]
+
+[ext_resource type="Texture2D" uid="uid://c6skuim1qen2k" path="res://assets/bg/bones.png" id="1_u4gpq"]
+
+[node name="SkullDecoration" type="Sprite2D" unique_id=367717854]
+rotation = -0.20769419
+scale = Vector2(0.148, 0.15300001)
+texture = ExtResource("1_u4gpq")
+region_enabled = true
+region_rect = Rect2(21.988297, 5.358678, 65.15681, 61.87231)
