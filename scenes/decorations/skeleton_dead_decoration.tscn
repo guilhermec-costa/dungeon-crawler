@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://8dnuvy8klbkr"]
+
+[ext_resource type="PackedScene" uid="uid://bi7ndh1iuu5qi" path="res://scenes/decorations/skull.tscn" id="1_oiet8"]
+[ext_resource type="PackedScene" uid="uid://c76kxk20mfhem" path="res://scenes/decorations/skeleton_body_decoration.tscn" id="2_u64yn"]
+[ext_resource type="PackedScene" uid="uid://b1ia4x0n46uti" path="res://scenes/decorations/skeleton_bone_decoration.tscn" id="3_6568v"]
+
+[node name="SkeletonDeadDecoration" type="Node2D" unique_id=354119243]
+y_sort_enabled = true
+
+[node name="SkullDecoration" parent="." unique_id=367717854 instance=ExtResource("1_oiet8")]
+position = Vector2(491, 272)
+
+[node name="SkeletonBodyDecoration" parent="." unique_id=1265313300 instance=ExtResource("2_u64yn")]
+position = Vector2(493, 280.00003)
+rotation = -0.20769419
+scale = Vector2(0.148, 0.148)
+
+[node name="SkeletonBoneDecoration" parent="." unique_id=1223949128 instance=ExtResource("3_6568v")]
+position = Vector2(500.00003, 278)
+rotation = 0.930181
+scale = Vector2(0.148, 0.148)

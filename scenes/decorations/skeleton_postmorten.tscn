@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bp8trcnphj81f"]
+
+[ext_resource type="Script" uid="uid://bgxdclxvvxms7" path="res://scripts/skeleton_postmorten.gd" id="1_1fp88"]
+[ext_resource type="Texture2D" uid="uid://vyyn7utsf7q7" path="res://assets/enemies/skeletons/Skeleton_01_White_Die.png" id="1_bwokb"]
+
+[node name="DeadSkeleton" type="Node2D" unique_id=1014629683]
+texture_filter = 1
+position = Vector2(45, 21)
+scale = Vector2(1.32, 1.32)
+script = ExtResource("1_1fp88")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=805590231]
+texture_filter = 1
+scale = Vector2(0.565, 0.565)
+texture = ExtResource("1_bwokb")
+hframes = 14
+frame = 13
+region_rect = Rect2(616, 40.179737, 17.119202, 15.820263)

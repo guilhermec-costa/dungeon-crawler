@@ -1,12 +1,27 @@
 [gd_scene format=3 uid="uid://chvckeejavhx4"]
 
 [ext_resource type="Script" uid="uid://bfp62eoh24sey" path="res://scripts/skeleton.gd" id="1_ptjri"]
+[ext_resource type="Texture2D" uid="uid://cwpyj0lcn028v" path="res://assets/enemies/skeletons/Skeleton_01_White_Idle.png" id="2_f16eg"]
 [ext_resource type="AudioStream" uid="uid://b3a4ybvaeksos" path="res://assets/audio/skeleton_die.mp3" id="2_nsc55"]
 [ext_resource type="PackedScene" uid="uid://dkmmjac80p3pr" path="res://scenes/health_bar.tscn" id="3_f16eg"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7bkgt"]
-radius = 14.0
-height = 52.0
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnfvn"]
+atlas = ExtResource("2_f16eg")
+region = Rect2(0, 0, 96, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ptjri"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bnfvn")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i31dk"]
+size = Vector2(19.108368, 46.94263)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i0f3v"]
 size = Vector2(10.871645, 2.9492245)
@@ -46,16 +61,18 @@ position = Vector2(665, 292)
 scale = Vector2(0.785, 0.785)
 collision_layer = 4
 motion_mode = 1
+safe_margin = 0.01
 script = ExtResource("1_ptjri")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=599365077]
 texture_filter = 1
 position = Vector2(-3, -3)
-animation = &""
+sprite_frames = SubResource("SpriteFrames_ptjri")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=580395902]
-position = Vector2(-6, 4)
-shape = SubResource("CapsuleShape2D_7bkgt")
+position = Vector2(-5.732483, 5.6369324)
+scale = Vector2(0.9999998, 0.9999998)
+shape = SubResource("RectangleShape2D_i31dk")
 debug_color = Color(0, 0.62352943, 0.023529412, 0.41568628)
 
 [node name="DieSound" type="AudioStreamPlayer2D" parent="." unique_id=1581833248]
@@ -81,18 +98,20 @@ rotation = -1.6757339
 shape = SubResource("CapsuleShape2D_1bnh4")
 
 [node name="HealthBar" parent="." unique_id=1537375787 instance=ExtResource("3_f16eg")]
-offset_left = -18.0
-offset_top = -24.0
-offset_right = 17.0
-offset_bottom = -20.0
+offset_left = -19.108274
+offset_top = -21.656055
+offset_right = 6.3694477
+offset_bottom = -17.656055
 theme_override_styles/fill = SubResource("StyleBoxFlat_smehm")
 max_value = 0.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=294389010]
 path_desired_distance = 3.0
-target_desired_distance = 25.0
+target_desired_distance = 8.0
 path_postprocessing = 1
-debug_enabled = true
+simplify_path = true
+simplify_epsilon = 8.0
+radius = 8.0
 debug_use_custom = true
 debug_path_custom_color = Color(0, 0.52156866, 0, 1)
 
@@ -119,3 +138,4 @@ debug_color = Color(0.752983, 0.4295562, 0.43559608, 0.24705882)
 [connection signal="body_entered" from="AttackRange" to="." method="on_attack_range_body_entered"]
 [connection signal="body_exited" from="AttackRange" to="." method="_on_attack_range_body_exited"]
 [connection signal="navigation_finished" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_navigation_finished"]
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_velocity_computed"]

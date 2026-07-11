@@ -32,7 +32,7 @@ enum State {
 
 var state: State = State.IDLE
 var damageTakenLabel: PackedScene = preload("res://scenes/damage_label.tscn")
-
+var postmortenScene: PackedScene = preload("res://scenes/decorations/skeleton_postmorten.tscn")
 	
 func _ready():
 	walk_timer = idle_duration
@@ -51,7 +51,8 @@ func _ready():
 	
 	$WalkTimer.timeout.connect(_on_walk_timer_timeout)
 	$WalkTimer.start()
-	
+
+
 
 func _draw():
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2(1, 0.6))
@@ -87,12 +88,45 @@ func update_flip_based_on_velocity():
 		flip_to_right()
 	elif velocity.x < 0:
 		flip_to_left()
-		
+
+var stuck_timer: float = 0.0
+var stuck_direction: Vector2 = Vector2.ZERO
+var unstuck_timer: float = 0.0
+
+	
+#func _on_velocity_computed(safe_velocity: Vector2):
+	#print("computed")
+	#velocity = safe_velocity
+	
+#func _chase_player():
+	#var player_pos = player.global_position
+	#pathfinder.target_position = player_pos
+	#
+	#var next_pos = pathfinder.get_next_path_position()
+	#var direction = global_position.direction_to(next_pos)
+	#pathfinder.velocity = direction * speed
+	#
+	
+#func _chase_player():	
+	#var player_pos = player.global_position
+	#pathfinder.target_position = player_pos
+	#
+	#if unstuck_timer > 0:
+		#velocity = stuck_direction * speed
+		#return
+	#
+	#var next_pos = pathfinder.get_next_path_position()
+	#var direction = global_position.direction_to(next_pos)
+	#velocity = direction * speed
+	#
 func _chase_player():	
-	var player_pos = self.player.global_position
-	var dir_to_player = (player_pos - global_position).normalized()
-	pathfinder.target_position = Vector2(player_pos.x + (-1 if dir_to_player.x > 0 else 1) * 20, player_pos.y + 10)
-	var direction = to_local(pathfinder.get_next_path_position()).normalized()
+	var target = player.global_position
+	target.y += randf_range(-16.0, 16.0)
+
+	pathfinder.target_position = target
+	
+	var next_pos = pathfinder.get_next_path_position()
+	var direction = global_position.direction_to(next_pos)
 	velocity = direction * speed
 			
 func _physics_process(delta: float) -> void:
@@ -112,12 +146,30 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		
 	move_and_slide()
+	
+	# TODO lógica de desbloquear em aprede
+	#if state == State.CHASING:
+		#if get_slide_collision_count() > 0:
+			#stuck_timer += delta
+			#if stuck_timer > 0.3:
+				#var dir = global_position.direction_to(player.global_position)
+				#stuck_direction = dir.rotated(PI / 3) * (1 if randi() % 2 == 0 else -1)
+				#unstuck_timer = 0.2
+				#stuck_timer = 0.0
+		#else:
+			#stuck_timer = 0.0
+		#
+		#if unstuck_timer > 0:
+			#unstuck_timer -= delta
+	#
 
 func _process(delta: float) -> void:
 	if is_dead: 
 		return
 	
-	update_animation(get_animation_from_state())
+	var animation = get_animation_from_state()
+	print("animation: ", animation)
+	update_animation(animation)
 
 func get_animation_from_state() -> String:
 	match state:
@@ -133,7 +185,15 @@ func get_animation_from_state() -> String:
 func update_animation(new_animation: String):
 	if new_animation != $AnimatedSprite2D.animation or not $AnimatedSprite2D.is_playing():
 		$AnimatedSprite2D.play(new_animation)
-		
+
+func spawn_dead_corpse():
+	var corpse: SkeletonPostmorten = postmortenScene.instantiate()
+	corpse.global_position = global_position
+	
+	get_parent().add_child(corpse)
+	var despawn_timer = corpse.get_tree().create_timer(10)
+	despawn_timer.timeout.connect(corpse.on_despawn_timer_timeout)
+	
 func die():
 	$HealthBar.hide_health_ui()
 	is_dead = true
@@ -142,21 +202,30 @@ func die():
 	
 	await $AnimatedSprite2D.animation_finished
 	
+	spawn_dead_corpse()
 	queue_free()
+	
+
 
 func show_damage_label(damage: float, type: DamageTypes.Type):
-	var damageLabel: DamageLabel = damageTakenLabel.instantiate()
-	add_child(damageLabel)
-	damageLabel.position = Vector2(0, -20)
-	damageLabel.texture_filter = 1
-	
-	if type ==  DamageTypes.Type.NORMAL:
-		damageLabel.modulate = Color.YELLOW
-	elif type ==  DamageTypes.Type.CRITICAL:
-		damageLabel.modulate = Color.RED
-		
-	damageLabel.add_theme_font_size_override("font_size", 10)
-	damageLabel.show_damage_label(damage, 0.7)
+	var damage_label: DamageLabel = damageTakenLabel.instantiate()
+	add_child(damage_label)
+
+	damage_label.position = Vector2(0, -20)
+	damage_label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+
+	match type:
+		DamageTypes.Type.NORMAL:
+			damage_label.modulate = Color.WHITE
+
+		DamageTypes.Type.CRITICAL:
+			damage_label.modulate = Color(1.0, 0.85, 0.0)
+
+	damage_label.add_theme_font_size_override("font_size", 18)
+	damage_label.add_theme_constant_override("outline_size", 3)
+	damage_label.add_theme_color_override("font_outline_color", Color.BLACK)
+
+	damage_label.show_damage_label(damage, 0.7)
 	
 func take_damage(damage: float, type: DamageTypes.Type) -> void:
 	if resistence != 0:

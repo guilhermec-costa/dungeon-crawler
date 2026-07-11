@@ -194,19 +194,19 @@ region = Rect2(864, 0, 96, 64)
 [sub_resource type="SpriteFrames" id="SpriteFrames_rgwuv"]
 animations = [{
 "frames": [{
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_i31dk")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_36kdy")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_ra8jn")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_wiwcp")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_37lvh")
 }, {
 "duration": 1.0,
@@ -221,7 +221,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_knhjy")
 }, {
-"duration": 1.0,
+"duration": 1.2,
 "texture": SubResource("AtlasTexture_w8e0p")
 }],
 "loop": 0,
@@ -364,8 +364,10 @@ damage_given = 15.0
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=599365077]
 sprite_frames = SubResource("SpriteFrames_rgwuv")
-animation = &"attack"
-frame = 3
+animation = &"walk"
+frame = 9
+frame_progress = 1.0
 
 [node name="NavigationAgent2D" parent="." index="6" unique_id=294389010]
+radius = 3.0
 debug_path_custom_color = Color(0.7529412, 0.44705883, 0, 1)

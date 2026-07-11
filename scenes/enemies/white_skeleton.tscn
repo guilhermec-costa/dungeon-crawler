@@ -170,19 +170,19 @@ region = Rect2(864, 0, 96, 64)
 [sub_resource type="SpriteFrames" id="SpriteFrames_au15w"]
 animations = [{
 "frames": [{
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_67pwj")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_dnc0r")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_l18t7")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_vdbwx")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_wdbj4")
 }, {
 "duration": 1.0,
@@ -194,7 +194,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yjqjo")
 }, {
-"duration": 1.0,
+"duration": 1.2,
 "texture": SubResource("AtlasTexture_8l6in")
 }],
 "loop": 0,
@@ -322,13 +322,12 @@ damage_given = 7.0
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=599365077]
 sprite_frames = SubResource("SpriteFrames_au15w")
-animation = &"walk"
+animation = &"attack"
+frame = 8
+frame_progress = 1.0
 
 [node name="AttackRange" parent="." index="3" unique_id=1278185032]
 position = Vector2(-11.464968, 0)
 
 [node name="CollisionShape2D" parent="AttackRange" index="0" unique_id=1365649055]
 position = Vector2(5.095566, -3.8216412)
-
-[node name="NavigationAgent2D" parent="." index="6" unique_id=294389010]
-radius = 15.0
