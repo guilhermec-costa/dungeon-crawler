@@ -63,6 +63,7 @@ collision_layer = 4
 motion_mode = 1
 safe_margin = 0.01
 script = ExtResource("1_ptjri")
+speed = 90.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=599365077]
 texture_filter = 1
@@ -106,12 +107,11 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_smehm")
 max_value = 0.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=294389010]
-path_desired_distance = 3.0
 target_desired_distance = 8.0
 path_postprocessing = 1
-simplify_path = true
 simplify_epsilon = 8.0
 radius = 8.0
+debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0, 0.52156866, 0, 1)
 

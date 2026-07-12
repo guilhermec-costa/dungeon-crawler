@@ -38,13 +38,16 @@ func _draw():
 func die():
 	is_dead = true
 	$AnimatedSprite2D.play("death")
+	if $RunningSound.playing:
+		$RunningSound.stop()
+		
 	await $AnimatedSprite2D.animation_finished
 	await get_tree().create_timer(0.5).timeout
 	player_dead.emit()
 	
 	
 func _ready():
-	$Camera2D.zoom = Vector2(4, 4)
+	$Camera2D.zoom = Vector2(4.5, 4.5)
 	health_bar.max_value = max_health
 	health = max_health
 	$HealthBar.set_health_bar_value(health)
@@ -110,6 +113,9 @@ func _process(delta: float) -> void:
 	if is_dead:
 		return
 	
+	if state == State.ROLLING and $RunningSound.playing:
+		$RunningSound.stop()
+		
 	match state:
 		State.ROLLING, State.ATTACKING:
 			pass

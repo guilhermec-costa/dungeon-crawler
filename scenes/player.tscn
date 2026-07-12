@@ -395,6 +395,7 @@ border_color = Color(0, 0, 0, 1)
 border_blend = true
 
 [node name="Player" type="CharacterBody2D" unique_id=898338159]
+visibility_layer = 6
 z_index = 1
 position = Vector2(538, 344)
 scale = Vector2(0.82, 0.82)
@@ -402,7 +403,7 @@ collision_layer = 2
 collision_mask = 9
 script = ExtResource("1_g2els")
 speed = 90.0
-max_health = 250.0
+max_health = 99.0
 metadata/_edit_group_ = true
 
 [node name="SwordArea" type="Area2D" parent="." unique_id=87376858]

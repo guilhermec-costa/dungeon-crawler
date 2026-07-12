@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://ce5cyr56n8bf4"]
+
+[ext_resource type="Script" uid="uid://dgsxfimml0udg" path="res://scripts/game_menu.gd" id="1_qdaa4"]
+
+[node name="GameMenu" type="CanvasLayer" unique_id=222706555]
+script = ExtResource("1_qdaa4")
+
+[node name="PlayButton" type="Button" parent="." unique_id=1195150418]
+offset_left = 634.0
+offset_top = 372.0
+offset_right = 781.0
+offset_bottom = 427.0
+text = "Start
+"
+
+[node name="ExitButton" type="Button" parent="." unique_id=1632527005]
+offset_left = 634.0
+offset_top = 448.0
+offset_right = 781.0
+offset_bottom = 503.0
+text = "Exit"
+
+[node name="GameName" type="Label" parent="." unique_id=1361357564]
+texture_filter = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -121.0
+offset_top = 66.0
+offset_right = 179.0
+offset_bottom = 168.0
+grow_horizontal = 2
+text = "Dungeon Crawler "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]

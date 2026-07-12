@@ -119,16 +119,25 @@ var unstuck_timer: float = 0.0
 	#var direction = global_position.direction_to(next_pos)
 	#velocity = direction * speed
 	#
+	
+func is_facing_left():
+	return $AnimatedSprite2D.flip_h
+	
+func is_facing_right():
+	return not $AnimatedSprite2D.flip_h
+	
 func _chase_player():	
 	var target = player.global_position
-	target.y += randf_range(-16.0, 16.0)
+	target.y += 16
+	target.x += 20 if is_facing_left() else -20
 
 	pathfinder.target_position = target
 	
 	var next_pos = pathfinder.get_next_path_position()
 	var direction = global_position.direction_to(next_pos)
 	velocity = direction * speed
-			
+
+	
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
@@ -168,7 +177,6 @@ func _process(delta: float) -> void:
 		return
 	
 	var animation = get_animation_from_state()
-	print("animation: ", animation)
 	update_animation(animation)
 
 func get_animation_from_state() -> String:

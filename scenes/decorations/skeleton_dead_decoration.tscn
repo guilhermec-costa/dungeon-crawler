@@ -6,16 +6,17 @@
 
 [node name="SkeletonDeadDecoration" type="Node2D" unique_id=354119243]
 y_sort_enabled = true
+metadata/_edit_group_ = true
 
 [node name="SkullDecoration" parent="." unique_id=367717854 instance=ExtResource("1_oiet8")]
-position = Vector2(491, 272)
+position = Vector2(5.0000005, -1.7881393e-07)
 
 [node name="SkeletonBodyDecoration" parent="." unique_id=1265313300 instance=ExtResource("2_u64yn")]
-position = Vector2(493, 280.00003)
+position = Vector2(7, 7)
 rotation = -0.20769419
 scale = Vector2(0.148, 0.148)
 
 [node name="SkeletonBoneDecoration" parent="." unique_id=1223949128 instance=ExtResource("3_6568v")]
-position = Vector2(500.00003, 278)
+position = Vector2(3.9999962, 8)
 rotation = 0.930181
 scale = Vector2(0.148, 0.148)

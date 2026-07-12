@@ -316,9 +316,9 @@ animations = [{
 }]
 
 [node name="WhiteSkeleton" unique_id=582161565 instance=ExtResource("1_ff8hq")]
-speed = 50.0
+speed = 60.0
 max_health = 100.0
-damage_given = 7.0
+damage_given = 15.0
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=599365077]
 sprite_frames = SubResource("SpriteFrames_au15w")

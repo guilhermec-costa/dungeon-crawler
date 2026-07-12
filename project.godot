@@ -60,6 +60,10 @@ roll={
 
 [layer_names]
 
+2d_render/layer_1="Tilemaps"
+2d_render/layer_2="Entities"
+2d_render/layer_3="Minimap Icons"
+2d_render/layer_4="Celing"
 2d_physics/layer_1="terrain"
 2d_navigation/layer_1="dungeon_floor"
 2d_physics/layer_2="player"
