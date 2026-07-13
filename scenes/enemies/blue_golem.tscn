@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://3mtevsp1n5oe" path="res://assets/enemies/golems/Golem_1/Blue/White_Swoosh_VFX/Golem_1_die.png" id="3_hboqw"]
 [ext_resource type="Texture2D" uid="uid://dbsv504orixjb" path="res://assets/enemies/golems/Golem_1/Blue/White_Swoosh_VFX/Golem_1_hurt.png" id="4_cl8wn"]
 [ext_resource type="PackedScene" uid="uid://dkmmjac80p3pr" path="res://scenes/health_bar.tscn" id="6_pcy3n"]
+[ext_resource type="AudioStream" uid="uid://bcma22lekkmtx" path="res://assets/audio/golem_impact_sound.mp3" id="9_c3aco"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hboqw"]
 size = Vector2(39.5, 38.5)
@@ -195,7 +196,7 @@ region = Rect2(810, 0, 90, 64)
 [sub_resource type="SpriteFrames" id="SpriteFrames_uyhjn"]
 animations = [{
 "frames": [{
-"duration": 1.0,
+"duration": 1.4,
 "texture": SubResource("AtlasTexture_0jp65")
 }, {
 "duration": 1.0,
@@ -210,7 +211,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8pjyv")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_aibjc")
 }, {
 "duration": 1.0,
@@ -219,10 +220,10 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_w87a0")
 }, {
-"duration": 1.0,
+"duration": 2.0,
 "texture": SubResource("AtlasTexture_e2mqb")
 }, {
-"duration": 1.0,
+"duration": 1.6,
 "texture": SubResource("AtlasTexture_ictbv")
 }, {
 "duration": 1.0,
@@ -373,7 +374,7 @@ radius = 89.44457
 radius = 215.32054
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7bkgt"]
-radius = 43.931767
+radius = 32.0
 
 [node name="BlueGolem" type="CharacterBody2D" unique_id=1334460780]
 texture_filter = 1
@@ -389,8 +390,9 @@ shape = SubResource("RectangleShape2D_hboqw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1881604786]
 sprite_frames = SubResource("SpriteFrames_uyhjn")
-animation = &"die"
-frame = 1
+animation = &"attack"
+frame = 10
+frame_progress = 1.0
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1457934423]
 position = Vector2(0, 13)
@@ -412,7 +414,6 @@ target_desired_distance = 15.0
 path_postprocessing = 1
 simplify_epsilon = 8.0
 radius = 8.0
-debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0, 0.52156866, 0, 1)
 
@@ -456,5 +457,10 @@ collision_layer = 5
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaDamageRange" unique_id=390117025]
-position = Vector2(0, 17)
+position = Vector2(-1, 15)
 shape = SubResource("CircleShape2D_7bkgt")
+
+[node name="AttackSound" type="AudioStreamPlayer2D" parent="." unique_id=333548896]
+stream = ExtResource("9_c3aco")
+volume_db = -10.169
+max_distance = 1200.0

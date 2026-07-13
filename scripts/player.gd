@@ -3,18 +3,26 @@ extends CharacterBody2D
 class_name Player
 
 signal player_dead
+signal damage_taken
 
-@export var speed: float = 30
-@export var roll_speed_multiplier: float = 1.1
+@export var roll_speed_multiplier: float = 1.5
+@export var sprinting_multiplier: float = 1.85
 @export var max_health: float
-@onready var health_bar: HealthBar = $HealthBar
+@export var dodge_chance: float = 5.0
+@onready var raycast: RayCast2D = $CollisionRay
 var damageTakenLabel: PackedScene = preload("res://scenes/damage_label.tscn")
 
 
-var health: float;
+var health: float
 var is_dead: bool = false
+var is_sprinting: bool = false
+
+@export var speed: float = 25:
+	get: 
+		return speed * sprinting_multiplier if is_sprinting else speed
 
 const SWORD_COLLIDER_OFFSET = 50
+const RAYCAST_OFFSET = 20
 const PLAYER_ATTACK_OFFSET = 20
 const PLAYER_COLLIDER_X = 0
 
@@ -48,10 +56,9 @@ func die():
 	
 func _ready():
 	$Camera2D.zoom = Vector2(4.5, 4.5)
-	health_bar.max_value = max_health
-	health = max_health
-	$HealthBar.set_health_bar_value(health)
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
+	$AnimatedSprite2D.animation_changed.connect(_on_animation_changed)
+	health = max_health
 	
 func start(initial_pos: Vector2):
 	self.position = initial_pos
@@ -60,6 +67,7 @@ func start(initial_pos: Vector2):
 	$SwordArea/CollisionShape2D.disabled = true
 
 var camera_control_enabled: bool = true
+	
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed():
@@ -76,16 +84,28 @@ func _input(event: InputEvent) -> void:
 							$Camera2D.zoom = new_zoom
 				MOUSE_BUTTON_LEFT:
 					if not state == State.ATTACKING:
-						state = State.ATTACKING
-						$SwordAttackSound.play()
+						_attack()
 
+func _attack():
+	state = State.ATTACKING
+	
 func is_stopped() -> bool:
 	return velocity == Vector2.ZERO
 		
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
+				
+	if Input.is_action_just_pressed("roll"):
+		_start_roll()
 	
+	if Input.is_action_pressed("sprint"):
+		if not is_sprinting:
+			is_sprinting = true
+	elif Input.is_action_just_released("sprint"):
+			is_sprinting = false
+		
+		
 	match state:
 		State.ATTACKING:
 			return
@@ -95,18 +115,23 @@ func _physics_process(delta: float) -> void:
 			
 		_:
 			var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+			if direction != Vector2.ZERO:
+				raycast.target_position.x += -RAYCAST_OFFSET if direction.x > 0 else RAYCAST_OFFSET
+				raycast.target_position = direction * 30
+
+				
 			velocity = direction * speed
 			update_flip(direction)
 			move_and_slide()
-			
-			if Input.is_action_just_pressed("roll"):
-				_start_roll()
+
 
 func _start_roll():
 	state = State.ROLLING
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if direction == Vector2.ZERO:
 		direction = Vector2.LEFT if is_facing_left() else Vector2.RIGHT
+		
+	update_flip(direction)
 	velocity = direction * speed * roll_speed_multiplier
 	
 func _process(delta: float) -> void:
@@ -170,33 +195,40 @@ func get_animation_from_state() -> String:
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if $AnimatedSprite2D.animation == "roll":
 		state = State.IDLE
-		print("finished")
 		
 	if $AnimatedSprite2D.animation == "attack":
 		state = State.IDLE
-		$SwordArea/CollisionShape2D.disabled = true
-
+		$SwordArea/CollisionShape2D.call_deferred("set_disabled", true)
+ 
 func take_damage(damage: float):
 	if state == State.ROLLING:
-		show_rolling_label()
-		return
+		if (randf() * 100) < dodge_chance:
+			show_tween_message("DODGE!")
+			return
 		
 	if is_dead: 
 		return
 		
 	health -= damage
-	$HealthBar.set_health_bar_value(health)
+	damage_taken.emit()
 	show_damage_label(damage)
 	
 	if health <= 0:
 		die()
 		return
 
+
+func _on_animation_changed():
+	if state != State.ATTACKING and not $SwordArea/CollisionShape2D.disabled:
+		$SwordArea/CollisionShape2D.call_deferred("set_disabled", true)
+		
 func _on_frame_changed():
 	if state == State.ATTACKING and $AnimatedSprite2D.frame == 2:
-		$SwordArea/CollisionShape2D.disabled = false
+		if not $SwordAttackSound.playing:
+			$SwordAttackSound.play()
+		$SwordArea/CollisionShape2D.call_deferred("set_disabled", false)
 
-func show_rolling_label():
+func show_tween_message(message: String):
 	var damage_label: TweenMessage = damageTakenLabel.instantiate()
 	add_child(damage_label)
 	damage_label.position = Vector2(0, 32)
@@ -204,7 +236,7 @@ func show_rolling_label():
 	damage_label.modulate = Color(0.0, 0.68, 0.3)
 	damage_label.add_theme_constant_override("outline_size", 4)
 	damage_label.add_theme_color_override("font_outline_color", Color.YELLOW_GREEN)
-	damage_label.show_text_label("DODGE!", 0.7)
+	damage_label.show_text_label(message, 0.7)
 
 func show_damage_label(damage: float):
 	var damage_label: TweenMessage = damageTakenLabel.instantiate()

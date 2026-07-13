@@ -7,8 +7,14 @@ var whiteSkeletonScene = preload("res://scenes/enemies/white_skeleton.tscn")
 var blue_golem = preload("res://scenes/enemies/blue_golem.tscn")
 var minimap = preload("res://scenes/minimap.tscn")
 
+@onready var player_hud: PlayerHUD = $PlayerHUD
 @onready var player: Player = $Entities/Player
 
+func _ready() -> void:
+	player_hud.player = player
+	player_hud.update_max_health()
+	player_hud.update_health()
+	
 func spawn_mobs():
 	player.start($PlayerStartPosition.position)
 	var yellowSkeleton: BaseSkeleton = yellowSkeletonScene.instantiate()
@@ -19,7 +25,7 @@ func spawn_mobs():
 	var yellowSkeleton2: BaseSkeleton = yellowSkeletonScene.instantiate()
 	yellowSkeleton2.player = player
 	yellowSkeleton2.position =  player.global_position + Vector2(-250, 120)
-	$Entities.add_child(yellowSkeleton2)git
+	$Entities.add_child(yellowSkeleton2)
 	
 	var whiteSkeleton: BaseSkeleton = whiteSkeletonScene.instantiate()
 	whiteSkeleton.player = player
@@ -39,3 +45,7 @@ func setup_minimap():
 func start():
 	spawn_mobs()
 	#setup_minimap()
+
+
+func _on_player_damage_taken() -> void:
+	player_hud.update_health()

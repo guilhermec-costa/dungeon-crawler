@@ -4,6 +4,10 @@ class_name BaseSkeleton
 
 var SWORD_COLLIDER_OFFSET = 50.0
 
+@onready var running_sound: AudioStreamPlayer2D = $RunningSound
+@onready var sword_hit_sound: AudioStreamPlayer2D = $SwordHitSound
+
+
 func _ready():
 	attack_hit_frame = 5
 	postmortem_scene = preload("res://scenes/decorations/skeleton_postmorten.tscn")
@@ -16,22 +20,34 @@ func _ready():
 
 
 func on_flip_left() -> void:
-	if not $AnimatedSprite2D.flip_h:
-		$SwordArea/CollisionShape2D.position.x -= SWORD_COLLIDER_OFFSET
-		$SwordArea/CollisionShape2D.rotation *= -1
+	$SwordArea/CollisionShape2D.position.x -= SWORD_COLLIDER_OFFSET
+	$SwordArea/CollisionShape2D.rotation *= -1
 
 func on_flip_right() -> void:
-	if $AnimatedSprite2D.flip_h:
-		$SwordArea/CollisionShape2D.position.x += SWORD_COLLIDER_OFFSET
-		$SwordArea/CollisionShape2D.rotation *= -1
+	$SwordArea/CollisionShape2D.position.x += SWORD_COLLIDER_OFFSET
+	$SwordArea/CollisionShape2D.rotation *= -1
 
 # --- Attack ---
 
+func _process(_delta: float) -> void:	
+	var walking := state == State.WALKING or state == State.CHASING
+
+	if walking:
+		if not $RunningSound.playing:
+			$RunningSound.play()
+	else:
+		if $RunningSound.playing:
+			$RunningSound.stop()
+	
+	super._process(_delta)
+	
 func _on_frame_changed() -> void:
 	if state == State.ATTACKING and $AnimatedSprite2D.frame == attack_hit_frame:
 		for body in $SwordArea.get_overlapping_bodies():
 			if body is Player:
 				player.take_damage(damage_given)
+				if not sword_hit_sound.playing:
+					sword_hit_sound.play()
 
 func on_enter_attack_range(body: Node2D) -> void:
 	if body is Player:
@@ -54,6 +70,9 @@ func on_exit_attack_range(body: Node2D) -> void:
 # --- Death ---
 
 func die() -> void:
+	if sword_hit_sound.playing:
+		sword_hit_sound.stop()
+		
 	$HealthBar.hide_health_ui()
 	is_dead = true
 	$DieSound.play()

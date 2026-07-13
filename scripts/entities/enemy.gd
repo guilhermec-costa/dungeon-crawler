@@ -77,12 +77,14 @@ func is_facing_right() -> bool:
 	return not $AnimatedSprite2D.flip_h
 
 func flip_to_left():
-	$AnimatedSprite2D.flip_h = true
-	on_flip_left()
+	if not $AnimatedSprite2D.flip_h:
+		$AnimatedSprite2D.flip_h = true
+		on_flip_left()
 
 func flip_to_right():
-	$AnimatedSprite2D.flip_h = false
-	on_flip_right()
+	if $AnimatedSprite2D.flip_h:
+		$AnimatedSprite2D.flip_h = false
+		on_flip_right()
 
 # virtuals
 func on_flip_left() -> void:
@@ -148,6 +150,7 @@ func _physics_process(delta: float) -> void:
 func _process(_delta: float) -> void:
 	if is_dead:
 		return
+		
 	update_animation(get_animation_from_state())
 
 func get_animation_from_state() -> String:

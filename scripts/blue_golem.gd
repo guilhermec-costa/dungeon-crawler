@@ -2,6 +2,8 @@ class_name BlueGolem
 
 extends BaseEnemy
 
+@onready var attack_sound: AudioStreamPlayer2D = $AttackSound
+
 func _ready():
 	attack_hit_frame = 7
 	postmortem_scene = preload("res://scenes/decorations/skeleton_postmorten.tscn")
@@ -15,6 +17,7 @@ func _on_frame_changed() -> void:
 		for body in $AreaDamageRange.get_overlapping_bodies():
 			if body is Player:
 				player.take_damage(damage_given)
+				attack_sound.play()
 
 func on_enter_attack_range(body: Node2D) -> void:
 	if body is Player:
