@@ -2,6 +2,7 @@ extends CanvasLayer
 
 class_name GameMenu
 
+@onready var game_name: Label = $GameName
 @onready var play_button: Button = $PlayButton
 @onready var exit_button: Button = $PlayButton
 
@@ -9,7 +10,6 @@ signal start_game
 
 var font: Font = preload("res://assets/fonts/Tiny RPG - Necro Romance.ttf")
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	play_button.add_theme_font_override("font", font)
 	play_button.add_theme_font_size_override("font_size", 22)
@@ -22,9 +22,12 @@ func _ready() -> void:
 	
 	play_button.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	play_button.text = "Start Game"
+	
+	game_name.text = "Necroveil"
+	game_name.add_theme_font_override("font", font)
+	game_name.add_theme_font_size_override("font_size", 56)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 

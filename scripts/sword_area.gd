@@ -9,7 +9,7 @@ func _ready():
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body is BaseSkeleton:
+	if body is BaseEnemy:
 		var damage = base_damage
 		var damage_type = DamageTypes.Type.NORMAL
 		if randf() * 100 < critical_chance:

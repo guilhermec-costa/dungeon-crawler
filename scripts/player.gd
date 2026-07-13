@@ -177,6 +177,10 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		$SwordArea/CollisionShape2D.disabled = true
 
 func take_damage(damage: float):
+	if state == State.ROLLING:
+		show_rolling_label()
+		return
+		
 	if is_dead: 
 		return
 		
@@ -192,10 +196,18 @@ func _on_frame_changed():
 	if state == State.ATTACKING and $AnimatedSprite2D.frame == 2:
 		$SwordArea/CollisionShape2D.disabled = false
 
-
+func show_rolling_label():
+	var damage_label: TweenMessage = damageTakenLabel.instantiate()
+	add_child(damage_label)
+	damage_label.position = Vector2(0, 32)
+	damage_label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	damage_label.modulate = Color(0.0, 0.68, 0.3)
+	damage_label.add_theme_constant_override("outline_size", 4)
+	damage_label.add_theme_color_override("font_outline_color", Color.YELLOW_GREEN)
+	damage_label.show_text_label("DODGE!", 0.7)
 
 func show_damage_label(damage: float):
-	var damage_label: DamageLabel = damageTakenLabel.instantiate()
+	var damage_label: TweenMessage = damageTakenLabel.instantiate()
 	add_child(damage_label)
 	damage_label.position = Vector2(0, 32)
 	damage_label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST

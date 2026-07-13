@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://chvckeejavhx4"]
 
-[ext_resource type="Script" uid="uid://bfp62eoh24sey" path="res://scripts/skeleton.gd" id="1_ptjri"]
+[ext_resource type="Script" uid="uid://bfp62eoh24sey" path="res://scripts/base_skeleton.gd" id="1_ptjri"]
 [ext_resource type="Texture2D" uid="uid://cwpyj0lcn028v" path="res://assets/enemies/skeletons/Skeleton_01_White_Idle.png" id="2_f16eg"]
 [ext_resource type="AudioStream" uid="uid://b3a4ybvaeksos" path="res://assets/audio/skeleton_die.mp3" id="2_nsc55"]
 [ext_resource type="PackedScene" uid="uid://dkmmjac80p3pr" path="res://scenes/health_bar.tscn" id="3_f16eg"]
@@ -16,7 +16,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_bnfvn")
 }],
 "loop": 1,
-"name": &"default",
+"name": &"walk",
 "speed": 5.0
 }]
 
@@ -25,18 +25,6 @@ size = Vector2(19.108368, 46.94263)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i0f3v"]
 size = Vector2(10.871645, 2.9492245)
-
-[sub_resource type="GDScript" id="GDScript_w4hcs"]
-script/source = "extends Area2D
-
-func _ready() -> void:
-	body_entered.connect(_on_body_entered)
-
-
-func _on_body_entered(body: Node2D) -> void:
-	if body is Player:
-		body.take_damage(3)
-"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1bnh4"]
 radius = 3.0882263
@@ -56,9 +44,9 @@ radius = 89.44457
 [sub_resource type="CircleShape2D" id="CircleShape2D_ptjri"]
 radius = 215.32054
 
-[node name="Skeleton" type="CharacterBody2D" unique_id=582161565]
+[node name="BaseSkeleton" type="CharacterBody2D" unique_id=582161565]
 position = Vector2(665, 292)
-scale = Vector2(0.785, 0.785)
+scale = Vector2(0.625, 0.625)
 collision_layer = 4
 motion_mode = 1
 safe_margin = 0.01
@@ -69,6 +57,7 @@ speed = 90.0
 texture_filter = 1
 position = Vector2(-3, -3)
 sprite_frames = SubResource("SpriteFrames_ptjri")
+animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=580395902]
 position = Vector2(-5.732483, 5.6369324)
@@ -91,7 +80,6 @@ debug_color = Color(18.892157, 0, 0, 0.25490198)
 [node name="SwordArea" type="Area2D" parent="." unique_id=1951249365]
 collision_layer = 4
 collision_mask = 3
-script = SubResource("GDScript_w4hcs")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwordArea" unique_id=1993416583]
 position = Vector2(23, -5)
@@ -111,7 +99,6 @@ target_desired_distance = 8.0
 path_postprocessing = 1
 simplify_epsilon = 8.0
 radius = 8.0
-debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0, 0.52156866, 0, 1)
 

@@ -367,7 +367,6 @@ damage_given = 25.0
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=599365077]
 sprite_frames = SubResource("SpriteFrames_rgwuv")
-animation = &"walk"
 frame = 9
 frame_progress = 1.0
 
