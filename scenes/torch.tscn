@@ -72,13 +72,15 @@ position = Vector2(542, 278)
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2054213394]
+modulate = Color(0, 0.37941262, 0.6552118, 1)
 sprite_frames = SubResource("SpriteFrames_pn638")
 animation = &"flame"
 autoplay = "flame"
 frame_progress = 0.4529066
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=51456426]
-position = Vector2(-2.999981, 59.50001)
-scale = Vector2(0.6367188, 0.3613281)
-color = Color(0.9490196, 0.2784314, 0.019607844, 1)
+position = Vector2(-0.99998105, -0.99998856)
+scale = Vector2(0.5022176, 0.438738)
+color = Color(0.3882353, 0.5372549, 0.8627451, 1)
 texture = ExtResource("2_my26j")
+texture_scale = 0.78

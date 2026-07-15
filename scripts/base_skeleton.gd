@@ -70,11 +70,10 @@ func on_exit_attack_range(body: Node2D) -> void:
 # --- Death ---
 
 func die() -> void:
-	if sword_hit_sound.playing:
-		sword_hit_sound.stop()
+	sword_hit_sound.stop()
 		
 	$HealthBar.hide_health_ui()
-	is_dead = true
+	state = State.DEAD
 	$DieSound.play()
 	$AnimatedSprite2D.play("die")
 

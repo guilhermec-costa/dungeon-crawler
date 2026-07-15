@@ -14,7 +14,7 @@ func _on_player_died():
 func start_game():
 	var phase1: Phase1 = phase1Scene.instantiate()
 	add_child(phase1)
-	var player: Player = phase1.get_node("Entities/Player")
+	var player: Player = phase1.player
 	player.player_dead.connect(_on_player_died)
 	phase1.start()
 

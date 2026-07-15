@@ -4,22 +4,51 @@ class_name Player
 
 signal player_dead
 signal damage_taken
+signal update_stamina
 
-@export var roll_speed_multiplier: float = 1.5
-@export var sprinting_multiplier: float = 1.85
+@export var roll_speed_multiplier: float = 1.2
+@export var sprinting_multiplier: float = 1.5
 @export var max_health: float
+@export var max_stamina: float
 @export var dodge_chance: float = 5.0
 @onready var raycast: RayCast2D = $CollisionRay
+@onready var sword_area: SwordArea = $SwordArea
+
 var damageTakenLabel: PackedScene = preload("res://scenes/damage_label.tscn")
 
+var stamina_cost := {
+	"roll": 30.0,
+	"main_attack": 20.0,
+}
+
+@export var sprint_stamina_cost_per_second: float = 15.0
+@export var stamina_recovery_rate: float = 22.0
+@export var stamina_recovery_delay: float = 0.75
+var stamina_recovery_timer := 0.0
+
+func consume_stamina(amount: float):
+	stamina -= amount
+	stamina_recovery_timer = stamina_recovery_delay
 
 var health: float
-var is_dead: bool = false
-var is_sprinting: bool = false
+
+var stamina: float = 0.0:
+	get:
+		return stamina
+	set(value):
+		stamina = clamp(value, 0, max_stamina)
+		update_stamina.emit()
+
 
 @export var speed: float = 25:
 	get: 
-		return speed * sprinting_multiplier if is_sprinting else speed
+		var can_sprint = stamina > 0
+		return speed * sprinting_multiplier \
+			if (can_sprint and is_sprinting) else speed
+
+var is_dead: bool = false
+var is_sprinting: bool = false
+
 
 const SWORD_COLLIDER_OFFSET = 50
 const RAYCAST_OFFSET = 20
@@ -30,7 +59,6 @@ enum State {
 	IDLE,
 	RUNNING,
 	ATTACKING,
-	SLIDING,
 	ROLLING
 }
 
@@ -38,9 +66,9 @@ var state := State.	IDLE
 
 
 func _draw():
-	draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.5, 0.6))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.2, 0.6))
 	var shadow_color = Color.BLACK
-	shadow_color.a = 0.4
+	shadow_color.a = 0.15
 	draw_circle(Vector2.DOWN * 65, 10, shadow_color)
 	
 func die():
@@ -59,6 +87,7 @@ func _ready():
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	$AnimatedSprite2D.animation_changed.connect(_on_animation_changed)
 	health = max_health
+	stamina = max_stamina
 	
 func start(initial_pos: Vector2):
 	self.position = initial_pos
@@ -80,11 +109,14 @@ func _input(event: InputEvent) -> void:
 				MOUSE_BUTTON_WHEEL_DOWN:
 					if camera_control_enabled:
 						var new_zoom = $Camera2D.zoom - Vector2(0.1, 0.1)
-						if new_zoom >= Vector2(1.5, 1.5):	
+						if new_zoom >= Vector2(0.5, 0.5):	
 							$Camera2D.zoom = new_zoom
 				MOUSE_BUTTON_LEFT:
 					if not state == State.ATTACKING:
-						_attack()
+						if stamina > stamina_cost["main_attack"]:
+							_attack()
+						else:
+							show_no_stamina_message()
 
 func _attack():
 	state = State.ATTACKING
@@ -126,6 +158,10 @@ func _physics_process(delta: float) -> void:
 
 
 func _start_roll():
+	if stamina < stamina_cost["roll"]:
+		show_no_stamina_message()
+		return
+		
 	state = State.ROLLING
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if direction == Vector2.ZERO:
@@ -133,6 +169,7 @@ func _start_roll():
 		
 	update_flip(direction)
 	velocity = direction * speed * roll_speed_multiplier
+	consume_stamina(stamina_cost["roll"])
 	
 func _process(delta: float) -> void:
 	if is_dead:
@@ -140,7 +177,15 @@ func _process(delta: float) -> void:
 	
 	if state == State.ROLLING and $RunningSound.playing:
 		$RunningSound.stop()
-		
+	
+	if is_sprinting:
+		consume_stamina(sprint_stamina_cost_per_second * delta)
+	else:
+		if stamina_recovery_timer > 0:
+			stamina_recovery_timer -= delta
+		else:
+			stamina += stamina_recovery_rate * delta
+	
 	match state:
 		State.ROLLING, State.ATTACKING:
 			pass
@@ -185,8 +230,6 @@ func get_animation_from_state() -> String:
 			return "attack"
 		State.RUNNING:
 			return "run"
-		State.SLIDING:
-			return "slide"
 		State.ROLLING:
 			return "roll"
 		_:
@@ -224,6 +267,7 @@ func _on_animation_changed():
 		
 func _on_frame_changed():
 	if state == State.ATTACKING and $AnimatedSprite2D.frame == 2:
+		consume_stamina(stamina_cost["main_attack"])
 		if not $SwordAttackSound.playing:
 			$SwordAttackSound.play()
 		$SwordArea/CollisionShape2D.call_deferred("set_disabled", false)
@@ -238,6 +282,22 @@ func show_tween_message(message: String):
 	damage_label.add_theme_color_override("font_outline_color", Color.YELLOW_GREEN)
 	damage_label.show_text_label(message, 0.7)
 
+func show_no_stamina_message():
+	var label: TweenMessage = damageTakenLabel.instantiate()
+	add_child(label)
+
+	label.position = Vector2(0, 32)
+	label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+
+	label.modulate = Color(1.0, 0.9, 0.2)cd
+
+	label.add_theme_constant_override("outline_size", 4)
+	label.add_theme_color_override(
+		"font_outline_color",
+		Color.BLACK
+	)
+	label.show_text_label("NO STAMINA!", 0.7)
+	
 func show_damage_label(damage: float):
 	var damage_label: TweenMessage = damageTakenLabel.instantiate()
 	add_child(damage_label)

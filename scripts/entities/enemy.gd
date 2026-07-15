@@ -12,23 +12,21 @@ class_name BaseEnemy
 @export var damage_given: float
 
 
-# Onready
 @onready var health_bar: HealthBar = $HealthBar
 @onready var pathfinder: NavigationAgent2D = $NavigationAgent2D
 @onready var start_chase_area: Area2D = $StartChaseArea
 @onready var limit_chase_area: Area2D = $LimitChaseArea
 
-# State
 var health: float
-var player: Player
-var is_dead: bool = false
+@export var player: Player
 var walk_direction := Vector2.ZERO
 
 enum State {
 	IDLE,
 	ATTACKING,
 	CHASING,
-	WALKING
+	WALKING,
+	DEAD
 }
 
 var state: State = State.IDLE
@@ -127,7 +125,7 @@ func _chase_player():
 
 
 func _physics_process(delta: float) -> void:
-	if is_dead:
+	if state == State.DEAD:
 		return
 
 	if state == State.CHASING or state == State.ATTACKING:
@@ -148,7 +146,7 @@ func _physics_process(delta: float) -> void:
 # --- Animation ---
 
 func _process(_delta: float) -> void:
-	if is_dead:
+	if state == State.DEAD:
 		return
 		
 	update_animation(get_animation_from_state())
@@ -216,7 +214,7 @@ func spawn_dead_corpse():
 
 func die():
 	$HealthBar.hide_health_ui()
-	is_dead = true
+	state = State.DEAD
 	if $DieSound:
 		$DieSound.play()
 		

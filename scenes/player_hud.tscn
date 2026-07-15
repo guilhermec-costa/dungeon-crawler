@@ -110,6 +110,7 @@ offset_bottom = 75.99054
 color = Color(0, 0, 0, 1)
 
 [node name="Portrait" type="TextureRect" parent="Control/PortraitWidget/PortraitContainer" unique_id=1749889812]
+modulate = Color(0.737193, 0.7371929, 0.7371929, 1)
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
@@ -127,6 +128,7 @@ scale = Vector2(1.2, 1.2)
 texture = SubResource("AtlasTexture_er5qu")
 
 [node name="PortraitFrame" type="TextureRect" parent="Control/PortraitWidget" unique_id=1084100503]
+modulate = Color(0.54584616, 0.42222664, 1, 1)
 texture_filter = 1
 clip_contents = true
 layout_mode = 1
