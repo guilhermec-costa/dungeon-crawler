@@ -13,6 +13,7 @@ signal update_stamina
 @export var dodge_chance: float = 5.0
 @onready var raycast: RayCast2D = $CollisionRay
 @onready var sword_area: SwordArea = $SwordArea
+@export var current_gold: float = 0.0
 
 var damageTakenLabel: PackedScene = preload("res://scenes/damage_label.tscn")
 
@@ -83,7 +84,7 @@ func die():
 	
 	
 func _ready():
-	$Camera2D.zoom = Vector2(4.5, 4.5)
+	$Camera2D.zoom = Vector2(6, 6)
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	$AnimatedSprite2D.animation_changed.connect(_on_animation_changed)
 	health = max_health
@@ -96,6 +97,10 @@ func start(initial_pos: Vector2):
 	$SwordArea/CollisionShape2D.disabled = true
 
 var camera_control_enabled: bool = true
+
+func increment_gold(gold: float):
+	current_gold += gold
+	print("current gold: ", gold)
 	
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -269,7 +274,7 @@ func _on_frame_changed():
 	if state == State.ATTACKING and $AnimatedSprite2D.frame == 2:
 		consume_stamina(stamina_cost["main_attack"])
 		if not $SwordAttackSound.playing:
-			$SwordAttackSound.play()
+			AudioManager.play_sfx($SwordAttackSound.stream)
 		$SwordArea/CollisionShape2D.call_deferred("set_disabled", false)
 
 func show_tween_message(message: String):
@@ -287,9 +292,10 @@ func show_no_stamina_message():
 	add_child(label)
 
 	label.position = Vector2(0, 32)
+	label.z_index = 10
 	label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 
-	label.modulate = Color(1.0, 0.9, 0.2)cd
+	label.modulate = Color(1.0, 0.9, 0.2)
 
 	label.add_theme_constant_override("outline_size", 4)
 	label.add_theme_color_override(
@@ -300,6 +306,7 @@ func show_no_stamina_message():
 	
 func show_damage_label(damage: float):
 	var damage_label: TweenMessage = damageTakenLabel.instantiate()
+	damage_label.z_index = 10
 	add_child(damage_label)
 	damage_label.position = Vector2(0, 32)
 	damage_label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST

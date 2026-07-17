@@ -12,7 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://dylotsd6xcm21" path="res://assets/audio/hit_flesh.mp3" id="10_y4r1p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tuyoq"]
-size = Vector2(44.02173, 45.573486)
+size = Vector2(40.156433, 45.573486)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dt7fs"]
 atlas = ExtResource("3_y4r1p")
@@ -394,18 +394,14 @@ data = PackedByteArray("//vQRAAM5Gd6qxGINtKf7uUhGYisVrH82hTEgAL0vdsCnsAAGVm6/30m
 modulate = Color(0.47768176, 0.5452191, 0.50288934, 1)
 visibility_layer = 6
 position = Vector2(538, 344)
-scale = Vector2(0.705, 0.705)
+scale = Vector2(0.65, 0.65)
 collision_layer = 2
-collision_mask = 9
 script = ExtResource("1_g2els")
-roll_speed_multiplier = null
-sprinting_multiplier = null
 max_health = 200.0
-max_stamina = 100.0
+max_stamina = 150.0
 dodge_chance = 8.0
-sprint_stamina_cost_per_second = null
-stamina_recovery_rate = null
-stamina_recovery_delay = null
+stamina_recovery_rate = 25.0
+stamina_recovery_delay = 0.6
 speed = 60.0
 metadata/_edit_group_ = true
 
@@ -414,12 +410,12 @@ position = Vector2(-20, 0)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("2_fjrip")
-base_damage = 15.0
+base_damage = 30.0
 critical_chance = 20.0
 critical_multiplier = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwordArea" unique_id=419104898]
-position = Vector2(42.989136, 18)
+position = Vector2(41.05652, 18)
 shape = SubResource("RectangleShape2D_tuyoq")
 disabled = true
 debug_color = Color(0, 0.64617276, 0.25057608, 0.41960785)
@@ -434,8 +430,7 @@ position = Vector2(2, -1)
 rotation = -6.2831855
 sprite_frames = SubResource("SpriteFrames_1bnh4")
 animation = &"attack"
-frame = 5
-frame_progress = 1.0
+frame = 1
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1288535891]

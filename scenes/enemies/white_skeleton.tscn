@@ -341,7 +341,7 @@ position = Vector2(5.095566, -3.8216412)
 
 [node name="RunningSound" parent="." index="10" unique_id=1820116491]
 stream = SubResource("AudioStreamMP3_au15w")
-max_distance = 200.0
+max_distance = 104.0
 
 [node name="SwordHitSound" parent="." index="11" unique_id=1757392559]
 stream = SubResource("AudioStreamMP3_vsgni")

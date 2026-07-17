@@ -73,6 +73,7 @@ metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2054213394]
 modulate = Color(0, 0.37941262, 0.6552118, 1)
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_pn638")
 animation = &"flame"
 autoplay = "flame"

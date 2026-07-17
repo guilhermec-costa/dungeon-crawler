@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://lkr07nj52prc"]
+
+[ext_resource type="Script" uid="uid://cy4bunkjvm7e3" path="res://scripts/gold_drop.gd" id="1_kko0w"]
+[ext_resource type="Texture2D" uid="uid://bpfrl8e3nx36w" path="res://assets/collectables.png" id="1_nhnmi"]
+[ext_resource type="AudioStream" uid="uid://d7h6ho7e2ntu" path="res://assets/audio/coin_collect.mp3" id="3_bvaa0"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kko0w"]
+load_path = "res://.godot/imported/light.png-eb9830642ecf7514d3a3ab8bec045616.ctex"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7bkgt"]
+radius = 9.0
+
+[node name="GoldDrop" type="Node2D" unique_id=362545682]
+texture_filter = 1
+script = ExtResource("1_kko0w")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1550990129]
+texture_filter = 1
+position = Vector2(3, 1)
+texture = ExtResource("1_nhnmi")
+region_enabled = true
+region_rect = Rect2(71.14752, 137.63396, 16.910118, 14.7157135)
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=965946710]
+position = Vector2(2.9999998, 0)
+scale = Vector2(0.03, 0.03)
+color = Color(0.4745098, 0.35686275, 0.08235294, 1)
+texture = SubResource("CompressedTexture2D_kko0w")
+
+[node name="CollectRange" type="Area2D" parent="." unique_id=1056672516]
+collision_layer = 32
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectRange" unique_id=1844478890]
+position = Vector2(3, 1)
+shape = SubResource("CircleShape2D_7bkgt")
+
+[node name="CollectSound" type="AudioStreamPlayer2D" parent="." unique_id=1739540508]
+stream = ExtResource("3_bvaa0")
+pitch_scale = 1.23
+max_distance = 150.0
+
+[connection signal="body_entered" from="CollectRange" to="." method="_on_collect_range_body_entered"]

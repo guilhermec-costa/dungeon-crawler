@@ -5,7 +5,6 @@ extends Area2D
 @export var base_damage: float = 5
 @export var critical_chance: float # %
 @export var critical_multiplier: float
-
 @onready var hit_sound: AudioStreamPlayer2D = $HitSound
 
 func _ready():
