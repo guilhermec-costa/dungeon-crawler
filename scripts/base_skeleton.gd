@@ -7,18 +7,6 @@ var SWORD_COLLIDER_OFFSET = 50.0
 @onready var running_sound: AudioStreamPlayer2D = $RunningSound
 @onready var sword_hit_sound: AudioStreamPlayer2D = $SwordHitSound
 
-@export var dash_force := 100.0
-@export var dash_duration := 0.15
-@export var dash_chance := 0.35
-@export var dash_cooldown := 2.0
-
-var dash_controller := DashBehavior.new(
-	dash_chance,
-	dash_force,
-	dash_duration,
-	dash_cooldown
-)
-
 func process_special_movement(delta):
 	if dash_controller.process(delta):
 		velocity = dash_controller.dash_velocity
@@ -37,7 +25,7 @@ func _ready():
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	$AttackRange.body_entered.connect(on_enter_attack_range)
 	$AttackRange.body_exited.connect(on_exit_attack_range)
-	gold_drop_amount_on_death = 10
+	config.gold_drop_amount_on_death = 10
 	super._ready()
 
 
@@ -77,7 +65,7 @@ func _on_frame_changed() -> void:
 	if state == State.ATTACKING and is_on_hit_frame():
 		for body in $SwordArea.get_overlapping_bodies():
 			if body is Player:
-				player.take_damage(damage_given)
+				player.take_damage(config.damage_given)
 		if not sword_hit_sound.playing:
 			sword_hit_sound.play()
 

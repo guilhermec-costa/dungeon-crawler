@@ -1,15 +1,30 @@
 [gd_scene format=3 uid="uid://ce5cyr56n8bf4"]
 
 [ext_resource type="Script" uid="uid://dgsxfimml0udg" path="res://scripts/game_menu.gd" id="1_qdaa4"]
+[ext_resource type="FontFile" uid="uid://ds220eswvxcyk" path="res://assets/fonts/Tiny RPG - Forbidden Denizens.ttf" id="2_vrsc2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qdaa4"]
+bg_color = Color(0.010772156, 0.13397032, 0.17762399, 1)
 
 [node name="GameMenu" type="CanvasLayer" unique_id=222706555]
 script = ExtResource("1_qdaa4")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=972927851]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.17819664, 0, 0.0779772, 0.5764706)
 
 [node name="PlayButton" type="Button" parent="." unique_id=1195150418]
 offset_left = 634.0
 offset_top = 372.0
 offset_right = 781.0
 offset_bottom = 427.0
+theme_override_fonts/font = ExtResource("2_vrsc2")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_qdaa4")
 text = "Start
 "
 
@@ -18,6 +33,8 @@ offset_left = 634.0
 offset_top = 448.0
 offset_right = 781.0
 offset_bottom = 503.0
+theme_override_fonts/font = ExtResource("2_vrsc2")
+theme_override_font_sizes/font_size = 32
 text = "Exit"
 
 [node name="GameName" type="Label" parent="." unique_id=1361357564]
@@ -30,6 +47,8 @@ offset_top = 66.0
 offset_right = 179.0
 offset_bottom = 168.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_vrsc2")
+theme_override_font_sizes/font_size = 66
 text = "Dungeon Crawler "
 horizontal_alignment = 1
 vertical_alignment = 1

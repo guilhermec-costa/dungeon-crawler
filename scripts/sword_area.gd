@@ -2,9 +2,7 @@ class_name SwordArea
 
 extends Area2D
 
-@export var base_damage: float = 5
-@export var critical_chance: float # %
-@export var critical_multiplier: float
+@export var config: WeaponData
 @onready var hit_sound: AudioStreamPlayer2D = $HitSound
 
 func _ready():
@@ -13,10 +11,10 @@ func _ready():
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is BaseEnemy:
-		var damage = base_damage
+		var damage = config.base_damage
 		var damage_type = DamageTypes.Type.NORMAL
-		if randf() * 100 < critical_chance:
-			damage *= critical_multiplier
+		if randf() < config.critical_chance:
+			damage *= config.critical_multiplier
 			damage_type = DamageTypes.Type.CRITICAL
 		
 		if not hit_sound.playing:

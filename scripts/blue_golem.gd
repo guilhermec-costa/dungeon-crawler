@@ -11,17 +11,6 @@ func _ready():
 	$AttackRange.body_exited.connect(on_exit_attack_range)
 	super._ready()
 
-@export var dash_force := 110.0
-@export var dash_duration := 0.2
-@export var dash_chance := 0.9
-@export var dash_cooldown := 2.0
-
-var dash_controller := DashBehavior.new(
-	dash_chance,
-	dash_force,
-	dash_duration,
-	dash_cooldown
-)
 
 func process_special_movement(delta):
 	if dash_controller.process(delta):
@@ -37,7 +26,7 @@ func _on_frame_changed() -> void:
 	if state == State.ATTACKING and $AnimatedSprite2D.frame == attack_hit_frame:
 		for body in $AreaDamageRange.get_overlapping_bodies():
 			if body is Player:
-				player.take_damage(damage_given)
+				player.take_damage(config.damage_given)
 		if not attack_sound.playing:
 			attack_sound.play()
 

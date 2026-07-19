@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://dafx4xnxn61at"]
+
+[ext_resource type="Script" uid="uid://cvjmp4oij48pd" path="res://scripts/data/enemy_data.gd" id="1_ha837"]
+
+[resource]
+script = ExtResource("1_ha837")
+walk_duration = 2.5
+idle_duration = 1.5
+speed = 28.0
+speed_on_random_walk = 18.0
+patrol_radius = 96.0
+max_health = 220.0
+resistence = 12.0
+damage_given = 30.0
+gold_drop_amount_on_death = 50.0
+metadata/_custom_type_script = "uid://cvjmp4oij48pd"

@@ -3,29 +3,23 @@ extends CharacterBody2D
 class_name BaseEnemy
 
 var gold_scene: PackedScene = preload("res://scenes/gold_drop.tscn")
+var damageTakenLabel: PackedScene = preload("res://scenes/damage_label.tscn")
 
-# Stats
-@export var walk_duration: float = 2.0
-@export var idle_duration: float = 1.5
-@export var speed: float = 45.0
-@export var speed_on_random_walk: float = 25.0
-@export var patrol_radius: float = 96.0
-@export var max_health: float
-@export var resistence: float
-@export var damage_given: float
-@export var gold_drop_amount_on_death: float = 10
-
+@export var config: EnemyData
+@export var player: Player
 
 @onready var health_bar: HealthBar = $HealthBar
 @onready var pathfinder: NavigationAgent2D = $NavigationAgent2D
 @onready var start_chase_area: Area2D = $StartChaseArea
 @onready var limit_chase_area: Area2D = $LimitChaseArea
 
-var health: float
-@export var player: Player
-var walk_direction := Vector2.ZERO
+var dash_controller: DashBehavior
 
+var health: float
+var walk_direction := Vector2.ZERO
 var spawn_origin: Vector2
+var state: State = State.IDLE
+var attack_hit_frame: int = 0
 
 enum State {
 	IDLE,
@@ -36,16 +30,10 @@ enum State {
 	RETURNING_SPAWN_ORIGIN
 }
 
-var state: State = State.IDLE
-
-# Preloads
-var damageTakenLabel: PackedScene = preload("res://scenes/damage_label.tscn")
-
-var attack_hit_frame: int = 0
 
 func create_patrol_circle():
 	var patrol_circle := DebugPatrolCircle.new()
-	patrol_circle.radius = patrol_radius
+	patrol_circle.radius = config.patrol_radius
 	patrol_circle.global_position = global_position
 	patrol_circle.top_level = true
 	add_child(patrol_circle)
@@ -53,13 +41,19 @@ func create_patrol_circle():
 func _ready():
 	add_to_group("enemies")
 	spawn_origin = global_position
+	dash_controller = DashBehavior.new(
+		config.dash_chance,
+		config.dash_force,
+		config.dash_duration,
+		config.dash_cooldown
+	)
 	
-	if DebugConfig.can_show_patrol_radius():
+	if OS.has_feature("patrol_radius"):
 		create_patrol_circle()
 	
-	health = max_health
-	health_bar.max_value = max_health
-	health_bar.set_health_bar_value(max_health)
+	health = config.max_health
+	health_bar.max_value = config.max_health
+	health_bar.set_health_bar_value(config.max_health)
 
 	$CollisionShape2D.disabled = false
 
@@ -67,7 +61,7 @@ func _ready():
 	limit_chase_area.body_exited.connect(_on_limit_chase_area_body_exited)
 
 	$WalkTimer.timeout.connect(_on_walk_timer_timeout)
-	$WalkTimer.wait_time = idle_duration
+	$WalkTimer.wait_time = config.idle_duration
 	$WalkTimer.start()
 
 
@@ -133,7 +127,7 @@ func _chase_player():
 
 	var next_pos = pathfinder.get_next_path_position()
 	var direction = global_position.direction_to(next_pos)
-	velocity = direction * speed
+	velocity = direction * config.speed
 
 
 func _physics_process(delta: float) -> void:
@@ -158,13 +152,13 @@ func _physics_process(delta: float) -> void:
 		
 		var next_pos = pathfinder.get_next_path_position()
 		var return_direction = global_position.direction_to(next_pos)
-		velocity = return_direction * speed_on_random_walk
+		velocity = return_direction * config.speed_on_random_walk
 		
 	elif state == State.PATROLLING:
-		if global_position.distance_to(spawn_origin) >= patrol_radius:
+		if global_position.distance_to(spawn_origin) >= config.patrol_radius:
 			walk_direction = (spawn_origin - global_position).normalized()
 
-		velocity = walk_direction * speed_on_random_walk
+		velocity = walk_direction * config.speed_on_random_walk
 	elif state == State.IDLE or state == State.ATTACKING:
 		velocity = Vector2.ZERO
 	
@@ -218,8 +212,8 @@ func show_damage_label(damage: float, type: DamageTypes.Type):
 	damage_label.show_damage_label(damage, 0.7)
 
 func take_damage(damage: float, type: DamageTypes.Type) -> void:
-	if resistence != 0:
-		damage = max(0, damage * resistence / 100)
+	if config.resistence != 0:
+		damage = max(0, damage * config.resistence / 100)
 
 	health -= damage
 	if health <= 0:
@@ -265,7 +259,7 @@ func _on_chase_area_body_entered(body: Node2D) -> void:
 func _on_limit_chase_area_body_exited(body: Node2D) -> void:
 	if body is Player:
 		state = State.RETURNING_SPAWN_ORIGIN
-		$WalkTimer.wait_time = idle_duration
+		$WalkTimer.wait_time = config.idle_duration
 		$WalkTimer.start()
 
 func _on_walk_timer_timeout():
@@ -274,19 +268,19 @@ func _on_walk_timer_timeout():
 	if state == State.IDLE:
 		state = State.PATROLLING
 		walk_direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
-		$WalkTimer.wait_time = walk_duration
+		$WalkTimer.wait_time = config.walk_duration
 		$WalkTimer.start()
 	elif state == State.PATROLLING:
 		state = State.IDLE
 		velocity = Vector2.ZERO
-		$WalkTimer.wait_time = idle_duration
+		$WalkTimer.wait_time = config.idle_duration
 		$WalkTimer.start()
 		
 func drop_gold():
 	var _gold_scene: GoldDrop = gold_scene.instantiate()
 	_gold_scene.global_position = global_position
 	_gold_scene.z_index = player.z_index - 1
-	_gold_scene.gold_amount = gold_drop_amount_on_death
+	_gold_scene.gold_amount = config.gold_drop_amount_on_death
 	get_parent().add_child(_gold_scene)
 	
 func is_on_hit_frame():

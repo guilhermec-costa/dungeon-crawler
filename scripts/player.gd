@@ -87,7 +87,7 @@ func die():
 	
 	
 func _ready():
-	$Camera2D.zoom = Vector2(6, 6)
+	$Camera2D.zoom = Vector2(8, 8)
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	$AnimatedSprite2D.animation_changed.connect(_on_animation_changed)
 	health = max_health
@@ -113,7 +113,7 @@ func _input(event: InputEvent) -> void:
 				MOUSE_BUTTON_WHEEL_UP:
 					if camera_control_enabled:
 						var new_zoom = $Camera2D.zoom + Vector2(0.1, 0.1)
-						if new_zoom <= Vector2(6, 6): 
+						if new_zoom <= Vector2(8, 8): 
 							$Camera2D.zoom = new_zoom
 				MOUSE_BUTTON_WHEEL_DOWN:
 					if camera_control_enabled:
@@ -184,7 +184,8 @@ func _process(delta: float) -> void:
 	if is_dead:
 		return
 	
-	if state == State.ROLLING and $RunningSound.playing:
+	if (state == State.ROLLING or state == State.ATTACKING) \
+		and $RunningSound.playing:
 		$RunningSound.stop()
 	
 	if is_sprinting:
