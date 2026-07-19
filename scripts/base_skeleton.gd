@@ -74,7 +74,7 @@ func _process(_delta: float) -> void:
 	super._process(_delta)
 	
 func _on_frame_changed() -> void:
-	if state == State.ATTACKING and $AnimatedSprite2D.frame == attack_hit_frame:
+	if state == State.ATTACKING and is_on_hit_frame():
 		for body in $SwordArea.get_overlapping_bodies():
 			if body is Player:
 				player.take_damage(damage_given)
@@ -104,9 +104,6 @@ func on_exit_attack_range(body: Node2D) -> void:
 			state = State.CHASING
 		
 		$SwordArea/CollisionShape2D.call_deferred("set_disabled", true)
-
-# --- Death ---
-
 	
 func die() -> void:
 	sword_hit_sound.stop()

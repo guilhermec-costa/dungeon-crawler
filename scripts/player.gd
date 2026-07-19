@@ -15,12 +15,15 @@ signal update_stamina
 @onready var sword_area: SwordArea = $SwordArea
 @export var current_gold: float = 0.0
 
+
 var damageTakenLabel: PackedScene = preload("res://scenes/damage_label.tscn")
 
 var stamina_cost := {
 	"roll": 30.0,
 	"main_attack": 20.0,
 }
+
+var inventory := Inventory.new(4)
 
 @export var sprint_stamina_cost_per_second: float = 15.0
 @export var stamina_recovery_rate: float = 22.0
@@ -98,9 +101,10 @@ func start(initial_pos: Vector2):
 
 var camera_control_enabled: bool = true
 
-func increment_gold(gold: float):
-	current_gold += gold
-	print("current gold: ", gold)
+func collect_gold(goldData: ItemData, amount: float):
+	current_gold += amount
+	inventory.add_item(goldData, amount)
+	
 	
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

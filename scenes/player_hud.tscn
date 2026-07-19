@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://cywaovqr01vo6"]
 
-[ext_resource type="Texture2D" uid="uid://2ca3i5k8xbt5" path="res://assets/healthbar/Health Bar Asset Pack 2 by Adwit Rahman/greenbar (3).png" id="1_iraov"]
-[ext_resource type="Texture2D" uid="uid://d1nnu2q6r321a" path="res://assets/healthbar/Health Bar Asset Pack 2 by Adwit Rahman/greenbar (2).png" id="1_mlvnn"]
+[ext_resource type="Texture2D" uid="uid://2ca3i5k8xbt5" path="res://assets/healthbar/empty_lifegreenbar.png" id="1_iraov"]
+[ext_resource type="Texture2D" uid="uid://d1nnu2q6r321a" path="res://assets/healthbar/life_greenbar.png" id="1_mlvnn"]
 [ext_resource type="Script" uid="uid://c7qrcvq2y7q5k" path="res://scenes/player_hud.gd" id="1_s25gh"]
-[ext_resource type="Texture2D" uid="uid://u3vbu0fcm3nw" path="res://assets/healthbar/Health Bar Asset Pack 2 by Adwit Rahman/redblue (3).png" id="2_lqhkl"]
-[ext_resource type="Texture2D" uid="uid://8rcby5b6kbga" path="res://assets/healthbar/Health Bar Asset Pack 2 by Adwit Rahman/redblue (2).png" id="2_ujnyd"]
+[ext_resource type="Texture2D" uid="uid://u3vbu0fcm3nw" path="res://assets/healthbar/life_mana_empty.png" id="2_lqhkl"]
+[ext_resource type="Texture2D" uid="uid://8rcby5b6kbga" path="res://assets/healthbar/life_mana_full.png" id="2_ujnyd"]
 [ext_resource type="Texture2D" uid="uid://c7ojgbqebv5ch" path="res://assets/frames/100.png" id="3_er5qu"]
-[ext_resource type="Texture2D" uid="uid://cajfbmmabevb2" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_Idle.png" id="4_or0tx"]
-[ext_resource type="Texture2D" uid="uid://bu0mmawr1cg4k" path="res://assets/inventory.png" id="8_lqhkl"]
+[ext_resource type="Texture2D" uid="uid://cajfbmmabevb2" path="res://assets/knight/_Idle.png" id="4_or0tx"]
+[ext_resource type="Script" uid="uid://otbv8uel765x" path="res://scenes/hotbar.gd" id="8_8y7rk"]
+[ext_resource type="PackedScene" uid="uid://h5l18ovjacls" path="res://scenes/inventory_slot_ui.tscn" id="9_8y7rk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s25gh"]
 atlas = ExtResource("2_lqhkl")
@@ -32,15 +33,11 @@ region = Rect2(8.193176, 27.132683, 117.47502, 28.41454)
 atlas = ExtResource("4_or0tx")
 region = Rect2(48.27725, 41.257057, 15.421726, 12.250191)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lqhkl"]
-atlas = ExtResource("8_lqhkl")
-region = Rect2(401.01202, 2.9084415, 18.029266, 18.092304)
-
 [node name="HUD" type="CanvasLayer" unique_id=379781472]
 layer = 2
 script = ExtResource("1_s25gh")
 
-[node name="Control" type="Control" parent="." unique_id=1004076797]
+[node name="Stats" type="Control" parent="." unique_id=1004076797]
 modulate = Color(0.7079665, 0.7079665, 0.7079664, 1)
 layout_mode = 3
 anchors_preset = 0
@@ -50,7 +47,7 @@ offset_right = 470.4852
 offset_bottom = 121.67456
 scale = Vector2(0.845, 0.845)
 
-[node name="StaminaBar" type="TextureProgressBar" parent="Control" unique_id=259797205]
+[node name="StaminaBar" type="TextureProgressBar" parent="Stats" unique_id=259797205]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 2
@@ -67,7 +64,7 @@ texture_under = SubResource("AtlasTexture_s25gh")
 texture_progress = SubResource("AtlasTexture_7bkgt")
 tint_progress = Color(0.69041634, 0.7934268, 1, 1)
 
-[node name="HealthBar" type="TextureProgressBar" parent="Control" unique_id=759953530]
+[node name="HealthBar" type="TextureProgressBar" parent="Stats" unique_id=759953530]
 texture_filter = 1
 layout_mode = 0
 offset_left = 47.0
@@ -80,7 +77,7 @@ texture_over = SubResource("AtlasTexture_iraov")
 texture_progress = SubResource("AtlasTexture_otbg0")
 tint_progress = Color(1, 0.09094118, 0.05946324, 1)
 
-[node name="PortraitWidget" type="Control" parent="Control" unique_id=466449333]
+[node name="PortraitWidget" type="Control" parent="Stats" unique_id=466449333]
 clip_contents = true
 layout_mode = 1
 anchors_preset = 0
@@ -90,9 +87,8 @@ offset_right = 49.70416
 offset_bottom = 71.00592
 scale = Vector2(1.175, 1.175)
 
-[node name="PortraitContainer" type="Control" parent="Control/PortraitWidget" unique_id=425850523]
+[node name="PortraitContainer" type="Control" parent="Stats/PortraitWidget" unique_id=425850523]
 texture_filter = 1
-clip_contents = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -107,14 +103,15 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.835, 0.835)
 
-[node name="ColorRect" type="ColorRect" parent="Control/PortraitWidget/PortraitContainer" unique_id=1259266702]
+[node name="ColorRect" type="ColorRect" parent="Stats/PortraitWidget/PortraitContainer" unique_id=1259266702]
+visible = false
 layout_mode = 0
 offset_left = -2.4123955
-offset_right = 80.81532
+offset_right = 75.99054
 offset_bottom = 75.99054
 color = Color(0, 0, 0, 1)
 
-[node name="Portrait" type="TextureRect" parent="Control/PortraitWidget/PortraitContainer" unique_id=1749889812]
+[node name="Portrait" type="TextureRect" parent="Stats/PortraitWidget/PortraitContainer" unique_id=1749889812]
 modulate = Color(0.737193, 0.7371929, 0.7371929, 1)
 texture_filter = 1
 layout_mode = 1
@@ -132,67 +129,38 @@ grow_vertical = 2
 scale = Vector2(1.2, 1.2)
 texture = SubResource("AtlasTexture_er5qu")
 
-[node name="PortraitFrame" type="TextureRect" parent="Control/PortraitWidget" unique_id=1084100503]
-modulate = Color(0.54584616, 0.42222664, 1, 1)
-texture_filter = 1
-clip_contents = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.295868
-offset_top = -52.071007
-offset_right = 49.704132
-offset_bottom = 47.92899
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1.01, 1.01)
+[node name="Frame" type="TextureRect" parent="Stats/PortraitWidget/PortraitContainer" unique_id=1045125051]
+layout_mode = 0
+offset_left = -13.268186
+offset_top = -6.030997
+offset_right = 86.73181
+offset_bottom = 93.969
 texture = ExtResource("3_er5qu")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1173520020]
+[node name="Hotbar" type="HBoxContainer" parent="." unique_id=1173520020]
+texture_filter = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -293.0
-offset_top = -81.0
-offset_right = -25.0
-offset_bottom = -17.0
+offset_left = -378.0
+offset_top = -111.0
+offset_right = -92.0
+offset_bottom = -47.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/separation = 10
+script = ExtResource("8_8y7rk")
 
-[node name="Slot1" type="TextureRect" parent="HBoxContainer" unique_id=2116552432]
-texture_filter = 1
-custom_minimum_size = Vector2(64, 64)
+[node name="InventorySlotUI" parent="Hotbar" unique_id=1468157929 groups=["inventory_slot"] instance=ExtResource("9_8y7rk")]
 layout_mode = 2
-size_flags_horizontal = 4
-texture = SubResource("AtlasTexture_lqhkl")
-stretch_mode = 4
 
-[node name="Slot2" type="TextureRect" parent="HBoxContainer" unique_id=1432887309]
-texture_filter = 1
-custom_minimum_size = Vector2(64, 64)
+[node name="InventorySlotUI2" parent="Hotbar" unique_id=1255601383 groups=["inventory_slot"] instance=ExtResource("9_8y7rk")]
 layout_mode = 2
-size_flags_horizontal = 4
-texture = SubResource("AtlasTexture_lqhkl")
-stretch_mode = 4
 
-[node name="Slot3" type="TextureRect" parent="HBoxContainer" unique_id=271655462]
-texture_filter = 1
-custom_minimum_size = Vector2(64, 64)
+[node name="InventorySlotUI3" parent="Hotbar" unique_id=1765751250 groups=["inventory_slot"] instance=ExtResource("9_8y7rk")]
 layout_mode = 2
-size_flags_horizontal = 4
-texture = SubResource("AtlasTexture_lqhkl")
-stretch_mode = 4
 
-[node name="Slot4" type="TextureRect" parent="HBoxContainer" unique_id=1605172910]
-texture_filter = 1
-custom_minimum_size = Vector2(64, 64)
+[node name="InventorySlotUI4" parent="Hotbar" unique_id=126298247 groups=["inventory_slot"] instance=ExtResource("9_8y7rk")]
 layout_mode = 2
-size_flags_horizontal = 4
-texture = SubResource("AtlasTexture_lqhkl")
-stretch_mode = 4

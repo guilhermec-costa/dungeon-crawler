@@ -170,8 +170,7 @@ func _physics_process(delta: float) -> void:
 	
 	process_special_movement(delta)
 	
-	var colliding = move_and_slide()
-	print("is colliding", colliding)
+	move_and_slide()
 
 func process_special_movement(delta: float) -> void:
 	pass

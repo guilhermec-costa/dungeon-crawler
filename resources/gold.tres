@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bbp3l72why12s"]
+
+[ext_resource type="Texture2D" uid="uid://bpfrl8e3nx36w" path="res://assets/collectables.png" id="1_b1u1o"]
+[ext_resource type="Script" uid="uid://ca28ye276k74g" path="res://scripts/core/item_data.gd" id="1_kmk1b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drpsh"]
+atlas = ExtResource("1_b1u1o")
+region = Rect2(101.40318, 137.66368, 20.601997, 15.983093)
+
+[resource]
+script = ExtResource("1_kmk1b")
+id = "1"
+display_name = "Gold"
+icon = SubResource("AtlasTexture_drpsh")
+description = "Gold that can be collected from dead corpses"
+metadata/_custom_type_script = "uid://ca28ye276k74g"

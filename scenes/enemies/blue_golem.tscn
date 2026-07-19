@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://bn2i4magehkux"]
 
-[ext_resource type="Texture2D" uid="uid://c5eigfssyu0s7" path="res://assets/enemies/golems/Golem_1/Blue/White_Swoosh_VFX/Golem_1_idle.png" id="1_ht6r5"]
+[ext_resource type="Texture2D" uid="uid://c5eigfssyu0s7" path="res://assets/enemies/golems/blue/Golem_1_idle.png" id="1_ht6r5"]
 [ext_resource type="Script" uid="uid://dwfaq3tbvp33m" path="res://scripts/blue_golem.gd" id="1_ubhja"]
-[ext_resource type="Texture2D" uid="uid://dqxgu3nwvjg7q" path="res://assets/enemies/golems/Golem_1/Blue/White_Swoosh_VFX/Golem_1_attack.png" id="2_bx7dv"]
-[ext_resource type="Texture2D" uid="uid://bsijfwmoxp8nk" path="res://assets/enemies/golems/Golem_1/Blue/White_Swoosh_VFX/Golem_1_walk.png" id="3_1svqj"]
-[ext_resource type="Texture2D" uid="uid://didcdwd16o0a1" path="res://assets/knight/light.png" id="3_gqa84"]
-[ext_resource type="Texture2D" uid="uid://3mtevsp1n5oe" path="res://assets/enemies/golems/Golem_1/Blue/White_Swoosh_VFX/Golem_1_die.png" id="3_hboqw"]
-[ext_resource type="Texture2D" uid="uid://dbsv504orixjb" path="res://assets/enemies/golems/Golem_1/Blue/White_Swoosh_VFX/Golem_1_hurt.png" id="4_cl8wn"]
+[ext_resource type="Texture2D" uid="uid://dqxgu3nwvjg7q" path="res://assets/enemies/golems/blue/Golem_1_attack.png" id="2_bx7dv"]
+[ext_resource type="Texture2D" uid="uid://bsijfwmoxp8nk" path="res://assets/enemies/golems/blue/Golem_1_walk.png" id="3_1svqj"]
+[ext_resource type="Texture2D" uid="uid://didcdwd16o0a1" path="res://assets/light.png" id="3_gqa84"]
+[ext_resource type="Texture2D" uid="uid://3mtevsp1n5oe" path="res://assets/enemies/golems/blue/Golem_1_die.png" id="3_hboqw"]
+[ext_resource type="Texture2D" uid="uid://dbsv504orixjb" path="res://assets/enemies/golems/blue/Golem_1_hurt.png" id="4_cl8wn"]
 [ext_resource type="PackedScene" uid="uid://dkmmjac80p3pr" path="res://scenes/health_bar.tscn" id="6_pcy3n"]
 [ext_resource type="AudioStream" uid="uid://bcma22lekkmtx" path="res://assets/audio/golem_impact_sound.mp3" id="9_c3aco"]
 

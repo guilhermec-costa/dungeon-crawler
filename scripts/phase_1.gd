@@ -12,7 +12,6 @@ var minimap = preload("res://scenes/minimap.tscn")
 @onready var player: Player = entities.get_node("Player")
 
 func _ready() -> void:
-	player_hud.player = player
 	player_hud.update_max_health()
 	player_hud.update_health()
 	player_hud.update_max_stamina()

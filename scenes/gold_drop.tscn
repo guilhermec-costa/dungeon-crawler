@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cy4bunkjvm7e3" path="res://scripts/gold_drop.gd" id="1_kko0w"]
 [ext_resource type="Texture2D" uid="uid://bpfrl8e3nx36w" path="res://assets/collectables.png" id="1_nhnmi"]
+[ext_resource type="Resource" uid="uid://bbp3l72why12s" path="res://resources/gold.tres" id="2_eo0rs"]
 [ext_resource type="AudioStream" uid="uid://d7h6ho7e2ntu" path="res://assets/audio/coin_collect.mp3" id="3_bvaa0"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kko0w"]
@@ -13,6 +14,7 @@ radius = 9.0
 [node name="GoldDrop" type="Node2D" unique_id=362545682]
 texture_filter = 1
 script = ExtResource("1_kko0w")
+item = ExtResource("2_eo0rs")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1550990129]
 texture_filter = 1
