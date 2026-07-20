@@ -6,7 +6,7 @@ signal player_dead
 signal damage_taken
 signal update_stamina
 
-@export var roll_speed_multiplier: float = 1.2
+@export var roll_speed_multiplier: float = 1.6
 @export var sprinting_multiplier: float = 1.5
 @export var max_health: float
 @export var max_stamina: float
@@ -54,26 +54,26 @@ var is_dead: bool = false
 var is_sprinting: bool = false
 
 
-const SWORD_COLLIDER_OFFSET = 50
+const SWORD_COLLIDER_OFFSET = 35
 const RAYCAST_OFFSET = 20
 const PLAYER_ATTACK_OFFSET = 20
 const PLAYER_COLLIDER_X = 0
 
 enum State {
 	IDLE,
+	WALKING,
 	RUNNING,
 	ATTACKING,
-	ROLLING
+	ROLLING,
 }
 
 var state := State.	IDLE
-
 
 func _draw():
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.2, 0.6))
 	var shadow_color = Color.BLACK
 	shadow_color.a = 0.15
-	draw_circle(Vector2.DOWN * 65, 10, shadow_color)
+	draw_circle(Vector2.DOWN * 28, 10, shadow_color)
 	
 func die():
 	is_dead = true
@@ -143,8 +143,10 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("sprint"):
 		if not is_sprinting:
 			is_sprinting = true
+			state = State.RUNNING
 	elif Input.is_action_just_released("sprint"):
 			is_sprinting = false
+			state = State.IDLE
 		
 		
 	match state:
@@ -204,7 +206,10 @@ func _process(delta: float) -> void:
 				state = State.IDLE
 				$RunningSound.stop()
 			else:
-				state = State.RUNNING
+				if is_sprinting:
+					state = State.RUNNING
+				else:
+					state = State.WALKING
 				if not $RunningSound.playing:
 					$RunningSound.play()
 	
@@ -220,12 +225,10 @@ func update_flip(direction: Vector2) -> void:
 	if direction.x > 0:
 		if is_facing_left():
 			$SwordArea/CollisionShape2D.position.x += SWORD_COLLIDER_OFFSET
-			$AnimatedSprite2D.offset.x += 8
 		$AnimatedSprite2D.flip_h = false
 	elif direction.x < 0:
 		if is_facing_right():
 			$SwordArea/CollisionShape2D.position.x -= SWORD_COLLIDER_OFFSET
-			$AnimatedSprite2D.offset.x -= 8
 		$AnimatedSprite2D.flip_h = true
 			
 func update_animation(new_animation: String) -> void:
@@ -238,6 +241,8 @@ func get_animation_from_state() -> String:
 			return "idle"
 		State.ATTACKING:
 			return "attack"
+		State.WALKING:
+			return "walk"
 		State.RUNNING:
 			return "run"
 		State.ROLLING:

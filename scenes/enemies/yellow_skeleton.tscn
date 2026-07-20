@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://ctoiqnxh5b08a"]
 
 [ext_resource type="PackedScene" uid="uid://chvckeejavhx4" path="res://scenes/enemies/base_skeleton.tscn" id="1_ebvni"]
+[ext_resource type="Resource" uid="uid://dju484mw0d2h7" path="res://resources/yellow_skeleton.tres" id="2_36kdy"]
 [ext_resource type="Texture2D" uid="uid://dgqvys7paof13" path="res://assets/enemies/skeletons/Skeleton_01_Yellow_Attack1.png" id="2_i31dk"]
 [ext_resource type="Texture2D" uid="uid://bkmvohigufpu4" path="res://assets/enemies/skeletons/Skeleton_01_Yellow_Die.png" id="3_i31dk"]
 [ext_resource type="Texture2D" uid="uid://be4p0u80lhp55" path="res://assets/enemies/skeletons/Skeleton_01_Yellow_Idle.png" id="4_i31dk"]
@@ -368,13 +369,12 @@ data = PackedByteArray("//vUZAAABoNyMQUV4ABZC/bcoAwAGbIdL/j2gALiw6Y/DtAA+hCSTugc
 up_direction = Vector2(1, 0)
 wall_min_slide_angle = 1.5707964
 safe_margin = 0.08
-speed = 45.0
-max_health = 200.0
-damage_given = 25.0
+config = ExtResource("2_36kdy")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=599365077]
 sprite_frames = SubResource("SpriteFrames_rgwuv")
-frame = 9
+animation = &"take_damage"
+frame = 4
 frame_progress = 1.0
 
 [node name="NavigationAgent2D" parent="." index="6" unique_id=294389010]

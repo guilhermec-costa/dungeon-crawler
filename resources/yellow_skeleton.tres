@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://dju484mw0d2h7"]
+
+[ext_resource type="Script" uid="uid://cvjmp4oij48pd" path="res://scripts/data/enemy_data.gd" id="1_f48k1"]
+
+[resource]
+script = ExtResource("1_f48k1")
+walk_duration = 2.5
+idle_duration = 1.5
+speed = 55.0
+speed_on_random_walk = 30.0
+patrol_radius = 120.0
+max_health = 80.0
+resistence = 0.2
+damage_given = 16.0
+gold_drop_amount_on_death = 18.0
+dash_force = 140.0
+dash_duration = 0.12
+dash_chance = 0.6
+dash_cooldown = 2.0
+metadata/_custom_type_script = "uid://cvjmp4oij48pd"

@@ -27,9 +27,15 @@ enum State {
 	CHASING,
 	PATROLLING,
 	DEAD,
-	RETURNING_SPAWN_ORIGIN
+	RETURNING_SPAWN_ORIGIN,
+	TAKING_DAMAGE
 }
 
+func change_state(new_state: State) -> void:
+	if state == State.DEAD:
+		return
+	
+	state = new_state
 
 func create_patrol_circle():
 	var patrol_circle := DebugPatrolCircle.new()
@@ -120,8 +126,6 @@ func update_flip_based_on_velocity():
 
 func _chase_player():
 	var target = player.global_position
-	target.y += 16
-	target.x += 20 if is_facing_left() else -20
 
 	pathfinder.target_position = target
 
@@ -133,21 +137,22 @@ func _chase_player():
 func _physics_process(delta: float) -> void:
 	if state == State.DEAD:
 		return
-
+	
+	print(State.keys()[state])
 	if state == State.CHASING or state == State.ATTACKING:
 		update_flip_based_on_player_position()
 	elif state == State.PATROLLING:
 		update_flip_based_on_velocity()
 
 	if global_position.distance_to(spawn_origin) < 8 and state == State.RETURNING_SPAWN_ORIGIN:
-		state = State.PATROLLING
+		change_state(State.PATROLLING)
 		
 	if player and state == State.CHASING:
 		_chase_player()
 	elif state == State.RETURNING_SPAWN_ORIGIN:
 		pathfinder.target_position = spawn_origin
 		if pathfinder.is_navigation_finished():
-			state = State.PATROLLING
+			change_state(State.PATROLLING)
 			return
 		
 		var next_pos = pathfinder.get_next_path_position()
@@ -172,16 +177,21 @@ func process_special_movement(delta: float) -> void:
 # --- Animation ---
 
 func _process(_delta: float) -> void:
+	if state == State.DEAD:
+		return
+		
 	update_animation(get_animation_from_state())
 
 func get_animation_from_state() -> String:
 	match state:
 		State.IDLE:
 			return "idle"
-		[State.CHASING, State.PATROLLING]:
+		State.CHASING, State.PATROLLING:
 			return "walk"
 		State.ATTACKING:
 			return "attack"
+		State.TAKING_DAMAGE:
+			return "take_damage"
 		_:
 			return "walk"
 
@@ -212,8 +222,10 @@ func show_damage_label(damage: float, type: DamageTypes.Type):
 	damage_label.show_damage_label(damage, 0.7)
 
 func take_damage(damage: float, type: DamageTypes.Type) -> void:
+	var previous_state = state
+	change_state(State.TAKING_DAMAGE)
 	if config.resistence != 0:
-		damage = max(0, damage * config.resistence / 100)
+		damage = max(0.0, damage * (1.0 - config.resistence))
 
 	health -= damage
 	if health <= 0:
@@ -222,14 +234,15 @@ func take_damage(damage: float, type: DamageTypes.Type) -> void:
 
 	$HealthBar.set_health_bar_value(health)
 	show_damage_label(damage, type)
-
+	
 	$AnimatedSprite2D.play("take_damage")
 	await $AnimatedSprite2D.animation_finished
+	state = previous_state
 	update_animation(get_animation_from_state())
 	
 func die():
 	$HealthBar.hide_health_ui()
-	state = State.DEAD
+	change_state(State.DEAD)
 	if $DieSound:
 		AudioManager.play_sfx($DieSound.stream)
 		
@@ -253,12 +266,12 @@ func on_exit_attack_range(body: Node2D) -> void:
 
 func _on_chase_area_body_entered(body: Node2D) -> void:
 	if body is Player:
-		state = State.CHASING
+		change_state(State.CHASING)
 		$WalkTimer.stop()
 
 func _on_limit_chase_area_body_exited(body: Node2D) -> void:
 	if body is Player:
-		state = State.RETURNING_SPAWN_ORIGIN
+		change_state(State.RETURNING_SPAWN_ORIGIN)
 		$WalkTimer.wait_time = config.idle_duration
 		$WalkTimer.start()
 
@@ -266,12 +279,12 @@ func _on_walk_timer_timeout():
 	if state == State.ATTACKING:
 		return
 	if state == State.IDLE:
-		state = State.PATROLLING
+		change_state(State.PATROLLING)
 		walk_direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
 		$WalkTimer.wait_time = config.walk_duration
 		$WalkTimer.start()
 	elif state == State.PATROLLING:
-		state = State.IDLE
+		change_state(State.IDLE)
 		velocity = Vector2.ZERO
 		$WalkTimer.wait_time = config.idle_duration
 		$WalkTimer.start()

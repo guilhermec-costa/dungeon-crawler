@@ -14,6 +14,7 @@ func process_special_movement(delta):
 
 	if state == State.ATTACKING \
 	and dash_controller.can_dash() \
+	and not $AttackRange.overlaps_body(player) \
 	and is_on_hit_frame():
 		dash_controller.try_dash(global_position,player.global_position)
 
@@ -74,6 +75,7 @@ func on_enter_attack_range(body: Node2D) -> void:
 		return
 		
 	if body is Player:
+		
 		state = State.ATTACKING
 		$SwordArea/CollisionShape2D.call_deferred("set_disabled", false)
 		$WalkTimer.stop()

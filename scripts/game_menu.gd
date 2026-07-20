@@ -7,6 +7,7 @@ class_name GameMenu
 @onready var exit_button: Button = $PlayButton
 
 signal start_game
+signal quit_game
 
 var font: Font = preload("res://assets/fonts/Tiny RPG - Necro Romance.ttf")
 
@@ -34,3 +35,6 @@ func _process(delta: float) -> void:
 
 func _on_play_button_pressed() -> void:
 	start_game.emit()
+
+func _on_quit_button_pressed() -> void:
+	quit_game.emit()

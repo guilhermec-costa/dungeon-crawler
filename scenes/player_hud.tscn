@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://u3vbu0fcm3nw" path="res://assets/healthbar/life_mana_empty.png" id="2_lqhkl"]
 [ext_resource type="Texture2D" uid="uid://8rcby5b6kbga" path="res://assets/healthbar/life_mana_full.png" id="2_ujnyd"]
 [ext_resource type="Texture2D" uid="uid://c7ojgbqebv5ch" path="res://assets/frames/100.png" id="3_er5qu"]
-[ext_resource type="Texture2D" uid="uid://cajfbmmabevb2" path="res://assets/knight/_Idle.png" id="4_or0tx"]
+[ext_resource type="Texture2D" uid="uid://dhkp3qj0u671h" path="res://assets/loreon_knight/sword_1/ready_1.png" id="6_8y7rk"]
 [ext_resource type="Script" uid="uid://otbv8uel765x" path="res://scenes/hotbar.gd" id="8_8y7rk"]
 [ext_resource type="PackedScene" uid="uid://h5l18ovjacls" path="res://scenes/inventory_slot_ui.tscn" id="9_8y7rk"]
 
@@ -30,8 +30,8 @@ atlas = ExtResource("1_mlvnn")
 region = Rect2(8.193176, 27.132683, 117.47502, 28.41454)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_er5qu"]
-atlas = ExtResource("4_or0tx")
-region = Rect2(48.27725, 41.257057, 15.421726, 12.250191)
+atlas = ExtResource("6_8y7rk")
+region = Rect2(19.127127, 10.537494, 11.365368, 13.119756)
 
 [node name="HUD" type="CanvasLayer" unique_id=379781472]
 layer = 2

@@ -15,7 +15,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.17819664, 0, 0.0779772, 0.5764706)
+color = Color(0, 0, 0, 0.5764706)
 
 [node name="PlayButton" type="Button" parent="." unique_id=1195150418]
 offset_left = 634.0
@@ -54,3 +54,4 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_quit_button_pressed"]

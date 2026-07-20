@@ -18,7 +18,6 @@ func _ready():
 	pause_menu.hide()
 	
 func _on_resume_button_pressed():
-	print("here")
 	pause_menu.hide()
 	current_phase.get_tree().paused = false
 	
@@ -47,3 +46,6 @@ func start_game():
 func _on_game_menu_start_game() -> void:
 	game_menu.hide()
 	start_game()
+
+func _on_game_quit() -> void:
+	get_tree().quit()

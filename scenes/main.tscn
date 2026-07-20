@@ -11,4 +11,5 @@ script = ExtResource("1_0wfyh")
 
 [node name="PauseMenu" parent="." unique_id=2129762255 instance=ExtResource("3_sugp2")]
 
+[connection signal="quit_game" from="GameMenu" to="." method="_on_game_quit"]
 [connection signal="start_game" from="GameMenu" to="." method="_on_game_menu_start_game"]
