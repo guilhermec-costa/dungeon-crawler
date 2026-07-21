@@ -138,7 +138,6 @@ func _physics_process(delta: float) -> void:
 	if state == State.DEAD:
 		return
 	
-	print(State.keys()[state])
 	if state == State.CHASING or state == State.ATTACKING:
 		update_flip_based_on_player_position()
 	elif state == State.PATROLLING:

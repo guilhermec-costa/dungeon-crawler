@@ -206,6 +206,7 @@ visibility_layer = 6
 position = Vector2(538, 344)
 scale = Vector2(0.95, 0.95)
 collision_layer = 2
+collision_mask = 65
 script = ExtResource("1_g2els")
 max_health = 100.0
 max_stamina = 100.0

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c5v0btmpvrcub"]
+
+[ext_resource type="Texture2D" uid="uid://0w6piph61qeh" path="res://assets/keys/cursed_key.png" id="1_lorvi"]
+[ext_resource type="Script" uid="uid://ca28ye276k74g" path="res://scripts/data/item_data.gd" id="1_xpyog"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xpyog"]
+atlas = ExtResource("1_lorvi")
+region = Rect2(0.9183922, 13.550793, 16.53981, 33.297245)
+
+[resource]
+script = ExtResource("1_xpyog")
+id = "2"
+display_name = "Corrupted Key"
+icon = SubResource("AtlasTexture_xpyog")
+description = "The final key..."
+metadata/_custom_type_script = "uid://ca28ye276k74g"

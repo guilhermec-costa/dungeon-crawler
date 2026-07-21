@@ -86,6 +86,7 @@ pause_game={
 2d_physics/layer_4="water"
 2d_physics/layer_5="decoration"
 2d_physics/layer_6="floor"
+2d_physics/layer_7="interactables"
 
 [physics]
 

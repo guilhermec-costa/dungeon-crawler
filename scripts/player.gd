@@ -6,36 +6,36 @@ signal player_dead
 signal damage_taken
 signal update_stamina
 
+@onready var raycast: RayCast2D = $CollisionRay
+@onready var sword_area: SwordArea = $SwordArea
 @export var roll_speed_multiplier: float = 1.6
 @export var sprinting_multiplier: float = 1.5
 @export var max_health: float
 @export var max_stamina: float
 @export var dodge_chance: float = 5.0
-@onready var raycast: RayCast2D = $CollisionRay
-@onready var sword_area: SwordArea = $SwordArea
 @export var current_gold: float = 0.0
+@export var sprint_stamina_cost_per_second: float = 15.0
+@export var stamina_recovery_rate: float = 22.0
+@export var stamina_recovery_delay: float = 0.75
+@export var speed: float = 25:
+	get: 
+		var can_sprint = stamina > 0
+		return speed * sprinting_multiplier \
+			if (can_sprint and is_sprinting) else speed
 
 
 var damageTakenLabel: PackedScene = preload("res://scenes/damage_label.tscn")
-
+var is_dead: bool = false
+var is_sprinting: bool = false
 var stamina_cost := {
 	"roll": 30.0,
 	"main_attack": 20.0,
 }
-
 var inventory := Inventory.new(4)
-
-@export var sprint_stamina_cost_per_second: float = 15.0
-@export var stamina_recovery_rate: float = 22.0
-@export var stamina_recovery_delay: float = 0.75
+var stamina_controller := StaminaController.new()
+var current_interactable: Interactable
 var stamina_recovery_timer := 0.0
-
-func consume_stamina(amount: float):
-	stamina -= amount
-	stamina_recovery_timer = stamina_recovery_delay
-
 var health: float
-
 var stamina: float = 0.0:
 	get:
 		return stamina
@@ -44,15 +44,9 @@ var stamina: float = 0.0:
 		update_stamina.emit()
 
 
-@export var speed: float = 25:
-	get: 
-		var can_sprint = stamina > 0
-		return speed * sprinting_multiplier \
-			if (can_sprint and is_sprinting) else speed
-
-var is_dead: bool = false
-var is_sprinting: bool = false
-
+func consume_stamina(amount: float):
+	stamina -= amount
+	stamina_recovery_timer = stamina_recovery_delay
 
 const SWORD_COLLIDER_OFFSET = 35
 const RAYCAST_OFFSET = 20
@@ -121,6 +115,10 @@ func _input(event: InputEvent) -> void:
 						if new_zoom >= Vector2(0.5, 0.5):	
 							$Camera2D.zoom = new_zoom
 				MOUSE_BUTTON_LEFT:
+					if current_interactable:
+						current_interactable.interact(self)
+						return
+						
 					if not state == State.ATTACKING:
 						if stamina > stamina_cost["main_attack"]:
 							_attack()
@@ -324,3 +322,11 @@ func show_damage_label(damage: float):
 	damage_label.add_theme_constant_override("outline_size", 4)
 	damage_label.add_theme_color_override("font_outline_color", Color.BLACK)
 	damage_label.show_damage_label(damage, 0.7)
+
+func enter_interectable(interactable: Interactable):
+	print("enter interactable")
+	current_interactable = interactable
+
+func exit_interactable(interactable: Interactable):
+	if current_interactable == interactable:
+		current_interactable = null

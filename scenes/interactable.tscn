@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cnpwq472iiou0"]
+
+[ext_resource type="Script" uid="uid://1n8y63dfa32p" path="res://scripts/interactable.gd" id="1_56v82"]
+
+[node name="Interactable" type="Area2D" unique_id=1954145144]
+collision_mask = 2
+script = ExtResource("1_56v82")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=316515945]

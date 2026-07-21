@@ -12,7 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://cypiubbgwu7oj" path="res://scenes/torch.tscn" id="10_wawk4"]
 [ext_resource type="Texture2D" uid="uid://cn8msjajm2x1b" path="res://assets/map/0x72_DungeonTilesetII_v1.7/atlas_walls_high-16x32.png" id="11_ijf1m"]
 [ext_resource type="Texture2D" uid="uid://dwobia8v1e2dx" path="res://assets/map/0x72_DungeonTilesetII_v1.7/atlas_walls_low-16x16.png" id="12_3dyyi"]
-[ext_resource type="PackedScene" uid="uid://ctoiqnxh5b08a" path="res://scenes/enemies/yellow_skeleton.tscn" id="14_ho7nn"]
+[ext_resource type="Script" uid="uid://cv7htmerfgy3e" path="res://scripts/map_elements/dual_wall.gd" id="12_ho7nn"]
+[ext_resource type="PackedScene" uid="uid://d37qmuwcvb80v" path="res://scenes/enemies/white_skeleton.tscn" id="14_5iruf"]
+[ext_resource type="PackedScene" uid="uid://ch4hpitq4c3k7" path="res://scenes/chest.tscn" id="14_ho7nn"]
+[ext_resource type="Script" uid="uid://ca28ye276k74g" path="res://scripts/data/item_data.gd" id="15_qjiij"]
+[ext_resource type="Resource" uid="uid://c5v0btmpvrcub" path="res://resources/corrupted_key.tres" id="16_5iruf"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_rytft"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -1297,10 +1301,12 @@ texture = ExtResource("10_j1gp7")
 1:2/0/terrain_set = 0
 1:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_5iruf")
 2:2/0 = 0
+2:2/0/modulate = Color(0.6627451, 0.75686276, 0.7411765, 1)
 2:2/0/terrain_set = 0
 3:2/0 = 0
+3:2/0/modulate = Color(0.6627451, 0.75686276, 0.7411765, 1)
 4:2/0 = 0
-4:2/0/modulate = Color(0.6623775, 0.7570424, 0.74265414, 1)
+4:2/0/modulate = Color(0.6627451, 0.75686276, 0.7411765, 1)
 4:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_0koia")
 5:2/0 = 0
 5:2/0/modulate = Color(0.6623775, 0.7570424, 0.74265414, 1)
@@ -1309,9 +1315,13 @@ texture = ExtResource("10_j1gp7")
 6:2/0/modulate = Color(0.6623775, 0.7570424, 0.74265414, 1)
 6:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_lie7o")
 0:3/0 = 0
+0:3/0/modulate = Color(0.6627451, 0.75686276, 0.7411765, 1)
 1:3/0 = 0
+1:3/0/modulate = Color(0.6627451, 0.75686276, 0.7411765, 1)
 2:3/0 = 0
+2:3/0/modulate = Color(0.6627451, 0.75686276, 0.7411765, 1)
 3:3/0 = 0
+3:3/0/modulate = Color(0.6627451, 0.75686276, 0.7411765, 1)
 4:3/0 = 0
 4:3/0/modulate = Color(0.6623775, 0.7570424, 0.74265414, 1)
 4:3/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_0koia")
@@ -1332,6 +1342,7 @@ texture = ExtResource("10_j1gp7")
 5:4/0/modulate = Color(0.6623775, 0.7570424, 0.74265414, 1)
 5:4/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_cveml")
 0:5/0 = 0
+0:5/0/modulate = Color(0.6627451, 0.75686276, 0.7411765, 1)
 1:5/0 = 0
 2:5/0 = 0
 3:5/0 = 0
@@ -1892,12 +1903,15 @@ texture = ExtResource("12_3dyyi")
 6:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
 7:3/0 = 0
 7:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
-8:3/next_alternative_id = 2
+8:3/next_alternative_id = 3
 8:3/0 = 0
 8:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
 8:3/1 = 1
 8:3/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
 8:3/1/physics_layer_0/polygon_0/points = PackedVector2Array(-2.9366894, -8, 8, -8, 8, 8, -2.9366894, 8)
+8:3/2 = 2
+8:3/2/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+8:3/2/physics_layer_0/polygon_0/points = PackedVector2Array(-2.877739, -8, 2.877739, -8, 3.057598, 8, -3.057598, 8)
 9:3/0 = 0
 9:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
 10:3/0 = 0
@@ -2564,6 +2578,841 @@ texture = ExtResource("12_3dyyi")
 sources/0 = SubResource("TileSetAtlasSource_lie7o")
 sources/1 = SubResource("TileSetAtlasSource_q3625")
 
+[sub_resource type="TileMapPattern" id="TileMapPattern_drpsh"]
+tile_data = PackedInt32Array(0, 131072, 3, 65536, 131073, 65543)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rfs30"]
+resource_name = "walls_high"
+texture = ExtResource("11_ijf1m")
+0:0/0 = 0
+0:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+1:0/0 = 0
+1:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+2:0/0 = 0
+2:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+3:0/0 = 0
+3:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+4:0/0 = 0
+4:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+5:0/0 = 0
+5:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+6:0/0 = 0
+6:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+7:0/0 = 0
+7:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+8:0/0 = 0
+8:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+9:0/0 = 0
+9:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+10:0/0 = 0
+10:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+11:0/0 = 0
+11:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+16:0/0 = 0
+0:1/0 = 0
+0:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+1:1/0 = 0
+1:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+2:1/0 = 0
+2:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+3:1/0 = 0
+3:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+4:1/0 = 0
+4:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+5:1/0 = 0
+5:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+6:1/0 = 0
+6:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+7:1/0 = 0
+7:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+8:1/0 = 0
+8:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+9:1/0 = 0
+9:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+10:1/0 = 0
+10:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+11:1/0 = 0
+11:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+12:1/0 = 0
+13:1/0 = 0
+14:1/0 = 0
+15:1/0 = 0
+16:1/0 = 0
+1:2/0 = 0
+1:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+2:2/0 = 0
+2:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+3:2/0 = 0
+3:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+4:2/0 = 0
+4:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+5:2/0 = 0
+5:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+6:2/0 = 0
+6:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+7:2/0 = 0
+7:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+8:2/0 = 0
+8:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+9:2/0 = 0
+9:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+11:2/0 = 0
+11:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+15:2/0 = 0
+16:2/0 = 0
+17:2/0 = 0
+18:2/0 = 0
+0:3/0 = 0
+0:3/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+1:3/0 = 0
+1:3/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+2:3/0 = 0
+2:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+3:3/next_alternative_id = 2
+3:3/0 = 0
+3:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+3:3/1 = 1
+3:3/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+3:3/1/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 3.071148, -8, 3.071148, 8, -8, 8)
+4:3/0 = 0
+4:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+5:3/0 = 0
+5:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+6:3/0 = 0
+6:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+7:3/0 = 0
+7:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+8:3/0 = 0
+8:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+9:3/0 = 0
+9:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+11:3/0 = 0
+11:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+12:3/0 = 0
+12:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+13:3/0 = 0
+13:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+14:3/0 = 0
+14:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+15:3/0 = 0
+16:3/0 = 0
+17:3/0 = 0
+18:3/0 = 0
+1:4/0 = 0
+1:4/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+2:4/0 = 0
+2:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+3:4/0 = 0
+3:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+4:4/0 = 0
+4:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+5:4/0 = 0
+5:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+6:4/0 = 0
+6:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+7:4/0 = 0
+7:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+8:4/0 = 0
+8:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+9:4/0 = 0
+9:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+10:4/0 = 0
+10:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+11:4/0 = 0
+11:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+12:4/0 = 0
+13:4/0 = 0
+14:4/0 = 0
+0:5/0 = 0
+0:5/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+1:5/0 = 0
+1:5/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+2:5/0 = 0
+2:5/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+3:5/0 = 0
+3:5/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+4:5/0 = 0
+4:5/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+5:5/0 = 0
+5:5/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+6:5/0 = 0
+6:5/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+7:5/0 = 0
+7:5/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+8:5/0 = 0
+8:5/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+9:5/0 = 0
+10:5/0 = 0
+10:5/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+11:5/0 = 0
+11:5/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+12:5/0 = 0
+12:5/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+13:5/0 = 0
+14:5/0 = 0
+15:5/0 = 0
+17:5/0 = 0
+18:5/0 = 0
+21:5/0 = 0
+22:5/0 = 0
+0:6/0 = 0
+0:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+1:6/0 = 0
+1:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+2:6/0 = 0
+2:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+3:6/0 = 0
+3:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+4:6/0 = 0
+4:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+5:6/0 = 0
+5:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+6:6/0 = 0
+6:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+7:6/0 = 0
+7:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+8:6/0 = 0
+8:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+9:6/0 = 0
+9:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+10:6/0 = 0
+10:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+11:6/0 = 0
+11:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+12:6/0 = 0
+13:6/0 = 0
+15:6/0 = 0
+16:6/0 = 0
+17:6/0 = 0
+18:6/0 = 0
+19:6/0 = 0
+20:6/0 = 0
+21:6/0 = 0
+22:6/0 = 0
+23:6/0 = 0
+0:7/0 = 0
+0:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+1:7/next_alternative_id = 2
+1:7/0 = 0
+1:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+1:7/1 = 1
+1:7/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:7/1/physics_layer_0/polygon_0/points = PackedVector2Array(-2.8242273, -8, -2.8242273, 8, 8, 8, 8, -8)
+2:7/0 = 0
+2:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+3:7/next_alternative_id = 3
+3:7/0 = 0
+3:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+3:7/1 = 1
+3:7/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+3:7/1/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 2.9728718, -8, 3.0457668, 8, -8, 8)
+4:7/0 = 0
+4:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+5:7/0 = 0
+5:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+6:7/0 = 0
+6:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+7:7/0 = 0
+7:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+8:7/0 = 0
+8:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+9:7/0 = 0
+9:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+10:7/0 = 0
+10:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+11:7/0 = 0
+11:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+12:7/0 = 0
+12:7/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+13:7/0 = 0
+13:7/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+15:7/0 = 0
+16:7/0 = 0
+17:7/0 = 0
+18:7/0 = 0
+19:7/0 = 0
+20:7/0 = 0
+21:7/0 = 0
+22:7/0 = 0
+23:7/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jqt2x"]
+resource_name = "walls_high_z_index"
+texture = ExtResource("11_ijf1m")
+0:0/0 = 0
+0:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+1:0/0 = 0
+1:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+2:0/0 = 0
+2:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+3:0/0 = 0
+3:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+4:0/0 = 0
+4:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+5:0/0 = 0
+5:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+6:0/0 = 0
+6:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+7:0/0 = 0
+7:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+8:0/0 = 0
+8:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+9:0/0 = 0
+9:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+10:0/0 = 0
+10:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+11:0/0 = 0
+11:0/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+16:0/0 = 0
+0:1/0 = 0
+0:1/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+1:1/0 = 0
+1:1/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+2:1/0 = 0
+2:1/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+3:1/0 = 0
+3:1/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+4:1/0 = 0
+4:1/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+5:1/0 = 0
+5:1/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+6:1/0 = 0
+6:1/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+7:1/0 = 0
+7:1/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+8:1/0 = 0
+8:1/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+9:1/0 = 0
+9:1/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+10:1/0 = 0
+10:1/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+11:1/0 = 0
+11:1/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+12:1/0 = 0
+13:1/0 = 0
+14:1/0 = 0
+15:1/0 = 0
+16:1/0 = 0
+1:2/0 = 0
+1:2/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+2:2/0 = 0
+2:2/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+3:2/0 = 0
+3:2/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+4:2/0 = 0
+4:2/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+5:2/0 = 0
+5:2/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+6:2/0 = 0
+6:2/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+7:2/0 = 0
+7:2/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+8:2/0 = 0
+8:2/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+9:2/0 = 0
+9:2/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+11:2/0 = 0
+11:2/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+15:2/0 = 0
+16:2/0 = 0
+17:2/0 = 0
+18:2/0 = 0
+0:3/0 = 0
+0:3/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+1:3/next_alternative_id = 2
+1:3/0 = 0
+1:3/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+1:3/1 = 1
+1:3/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:3/1/z_index = 3
+1:3/1/physics_layer_0/polygon_0/points = PackedVector2Array(-2.9817615, -0.6240897, 8, -0.6934333, 8, 8, -2.8254566, 8)
+2:3/0 = 0
+2:3/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+3:3/next_alternative_id = 2
+3:3/0 = 0
+3:3/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+3:3/1 = 1
+3:3/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+3:3/1/z_index = 3
+3:3/1/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -0.74321747, 2.980043, -0.74501085, 3.0457659, 8, -8, 8)
+4:3/0 = 0
+4:3/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+5:3/0 = 0
+5:3/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+6:3/0 = 0
+6:3/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+7:3/0 = 0
+7:3/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+8:3/0 = 0
+8:3/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+9:3/0 = 0
+9:3/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+11:3/0 = 0
+11:3/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+12:3/0 = 0
+13:3/0 = 0
+14:3/0 = 0
+15:3/0 = 0
+16:3/0 = 0
+17:3/0 = 0
+18:3/0 = 0
+1:4/0 = 0
+1:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+2:4/0 = 0
+2:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+3:4/0 = 0
+3:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+4:4/0 = 0
+4:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+5:4/0 = 0
+5:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+6:4/0 = 0
+6:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+7:4/0 = 0
+7:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+8:4/0 = 0
+8:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+9:4/0 = 0
+9:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+10:4/0 = 0
+10:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+11:4/0 = 0
+11:4/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+12:4/0 = 0
+13:4/0 = 0
+14:4/0 = 0
+0:5/0 = 0
+0:5/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+1:5/0 = 0
+1:5/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+2:5/0 = 0
+2:5/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+3:5/0 = 0
+3:5/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+4:5/0 = 0
+4:5/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+5:5/0 = 0
+5:5/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+6:5/0 = 0
+6:5/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+7:5/0 = 0
+7:5/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+8:5/0 = 0
+8:5/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+9:5/0 = 0
+9:5/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+10:5/0 = 0
+10:5/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+11:5/0 = 0
+11:5/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+12:5/0 = 0
+13:5/0 = 0
+14:5/0 = 0
+15:5/0 = 0
+17:5/0 = 0
+18:5/0 = 0
+21:5/0 = 0
+22:5/0 = 0
+0:6/0 = 0
+0:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+1:6/0 = 0
+1:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+2:6/0 = 0
+2:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+3:6/0 = 0
+3:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+4:6/0 = 0
+4:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+5:6/0 = 0
+5:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+6:6/0 = 0
+6:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+7:6/0 = 0
+7:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+8:6/0 = 0
+8:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+9:6/0 = 0
+9:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+10:6/0 = 0
+10:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+11:6/0 = 0
+11:6/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+12:6/0 = 0
+13:6/0 = 0
+15:6/0 = 0
+16:6/0 = 0
+17:6/0 = 0
+18:6/0 = 0
+19:6/0 = 0
+20:6/0 = 0
+21:6/0 = 0
+22:6/0 = 0
+23:6/0 = 0
+0:7/0 = 0
+0:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+1:7/next_alternative_id = 2
+1:7/0 = 0
+1:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+1:7/1 = 1
+1:7/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:7/1/z_index = 3
+1:7/1/physics_layer_0/polygon_0/points = PackedVector2Array(-2.981762, -0.7627764, 8, -0.805161, 8, 8, -2.877739, 8)
+2:7/next_alternative_id = 3
+2:7/0 = 0
+2:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+2:7/1 = 1
+2:7/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+2:7/1/z_index = 3
+2:7/1/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -0.71943474, 8, -0.71067905, 8, 8, -8, 8)
+2:7/2 = 2
+2:7/2/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+2:7/2/z_index = 3
+3:7/next_alternative_id = 3
+3:7/0 = 0
+3:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+3:7/1 = 1
+3:7/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+3:7/1/z_index = 3
+3:7/1/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -0.70456505, 3.0785565, -0.7577987, 3.0205946, 8, -8, 8)
+4:7/0 = 0
+4:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+5:7/next_alternative_id = 2
+5:7/0 = 0
+5:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+5:7/1 = 1
+5:7/1/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+5:7/1/z_index = 3
+6:7/0 = 0
+6:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+7:7/0 = 0
+7:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+8:7/0 = 0
+8:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+9:7/0 = 0
+9:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+10:7/0 = 0
+10:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+11:7/0 = 0
+11:7/0/modulate = Color(0.41960785, 0.52156866, 0.5058824, 1)
+12:7/0 = 0
+13:7/0 = 0
+15:7/0 = 0
+16:7/0 = 0
+17:7/0 = 0
+18:7/0 = 0
+19:7/0 = 0
+20:7/0 = 0
+21:7/0 = 0
+22:7/0 = 0
+23:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_qhpcx"]
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 0
+terrain_set_0/mode = 1
+terrain_set_0/terrain_0/name = "walls"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+sources/1 = SubResource("TileSetAtlasSource_rfs30")
+sources/2 = SubResource("TileSetAtlasSource_jqt2x")
+pattern_0 = SubResource("TileMapPattern_drpsh")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e800h"]
+resource_name = "walls_low"
+texture = ExtResource("12_3dyyi")
+0:0/next_alternative_id = 2
+0:0/0 = 0
+0:0/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:0/next_alternative_id = 3
+1:0/0 = 0
+1:0/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2.8242283, -8, -2.9728718, 8, 8, 8, 8, -8)
+1:0/1 = 1
+1:0/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-2.8242273, -8, 8, -8, 8, 8, -2.8242273, 8)
+2:0/next_alternative_id = 2
+2:0/0 = 0
+2:0/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+2:0/0/terrain_set = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:0/next_alternative_id = 3
+3:0/0 = 0
+3:0/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+3:0/0/terrain_set = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 2.9728718, -8, 2.8242283, 8, -8, 8)
+3:0/1 = 1
+3:0/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+3:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(2.9442415, 8, 2.9728718, -8, -8, -8, -8, 8)
+4:0/0 = 0
+4:0/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+5:0/0 = 0
+5:0/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+5:0/0/terrain_set = 0
+5:0/0/terrains_peering_bit/bottom_right_corner = 0
+6:0/0 = 0
+6:0/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+6:0/0/terrain_set = 0
+6:0/0/terrains_peering_bit/bottom_left_corner = 0
+7:0/0 = 0
+7:0/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+8:0/0 = 0
+8:0/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+9:0/0 = 0
+9:0/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+10:0/0 = 0
+10:0/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+11:0/0 = 0
+11:0/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+0:1/next_alternative_id = 3
+0:1/0 = 0
+0:1/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+0:1/1 = 1
+0:1/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+0:1/1/z_index = 3
+0:1/1/physics_layer_0/polygon_0/points = PackedVector2Array(2.9442415, 8, -2.9442406, 8, -2.981762, -8, 2.9124184, -8)
+0:1/2 = 2
+0:1/2/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+0:1/2/z_index = 3
+0:1/2/physics_layer_0/polygon_0/points = PackedVector2Array(-3.0373514, 1.0888618, 2.980043, 1.2034789, 2.9227347, 8, -2.9227343, 8)
+1:1/next_alternative_id = 2
+1:1/0 = 0
+1:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2.8242283, -8, -2.9728718, 8, 8, 8, 8, -8)
+2:1/next_alternative_id = 2
+2:1/0 = 0
+2:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+2:1/0/terrain_set = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:1/next_alternative_id = 2
+3:1/0 = 0
+3:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 2.9728718, -8, 2.8242283, 8, -8, 8)
+4:1/0 = 0
+4:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+4:1/0/terrain_set = 0
+4:1/0/terrains_peering_bit/bottom_right_corner = 0
+5:1/0 = 0
+5:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+5:1/0/terrain_set = 0
+5:1/0/terrain = 0
+5:1/0/terrains_peering_bit/bottom_right_corner = 0
+5:1/0/terrains_peering_bit/bottom_left_corner = 0
+5:1/0/terrains_peering_bit/top_right_corner = 0
+6:1/0 = 0
+6:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+6:1/0/terrain_set = 0
+6:1/0/terrain = 0
+6:1/0/terrains_peering_bit/bottom_right_corner = 0
+6:1/0/terrains_peering_bit/bottom_left_corner = 0
+6:1/0/terrains_peering_bit/top_left_corner = 0
+7:1/0 = 0
+7:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+7:1/0/terrain_set = 0
+7:1/0/terrains_peering_bit/bottom_left_corner = 0
+8:1/0 = 0
+8:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+9:1/0 = 0
+9:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+11:1/0 = 0
+11:1/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+0:2/next_alternative_id = 3
+0:2/0 = 0
+0:2/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+0:2/2 = 2
+0:2/2/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+0:2/2/z_index = 3
+0:2/2/physics_layer_0/polygon_0/points = PackedVector2Array(2.9442415, 8, -2.9442406, 8, -2.981762, -8, 2.9124184, -8)
+1:2/next_alternative_id = 3
+1:2/0 = 0
+1:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2.8242283, -8, -2.9728718, 8, 8, 8, 8, -8)
+2:2/next_alternative_id = 2
+2:2/0 = 0
+2:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:2/next_alternative_id = 2
+3:2/0 = 0
+3:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 2.9728718, -8, 2.8242283, 8, -8, 8)
+4:2/0 = 0
+4:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+5:2/0 = 0
+5:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+5:2/0/terrain_set = 0
+5:2/0/terrains_peering_bit/bottom_right_corner = 0
+5:2/0/terrains_peering_bit/top_right_corner = 0
+6:2/0 = 0
+6:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+6:2/0/terrain_set = 0
+6:2/0/terrains_peering_bit/bottom_left_corner = 0
+6:2/0/terrains_peering_bit/top_left_corner = 0
+7:2/0 = 0
+7:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+8:2/0 = 0
+8:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+9:2/next_alternative_id = 2
+9:2/0 = 0
+9:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+10:2/0 = 0
+10:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+11:2/0 = 0
+11:2/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+0:3/next_alternative_id = 2
+0:3/0 = 0
+0:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+0:3/1 = 1
+0:3/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+0:3/1/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:3/next_alternative_id = 2
+1:3/0 = 0
+1:3/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:3/1 = 1
+1:3/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:3/1/physics_layer_0/polygon_0/points = PackedVector2Array(-2.9728708, -8, 8, -8, 8, 8, -2.8242273, 8)
+2:3/next_alternative_id = 2
+2:3/0 = 0
+2:3/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+2:3/1 = 1
+2:3/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+2:3/1/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:3/next_alternative_id = 2
+3:3/0 = 0
+3:3/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+3:3/1 = 1
+3:3/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+3:3/1/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 2.9728718, -8, 2.8242283, 8, -8, 8)
+4:3/0 = 0
+4:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+5:3/0 = 0
+5:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+6:3/0 = 0
+6:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+7:3/0 = 0
+7:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+8:3/next_alternative_id = 2
+8:3/0 = 0
+8:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+8:3/1 = 1
+8:3/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+8:3/1/physics_layer_0/polygon_0/points = PackedVector2Array(-2.9366894, -8, 8, -8, 8, 8, -2.9366894, 8)
+9:3/0 = 0
+9:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+10:3/0 = 0
+10:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+11:3/next_alternative_id = 2
+11:3/0 = 0
+11:3/0/modulate = Color(0.5540514, 0.66035193, 0.6436609, 1)
+11:3/1 = 1
+11:3/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+11:3/1/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 2.8242283, -8, 2.9728718, 8, -8, 8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y2o88"]
+resource_name = "walls_low_z_index"
+texture = ExtResource("12_3dyyi")
+0:0/0 = 0
+0:0/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:0/next_alternative_id = 2
+1:0/0 = 0
+1:0/1 = 1
+1:0/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:0/1/z_index = 3
+2:0/0 = 0
+3:0/next_alternative_id = 2
+3:0/0 = 0
+3:0/1 = 1
+3:0/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+3:0/1/z_index = 3
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+0:1/0 = 0
+0:1/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:1/0 = 0
+1:1/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+2:1/0 = 0
+2:1/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+3:1/0 = 0
+3:1/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+11:1/0 = 0
+0:2/0 = 0
+0:2/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:2/next_alternative_id = 2
+1:2/0 = 0
+1:2/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:2/1 = 1
+1:2/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:2/1/z_index = 3
+2:2/0 = 0
+2:2/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+3:2/0 = 0
+3:2/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+0:3/0 = 0
+0:3/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+1:3/0 = 0
+1:3/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+2:3/next_alternative_id = 2
+2:3/0 = 0
+2:3/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+2:3/1 = 1
+2:3/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+2:3/1/z_index = 3
+3:3/0 = 0
+3:3/0/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/next_alternative_id = 2
+11:3/0 = 0
+11:3/1 = 1
+11:3/1/modulate = Color(0.42088208, 0.5228121, 0.5045628, 1)
+11:3/1/z_index = 3
+
+[sub_resource type="TileSet" id="TileSet_s0cm8"]
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 6
+terrain_set_0/mode = 1
+terrain_set_0/terrain_0/name = "walls"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+sources/0 = SubResource("TileSetAtlasSource_e800h")
+sources/3 = SubResource("TileSetAtlasSource_y2o88")
+pattern_0 = SubResource("TileMapPattern_drpsh")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pd3m7"]
+size = Vector2(96, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4bst"]
+size = Vector2(96, 2)
+
 [node name="Phase1" type="Node" unique_id=699602322]
 script = ExtResource("1_5xy5e")
 
@@ -2575,7 +3424,7 @@ player = NodePath("../World/Entities/Player")
 [node name="PhaseLight" type="DirectionalLight2D" parent="." unique_id=815560919]
 visible = false
 position = Vector2(-17, 36)
-color = Color(0.37252936, 0.4226722, 0.4384696, 1)
+color = Color(0.24360749, 0.2818836, 0.29364765, 1)
 energy = 1.15
 blend_mode = 2
 range_item_cull_mask = 3
@@ -2625,16 +3474,36 @@ z_index = 1
 position = Vector2(131, 331)
 scale = Vector2(0.86, 0.86)
 
+[node name="SkeletonDeadDecoration2" parent="World/DungeonMap/Decorations" unique_id=1340693752 instance=ExtResource("6_5xy5e")]
+position = Vector2(493.99997, 345)
+scale = Vector2(0.86, 0.86)
+
+[node name="SkeletonDeadDecoration3" parent="World/DungeonMap/Decorations" unique_id=498983597 instance=ExtResource("6_5xy5e")]
+position = Vector2(493.99997, 345)
+scale = Vector2(0.86, 0.86)
+
 [node name="Torch2" parent="World/DungeonMap/Decorations" unique_id=1156117351 instance=ExtResource("10_wawk4")]
 position = Vector2(340, 270)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch3" parent="World/DungeonMap/Decorations" unique_id=884532625 instance=ExtResource("10_wawk4")]
+[node name="Torch17" parent="World/DungeonMap/Decorations" unique_id=884532625 instance=ExtResource("10_wawk4")]
+position = Vector2(663, 256)
+scale = Vector2(0.35, 0.35)
+
+[node name="Torch15" parent="World/DungeonMap/Decorations" unique_id=535235719 instance=ExtResource("10_wawk4")]
+position = Vector2(502, 380)
+scale = Vector2(0.35, 0.35)
+
+[node name="Torch16" parent="World/DungeonMap/Decorations" unique_id=992320063 instance=ExtResource("10_wawk4")]
+position = Vector2(332, 437)
+scale = Vector2(0.35, 0.35)
+
+[node name="Torch3" parent="World/DungeonMap/Decorations" unique_id=466695696 instance=ExtResource("10_wawk4")]
 position = Vector2(435, 99.00001)
 scale = Vector2(0.35, 0.35)
 
 [node name="Torch7" parent="World/DungeonMap/Decorations" unique_id=1555232895 instance=ExtResource("10_wawk4")]
-position = Vector2(528, 102)
+position = Vector2(559, 97)
 scale = Vector2(0.35, 0.35)
 
 [node name="Torch9" parent="World/DungeonMap/Decorations" unique_id=1348143953 instance=ExtResource("10_wawk4")]
@@ -2680,12 +3549,12 @@ scale = Vector2(0.35, 0.35)
 
 [node name="WallBase" type="TileMapLayer" parent="World/DungeonMap" unique_id=475996126 groups=["walls"]]
 texture_filter = 1
-tile_map_data = PackedByteArray("AAAIABQAAQADAAUAAAAHAA4AAgACAAcAAQAGAA4AAgACAAcAAQAGAAgAAQACAAcAAAAHAAgAAQACAAcAAAAIAAgAAQACAAcAAAAJAAgAAQACAAcAAAAKAAgAAQACAAcAAAALAAgAAQACAAcAAAAMAA0AAgACAAcAAQANAA0AAgACAAcAAQAOAA0AAgACAAcAAQAFAA4AAgABAAcAAQABABQAAQACAAcAAAACABQAAQACAAcAAAADABQAAQACAAcAAAAEABQAAQACAAcAAAAFABQAAQACAAcAAAAGABQAAQACAAcAAAAHABQAAQACAAcAAAAFAAgAAQABAAcAAAALAA0AAgABAAMAAQAAABQAAQABAAcAAAAHABgAAgACAAcAAQAGABgAAgACAAcAAQAFABgAAgACAAcAAQAEABgAAgACAAcAAQADABgAAgACAAcAAQACABgAAgACAAcAAQABABgAAgACAAcAAQAAABgAAgABAAcAAQAIABgAAgADAAcAAQAMABQAAQACAAcAAAANABQAAQACAAcAAAAOABQAAQACAAcAAAAPABQAAQACAAcAAAAQABQAAQACAAcAAAALABQAAQABAAcAAAAMABcAAgACAAcAAQANABcAAgACAAcAAQAOABcAAgACAAcAAQAPABcAAgACAAcAAQAQABcAAgACAAcAAQALABcAAgABAAMAAQAPAA0AAgADAAcAAQAMAAgAAQACAAcAAAANAAgAAQACAAcAAAAOAAgAAQACAAcAAAAPAAgAAQACAAcAAAAQAAgAAQACAAcAAAARAAgAAQACAAcAAAAPAAsAAgABAAMAAQAQAAsAAgACAAcAAQARAAsAAgACAAcAAQASAAsAAgACAAcAAQATAAsAAgACAAcAAQAUAAsAAgACAAcAAQAVAAsAAgACAAcAAQAWAAsAAgACAAcAAQAXAAsAAgACAAcAAQASAAgAAQACAAcAAAATAAgAAQACAAcAAAAUAAgAAQACAAcAAAAVAAgAAQACAAcAAAAWAAgAAQACAAcAAAAXAAgAAQACAAcAAAAIAA4AAgADAAMAAQAYAAsAAgADAAMAAQAZAA0AAgACAAcAAQAaAA0AAgACAAcAAQAbAA0AAgACAAcAAQAcAA0AAgACAAcAAQAdAA0AAgACAAcAAQAeAA0AAgACAAcAAQAYAA0AAgABAAcAAQAfAA0AAgACAAcAAQAgAA0AAgACAAcAAQAhAA0AAgACAAcAAQAiAA0AAgACAAcAAQAjAA0AAgACAAcAAQAkAA0AAgADAAcAAQAlAAsAAgACAAcAAQAmAAsAAgACAAcAAQAnAAsAAgACAAcAAQAoAAsAAgACAAcAAQApAAsAAgACAAcAAQAkAAsAAgABAAMAAQAqAAsAAgADAAMAAQASABEAAQACAAcAAAATABEAAQACAAcAAAAUABEAAQACAAcAAAAVABEAAQACAAcAAAAWABEAAQACAAcAAAAZABIAAQACAAcAAAAaABIAAQACAAcAAAAbABIAAQACAAcAAAAcABIAAQACAAcAAAAdABIAAQACAAcAAAAeABIAAQACAAcAAAAfABIAAQACAAcAAAAgABIAAQACAAcAAAAhABIAAQACAAcAAAAiABIAAQACAAcAAAAjABIAAQACAAcAAAAlABAAAQACAAcAAAAmABAAAQACAAcAAAAnABAAAQACAAcAAAAoABAAAQACAAcAAAApABAAAQACAAcAAAARABQAAQADAAUAAAARABEAAQABAAcAAAAYABEAAQADAAUAAAAYABIAAQABAAcAAAAkABIAAQADAAUAAAAkABAAAQABAAcAAAAqABAAAQADAAUAAAAPABMAAQADAAUAAAAZAB8AAgACAAcAAQAaAB8AAgACAAcAAQAbAB8AAgACAAcAAQAcAB8AAgACAAcAAQAdAB8AAgACAAcAAQAeAB8AAgACAAcAAQAfAB8AAgACAAcAAQAgAB8AAgACAAcAAQAhAB8AAgACAAcAAQAiAB8AAgACAAcAAQAjAB8AAgACAAcAAQAYAB8AAgABAAcAAQARABcAAgADAAcAAQAuAAsAAgACAAcAAQAvAAsAAgACAAcAAQAwAAsAAgACAAcAAQAxAAsAAgACAAcAAQAyAAsAAgACAAcAAQAtAAsAAgABAAMAAQAkAAgAAQABAAcAAAAlAAgAAQACAAcAAAAmAAgAAQACAAcAAAAnAAgAAQACAAcAAAAoAAgAAQACAAcAAAApAAgAAQACAAcAAAAqAAgAAQACAAcAAAArAAgAAQACAAcAAAAsAAgAAQACAAcAAAAtAAgAAQACAAcAAAAuAAgAAQACAAcAAAAvAAgAAQACAAcAAAAwAAgAAQACAAcAAAAxAAgAAQACAAcAAAAyAAgAAQACAAcAAAAYAAgAAQADAAUAAAAZAAYAAQACAAcAAAAaAAYAAQACAAcAAAAbAAYAAQACAAcAAAAcAAYAAQACAAcAAAAdAAYAAQACAAcAAAAeAAYAAQACAAcAAAAfAAYAAQACAAcAAAAgAAYAAQACAAcAAAAhAAYAAQACAAcAAAAiAAYAAQACAAcAAAAjAAYAAQACAAcAAAAYAAYAAQABAAcAAAAkAAYAAQADAAUAAAAkAB8AAgACAAcAAQAlAB8AAgACAAcAAQArABgAAgACAAcAAQAsABgAAgACAAcAAQAtABgAAgACAAcAAQAuABgAAgACAAcAAQAvABgAAgACAAcAAQAwABgAAgACAAcAAQAxABgAAgACAAcAAQAyABgAAgACAAcAAQAuABUAAQACAAcAAAAvABUAAQACAAcAAAAwABUAAQACAAcAAAAxABUAAQACAAcAAAAyABUAAQACAAcAAAAtABUAAQABAAcAAAAqABgAAgABAAcAAQAzABgAAgACAAcAAQA0ABgAAgACAAcAAQAmAB8AAQADAAUAAAALAB4AAQABAAcAAAAMAB4AAQACAAcAAAANAB4AAQACAAcAAAAOAB4AAQACAAcAAAAPAB4AAQACAAcAAAAQAB4AAQACAAcAAAARAB4AAQADAAUAAAAIACUAAgABAAcAAQAJACUAAgACAAcAAQAKACUAAgACAAcAAQALACUAAgACAAcAAQAMACUAAgACAAcAAQANACUAAgACAAcAAQAOACUAAgACAAcAAQAPACUAAgACAAcAAQAQACUAAgACAAcAAQARACUAAgACAAcAAQASACUAAgACAAcAAQATACUAAgACAAcAAQAUACUAAgACAAcAAQAVACUAAgACAAcAAQAWACUAAgACAAcAAQAXACUAAgACAAcAAQAYACUAAgACAAcAAQAZACUAAgACAAcAAQAaACUAAgACAAcAAQAbACUAAgACAAcAAQAcACUAAgACAAcAAQAdACUAAgACAAcAAQAeACUAAgACAAcAAQAfACUAAgACAAcAAQAgACUAAgACAAcAAQAhACUAAgACAAcAAQAiACUAAgACAAcAAQAjACUAAgACAAcAAQAkACUAAgACAAcAAQAlACUAAgACAAcAAQAmACUAAgACAAcAAQAnACUAAgACAAcAAQAoACUAAgACAAcAAQApACUAAgACAAcAAQAqACUAAgADAAcAAQARABwAAgABAAcAAQASABwAAgACAAcAAQATABwAAgACAAcAAQAUABwAAgACAAcAAQAVABwAAgACAAcAAQAWABwAAgACAAcAAQAXABwAAgACAAcAAQAYABwAAgADAAcAAQAzAAgAAQADAAUAAAAzAAsAAgADAAcAAQAzABUAAQACAAcAAAA0ABUAAQACAAcAAAA1ABUAAQACAAcAAAA1ABgAAgACAAcAAQA3AA8AAQACAAcAAAA4AA8AAQACAAcAAAA5AA8AAQACAAcAAAA6AA8AAQACAAcAAAA7AA8AAQACAAcAAAA8AA8AAQACAAcAAAA9AA8AAQACAAcAAAA+AA8AAQACAAcAAAA/AA8AAQACAAcAAAA2AA8AAQABAAcAAAA3AB0AAgACAAcAAQA4AB0AAgACAAcAAQA5AB0AAgACAAcAAQA6AB0AAgACAAcAAQA7AB0AAgACAAcAAQA8AB0AAgACAAcAAQA9AB0AAgACAAcAAQA+AB0AAgACAAcAAQA/AB0AAgACAAcAAQBAAA8AAQADAAUAAABAAB0AAgADAAcAAQA2AB0AAgABAAcAAQA2ABUAAQADAAUAAAA2ABgAAQADAAUAAAASACIAAQACAAcAAAATACIAAQACAAcAAAAUACIAAQACAAcAAAAVACIAAQACAAcAAAAWACIAAQACAAcAAAAXACIAAQACAAcAAAAYACIAAQACAAcAAAAZACIAAQACAAcAAAAaACIAAQACAAcAAAAbACIAAQACAAcAAAAcACIAAQACAAcAAAAdACIAAQACAAcAAAAeACIAAQACAAcAAAAfACIAAQACAAcAAAAgACIAAQACAAcAAAAhACIAAQACAAcAAAAiACIAAQACAAcAAAAjACIAAQACAAcAAAAkACIAAQACAAcAAAAlACIAAQACAAcAAAARACIAAQABAAcAAAAXABEAAQACAAcAAAAmACIAAQADAAUAAAAZABkAAgACAAcAAQAaABkAAgACAAcAAQAbABkAAgACAAcAAQAcABkAAgACAAcAAQAdABkAAgACAAcAAQAeABkAAgACAAcAAQAfABkAAgACAAcAAQAgABkAAgACAAcAAQAhABkAAgACAAcAAQAiABkAAgACAAcAAQAjABkAAgACAAcAAQAkABkAAgACAAcAAQAlABkAAgACAAcAAQAZABUAAQACAAcAAAAaABUAAQACAAcAAAAbABUAAQACAAcAAAAcABUAAQACAAcAAAAdABUAAQACAAcAAAAhABUAAQACAAcAAAAiABUAAQACAAcAAAAjABUAAQACAAcAAAAYABUAAQABAAcAAAA=")
+tile_map_data = PackedByteArray("AAAIABQAAQADAAUAAAAHAA4AAgACAAcAAQAGAA4AAgACAAcAAQAGAAgAAQACAAcAAAAHAAgAAQACAAcAAAAIAAgAAQACAAcAAAAJAAgAAQACAAcAAAAKAAgAAQACAAcAAAALAAgAAQACAAcAAAAMAA0AAgACAAcAAQANAA0AAgACAAcAAQAOAA0AAgACAAcAAQAFAA4AAgABAAcAAQABABQAAQACAAcAAAACABQAAQACAAcAAAADABQAAQACAAcAAAAEABQAAQACAAcAAAAFABQAAQACAAcAAAAGABQAAQACAAcAAAAHABQAAQACAAcAAAAFAAgAAQABAAcAAAALAA0AAgABAAMAAQAAABQAAQABAAcAAAAHABgAAgACAAcAAQAGABgAAgACAAcAAQAFABgAAgACAAcAAQAEABgAAgACAAcAAQADABgAAgACAAcAAQACABgAAgACAAcAAQABABgAAgACAAcAAQAAABgAAgABAAcAAQAIABgAAgADAAcAAQAMABQAAQACAAcAAAANABQAAQACAAcAAAAOABQAAQACAAcAAAAPABQAAQACAAcAAAAQABQAAQACAAcAAAALABQAAQABAAcAAAAMABcAAgACAAcAAQANABcAAgACAAcAAQAOABcAAgACAAcAAQAPABcAAgACAAcAAQAQABcAAgACAAcAAQALABcAAgABAAMAAQAPAA0AAgADAAcAAQAMAAgAAQACAAcAAAANAAgAAQACAAcAAAAOAAgAAQACAAcAAAAPAAgAAQACAAcAAAAQAAgAAQACAAcAAAARAAgAAQACAAcAAAAPAAsAAgABAAMAAQAQAAsAAgACAAcAAQARAAsAAgACAAcAAQASAAsAAgACAAcAAQATAAsAAgACAAcAAQAUAAsAAgACAAcAAQAVAAsAAgACAAcAAQAWAAsAAgACAAcAAQAXAAsAAgACAAcAAQASAAgAAQACAAcAAAATAAgAAQACAAcAAAAUAAgAAQACAAcAAAAVAAgAAQACAAcAAAAWAAgAAQACAAcAAAAXAAgAAQACAAcAAAAIAA4AAgADAAMAAQAYAAsAAgADAAMAAQAZAA0AAgACAAcAAQAaAA0AAgACAAcAAQAbAA0AAgACAAcAAQAcAA0AAgACAAcAAQAdAA0AAgACAAcAAQAeAA0AAgACAAcAAQAYAA0AAgABAAcAAQAfAA0AAgACAAcAAQAgAA0AAgACAAcAAQAhAA0AAgACAAcAAQAiAA0AAgACAAcAAQAjAA0AAgACAAcAAQAkAA0AAgADAAcAAQAlAAsAAgACAAcAAQAmAAsAAgACAAcAAQAnAAsAAgACAAcAAQAoAAsAAgACAAcAAQApAAsAAgACAAcAAQAkAAsAAgABAAMAAQAqAAsAAgADAAMAAQASABEAAQACAAcAAAATABEAAQACAAcAAAAUABEAAQACAAcAAAAVABEAAQACAAcAAAAWABEAAQACAAcAAAAZABIAAQACAAcAAAAaABIAAQACAAcAAAAbABIAAQACAAcAAAAcABIAAQACAAcAAAAdABIAAQACAAcAAAAeABIAAQACAAcAAAAfABIAAQACAAcAAAAgABIAAQACAAcAAAAhABIAAQACAAcAAAAiABIAAQACAAcAAAAjABIAAQACAAcAAAAlABAAAQACAAcAAAAmABAAAQACAAcAAAAnABAAAQACAAcAAAAoABAAAQACAAcAAAApABAAAQACAAcAAAARABQAAQADAAUAAAARABEAAQABAAcAAAAYABEAAQADAAUAAAAYABIAAQABAAcAAAAkABIAAQADAAUAAAAkABAAAQABAAcAAAAqABAAAQADAAUAAAAPABMAAQADAAUAAAAZAB8AAgACAAcAAQAaAB8AAgACAAcAAQAbAB8AAgACAAcAAQAcAB8AAgACAAcAAQAdAB8AAgACAAcAAQAeAB8AAgACAAcAAQAfAB8AAgACAAcAAQAgAB8AAgACAAcAAQAhAB8AAgACAAcAAQAiAB8AAgACAAcAAQAjAB8AAgACAAcAAQAYAB8AAgABAAcAAQARABcAAgADAAcAAQAuAAsAAgACAAcAAQAvAAsAAgACAAcAAQAwAAsAAgACAAcAAQAxAAsAAgACAAcAAQAyAAsAAgACAAcAAQAtAAsAAgABAAMAAQAkAAgAAQABAAcAAAAlAAgAAQACAAcAAAAmAAgAAQACAAcAAAAnAAgAAQACAAcAAAAoAAgAAQACAAcAAAApAAgAAQACAAcAAAAqAAgAAQACAAcAAAArAAgAAQACAAcAAAAsAAgAAQACAAcAAAAtAAgAAQACAAcAAAAuAAgAAQACAAcAAAAvAAgAAQACAAcAAAAwAAgAAQACAAcAAAAxAAgAAQACAAcAAAAyAAgAAQACAAcAAAAYAAgAAQADAAUAAAAZAAYAAQACAAcAAAAaAAYAAQACAAcAAAAbAAYAAQACAAcAAAAcAAYAAQACAAcAAAAdAAYAAQACAAcAAAAeAAYAAQACAAcAAAAfAAYAAQACAAcAAAAgAAYAAQACAAcAAAAhAAYAAQACAAcAAAAiAAYAAQACAAcAAAAjAAYAAQACAAcAAAAYAAYAAQABAAcAAAAkAAYAAQADAAUAAAAkAB8AAgACAAcAAQAlAB8AAgACAAcAAQArABgAAgACAAcAAQAsABgAAgACAAcAAQAtABgAAgACAAcAAQAuABgAAgACAAcAAQAvABgAAgACAAcAAQAwABgAAgACAAcAAQAxABgAAgACAAcAAQAyABgAAgACAAcAAQAuABUAAQACAAcAAAAvABUAAQACAAcAAAAwABUAAQACAAcAAAAxABUAAQACAAcAAAAyABUAAQACAAcAAAAtABUAAQABAAcAAAAqABgAAgABAAcAAQAzABgAAgACAAcAAQA0ABgAAgACAAcAAQAmAB8AAQADAAUAAAALAB4AAQABAAcAAAAMAB4AAQACAAcAAAANAB4AAQACAAcAAAAOAB4AAQACAAcAAAAPAB4AAQACAAcAAAAQAB4AAQACAAcAAAARAB4AAQADAAUAAAAIACUAAgABAAcAAQAJACUAAgACAAcAAQAKACUAAgACAAcAAQALACUAAgACAAcAAQAMACUAAgACAAcAAQANACUAAgACAAcAAQAOACUAAgACAAcAAQAPACUAAgACAAcAAQAQACUAAgACAAcAAQARACUAAgACAAcAAQASACUAAgACAAcAAQATACUAAgACAAcAAQAUACUAAgACAAcAAQAVACUAAgACAAcAAQAWACUAAgACAAcAAQAXACUAAgACAAcAAQAYACUAAgACAAcAAQAZACUAAgACAAcAAQAaACUAAgACAAcAAQAbACUAAgACAAcAAQAcACUAAgACAAcAAQAdACUAAgACAAcAAQAeACUAAgACAAcAAQAfACUAAgACAAcAAQAgACUAAgACAAcAAQAhACUAAgACAAcAAQAiACUAAgACAAcAAQAjACUAAgACAAcAAQAkACUAAgACAAcAAQAlACUAAgACAAcAAQAmACUAAgACAAcAAQAnACUAAgACAAcAAQAoACUAAgACAAcAAQApACUAAgACAAcAAQAqACUAAgADAAcAAQARABwAAgABAAcAAQASABwAAgACAAcAAQATABwAAgACAAcAAQAUABwAAgACAAcAAQAVABwAAgACAAcAAQAWABwAAgACAAcAAQAXABwAAgACAAcAAQAYABwAAgADAAcAAQAzAAgAAQADAAUAAAAzAAsAAgADAAcAAQAzABUAAQACAAcAAAA0ABUAAQACAAcAAAA1ABUAAQACAAcAAAA1ABgAAgACAAcAAQA3AA8AAQACAAcAAAA4AA8AAQACAAcAAAA5AA8AAQACAAcAAAA6AA8AAQACAAcAAAA7AA8AAQACAAcAAAA8AA8AAQACAAcAAAA9AA8AAQACAAcAAAA+AA8AAQACAAcAAAA/AA8AAQACAAcAAAA2AA8AAQABAAcAAAA3AB0AAgACAAcAAQA4AB0AAgACAAcAAQA5AB0AAgACAAcAAQA6AB0AAgACAAcAAQA7AB0AAgACAAcAAQA8AB0AAgACAAcAAQA9AB0AAgACAAcAAQA+AB0AAgACAAcAAQA/AB0AAgACAAcAAQBAAA8AAQADAAUAAABAAB0AAgADAAcAAQA2AB0AAgABAAcAAQA2ABUAAQADAAUAAAA2ABgAAQADAAUAAAASACIAAQACAAcAAAATACIAAQACAAcAAAAUACIAAQACAAcAAAAVACIAAQACAAcAAAAWACIAAQACAAcAAAAXACIAAQACAAcAAAAYACIAAQACAAcAAAAZACIAAQACAAcAAAAaACIAAQACAAcAAAAbACIAAQACAAcAAAAcACIAAQACAAcAAAAdACIAAQACAAcAAAAeACIAAQACAAcAAAAfACIAAQACAAcAAAAgACIAAQACAAcAAAAhACIAAQACAAcAAAAiACIAAQACAAcAAAAjACIAAQACAAcAAAAkACIAAQACAAcAAAAlACIAAQACAAcAAAARACIAAQABAAcAAAAXABEAAQACAAcAAAAmACIAAQADAAUAAAAYABUAAQABAAcAAAAfABUAAgADAAcAAQAfABsAAQABAAcAAAA=")
 tile_set = SubResource("TileSet_drpsh")
 
 [node name="WallTop" type="TileMapLayer" parent="World/DungeonMap" unique_id=431760887 groups=["walls"]]
 texture_filter = 1
-tile_map_data = PackedByteArray("AAAIABkAAAAAAAEAAQAIABoAAAAAAAEAAQAIABsAAAAAAAEAAQALABsAAAAAAAEAAQALABoAAAAAAAEAAQALABkAAAAAAAEAAQALABgAAAAAAAEAAQAIABIAAAAAAAEAAQAIABEAAAAAAAEAAQALAA8AAAAAAAEAAQALABAAAAAAAAEAAQALABEAAAAAAAEAAQALABIAAAAAAAEAAQALABMAAAAIAAMAAQAAABMAAAABAAAAAQALAA4AAAAAAAEAAQAHAA0AAwACAAMAAQAFAA0AAwABAAIAAQAIAA8AAAAAAAEAAQAIABAAAAAAAAEAAQAFAAwAAAAAAAEAAQAFAAsAAAAAAAEAAQAFAAoAAAAAAAEAAQAFAAkAAAAAAAEAAQAGAAcAAAACAAMAAQAHAAcAAAACAAMAAQAIAAcAAAACAAMAAQAFAAcAAAABAAAAAAAJAAcAAAACAAMAAQAKAAcAAAACAAMAAQALAAcAAAACAAMAAQAMAAwAAwACAAMAAQANAAwAAwACAAMAAQAOAAwAAwACAAMAAQAGAA0AAwACAAMAAQABABMAAAACAAMAAQACABMAAAACAAMAAQADABMAAAACAAMAAQAEABMAAAACAAMAAQAFABMAAAACAAMAAQAGABMAAAACAAMAAQAHABMAAAACAAMAAQAFAAgAAAAAAAEAAQAIAA4AAAAAAAEAAQAIABgAAAAAAAEAAgAIAA0AAwADAAAAAQABABcAAwACAAMAAQACABcAAwACAAMAAQADABcAAwACAAMAAQAEABcAAwACAAMAAQAGABcAAwACAAMAAQAHABcAAwACAAMAAQAIABcAAwADAAAAAQAAABUAAAAAAAEAAQAAABQAAAAAAAEAAQAAABYAAAAAAAEAAQAAABcAAwABAAIAAQALAA0AAAAAAAEAAQAFABcAAwACAAMAAQALAAwAAwABAAAAAQAMABMAAAACAAMAAQANABMAAAACAAMAAQAOABMAAAACAAMAAQAPABMAAAACAAMAAQAQABMAAAACAAMAAQAIABMAAAALAAMAAQAPAAwAAwALAAMAAQAOABYAAwACAAMAAQAPABYAAwACAAMAAQAQABYAAwACAAMAAQALABYAAwABAAAAAQAPAAsAAAAAAAEAAgAMAAcAAAACAAMAAQANAAcAAAACAAMAAQAOAAcAAAACAAMA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AQBAABoAAAAAAAEAAQBAABkAAAAAAAEAAQBAABgAAAAAAAEAAQBAABcAAAAAAAEAAQBAABYAAAAAAAEAAQBAABUAAAAAAAEAAQBAABQAAAAAAAEAAQBAABMAAAAAAAEAAQBAABIAAAAAAAEAAQBAABEAAAAAAAEAAQBAABAAAAAAAAEAAQBAAA8AAAAAAAEAAQBAAA4AAAADAAAAAAARABcAAAAAAAEAAgAZABgAAwACAAMAAQAaABgAAwACAAMAAQAbABgAAwACAAMAAQAcABgAAwACAAMAAQAdABgAAwACAAMAAQAeABgAAwACAAMAAQAfABgAAwACAAMAAQAgABgAAwACAAMAAQAhABgAAwACAAMAAQAiABgAAwACAAMAAQAjABgAAwACAAMAAQAkABgAAwACAAMAAQAlABgAAwACAAMAAQAZABQAAAACAAMAAQAaABQAAAACAAMAAQAbABQAAAACAAMAAQAcABQAAAACAAMAAQAdABQAAAACAAMAAQAhABQAAAACAAMAAQAiABQAAAACAAMAAQAjABQAAAACAAMAAQAYABQAAAAIAAMAAQAYABMAAAAAAAEAAQAYABIAAAAAAAEAAQA=")
+tile_map_data = PackedByteArray("AAAIABkAAAAAAAEAAQAIABoAAAAAAAEAAQAIABsAAAAAAAEAAQALABsAAAAAAAEAAQALABoAAAAAAAEAAQALABkAAAAAAAEAAQALABgAAAAAAAEAAQAIABIAAAAAAAEAAQAIABEAAAAAAAEAAQALAA8AAAAAAAEAAQALABAAAAAAAAEAAQALABEAAAAAAAEAAQALABIAAAAAAAEAAQALABMAAAAIAAMAAQAAABMAAAABAAAAAQALAA4AAAAAAAEAAQAHAA0AAwACAAMAAQAFAA0AAwABAAIAAQAIAA8AAAAAAAEAAQAIABAAAAAAAAEAAQAFAAwAAAAAAAEAAQAFAAsAAAAAAAEAAQAFAAoAAAAAAAEAAQAFAAkAAAAAAAEAAQAGAAcAAAACAAMAAQAHAAcAAAACAAMAAQAIAAcAAAACAAMAAQAFAAcAAAABAAAAAAAJAAcAAAACAAMAAQAKAAcAAAACAAMAAQALAAcAAAACAAMAAQAMAAwAAwACAAMAAQANAAwAAwACAAMAAQAOAAwAAwACAAMAAQAGAA0AAwACAAMAAQABABMAAAACAAMAAQACABMAAAACAAMAAQADABMAAAACAAMAAQAEABMAAAACAAMAAQAFABMAAAACAAMAAQAGABMAAAACAAMAAQAHABMAAAACAAMAAQAFAAgAAAAAAAEAAQAIAA4AAAAAAAEAAQAIABgAAAAAAAEAAgAIAA0AAwADAAAAAQABABcAAwACAAMAAQACABcAAwACAAMAAQADABcAAwACAAMAAQAEABcAAwACAAMAAQAGABcAAwACAAMAAQAHABcAAwACAAMAAQAIABcAAwADAAAAAQAAABUAAAAAAAEAAQAAABQAAAAAAAEAAQAAABYAAAAAAAEAAQAAABcAAwABAAIAAQALAA0AAAAAAAEAAQAFABcAAwACAAMAAQALAAwAAwABAAAAAQAMABMAAAACAAMAAQANABMAAAACAAMAAQAOABMAAAACAAMAAQAPABMAAAACAAMAAQAQABMAAAACAAMAAQAIABMAAAALAAMAAQAPAAwAAwALAAMAAQAOABYAAwACAAMAAQAPABYAAwACAAMAAQAQABYAAwACAAMAAQALABYAAwABAAAAAQAPAAsAAAAAAAEAAgAMAAcAAAACAAMAAQANAAcAAAACAAMAAQAOAAcAAAACAAMA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")
 tile_set = SubResource("TileSet_qjiij")
 
 [node name="Elements" type="TileMapLayer" parent="World/DungeonMap" unique_id=1457456420]
@@ -2708,6 +3577,124 @@ position = Vector2(2, 14)
 y_sort_enabled = true
 position = Vector2(39.000004, 326)
 
-[node name="YellowSkeleton2" parent="World/Entities" unique_id=3019170 node_paths=PackedStringArray("player") instance=ExtResource("14_ho7nn")]
-position = Vector2(164, 235)
+[node name="DualWall" type="Node2D" parent="World/Entities" unique_id=1931496430 node_paths=PackedStringArray("player")]
+position = Vector2(398, 306)
+script = ExtResource("12_ho7nn")
 player = NodePath("../Player")
+
+[node name="BottomToTop" type="TileMapLayer" parent="World/Entities/DualWall" unique_id=19166864]
+position = Vector2(-176, -144)
+collision_visibility_mode = 1
+
+[node name="WallBase" type="TileMapLayer" parent="World/Entities/DualWall/BottomToTop" unique_id=928365984 groups=["walls"]]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAALAAoAAQAFAAcAAAAMAAoAAQAFAAcAAAANAAoAAQAFAAcAAAAOAAoAAQAFAAcAAAAPAAoAAQAFAAcAAAAQAAoAAQAFAAcAAAA=")
+tile_set = SubResource("TileSet_qhpcx")
+collision_visibility_mode = 1
+
+[node name="WallTop" type="TileMapLayer" parent="World/Entities/DualWall/BottomToTop" unique_id=1912257744 groups=["walls"]]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAALAAkAAAACAAMAAAAMAAkAAAACAAMAAAANAAkAAAACAAMAAAAOAAkAAAACAAMAAAAPAAkAAAACAAMAAAAQAAkAAAACAAMAAAA=")
+tile_set = SubResource("TileSet_s0cm8")
+collision_visibility_mode = 1
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World/Entities/DualWall/BottomToTop" unique_id=584028563]
+position = Vector2(184, 156)
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Entities/DualWall/BottomToTop/StaticBody2D" unique_id=1888868990]
+z_index = 4
+position = Vector2(40, 5)
+shape = SubResource("RectangleShape2D_pd3m7")
+debug_color = Color(0.6214161, 0.5231188, 0.3088479, 0.41960785)
+
+[node name="TopToBottom" type="TileMapLayer" parent="World/Entities/DualWall" unique_id=656641133]
+position = Vector2(-176, -144)
+collision_visibility_mode = 1
+
+[node name="WallBase" type="TileMapLayer" parent="World/Entities/DualWall/TopToBottom" unique_id=1329024215 groups=["walls"]]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAALAAoAAgAFAAcAAQAMAAoAAgAFAAcAAQANAAoAAgAFAAcAAQAOAAoAAgAFAAcAAQAPAAoAAgAFAAcAAQAQAAoAAgAFAAcAAQA=")
+tile_set = SubResource("TileSet_qhpcx")
+collision_visibility_mode = 1
+
+[node name="WallTop" type="TileMapLayer" parent="World/Entities/DualWall/TopToBottom" unique_id=29150297 groups=["walls"]]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAALAAkAAwACAAMAAQAMAAkAAwACAAMAAQANAAkAAwACAAMAAQAOAAkAAwACAAMAAQAPAAkAAwACAAMAAQAQAAkAAwACAAMAAQA=")
+tile_set = SubResource("TileSet_s0cm8")
+collision_visibility_mode = 1
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World/Entities/DualWall/TopToBottom" unique_id=1736004073]
+position = Vector2(192, 167)
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Entities/DualWall/TopToBottom/StaticBody2D" unique_id=977527812]
+z_index = 4
+position = Vector2(32, -9)
+shape = SubResource("RectangleShape2D_n4bst")
+debug_color = Color(0.61262083, 0.43725637, 0.8155487, 0.41960785)
+
+[node name="DualWall2" type="Node2D" parent="World/Entities" unique_id=1344079583 node_paths=PackedStringArray("player")]
+position = Vector2(510, 402)
+script = ExtResource("12_ho7nn")
+player = NodePath("../Player")
+
+[node name="BottomToTop" type="TileMapLayer" parent="World/Entities/DualWall2" unique_id=1668220390]
+position = Vector2(-176, -144)
+collision_visibility_mode = 1
+
+[node name="WallBase" type="TileMapLayer" parent="World/Entities/DualWall2/BottomToTop" unique_id=2023110722 groups=["walls"]]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAALAAoAAQAFAAcAAAAMAAoAAQAFAAcAAAANAAoAAQAFAAcAAAAOAAoAAQAFAAcAAAAPAAoAAQAFAAcAAAAQAAoAAQAFAAcAAAA=")
+tile_set = SubResource("TileSet_qhpcx")
+collision_visibility_mode = 1
+
+[node name="WallTop" type="TileMapLayer" parent="World/Entities/DualWall2/BottomToTop" unique_id=1237245070 groups=["walls"]]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAALAAkAAAACAAMAAAAMAAkAAAACAAMAAAANAAkAAAACAAMAAAAOAAkAAAACAAMAAAAPAAkAAAACAAMAAAAQAAkAAAACAAMAAAA=")
+tile_set = SubResource("TileSet_s0cm8")
+collision_visibility_mode = 1
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World/Entities/DualWall2/BottomToTop" unique_id=776807536]
+position = Vector2(184, 156)
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Entities/DualWall2/BottomToTop/StaticBody2D" unique_id=1241507754]
+z_index = 4
+position = Vector2(40, 5)
+shape = SubResource("RectangleShape2D_pd3m7")
+debug_color = Color(0.6214161, 0.5231188, 0.3088479, 0.41960785)
+
+[node name="TopToBottom" type="TileMapLayer" parent="World/Entities/DualWall2" unique_id=1065924152]
+position = Vector2(-176, -144)
+collision_visibility_mode = 1
+
+[node name="WallBase" type="TileMapLayer" parent="World/Entities/DualWall2/TopToBottom" unique_id=149093156 groups=["walls"]]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAALAAoAAgAFAAcAAQAMAAoAAgAFAAcAAQANAAoAAgAFAAcAAQAOAAoAAgAFAAcAAQAPAAoAAgAFAAcAAQAQAAoAAgAFAAcAAQA=")
+tile_set = SubResource("TileSet_qhpcx")
+collision_visibility_mode = 1
+
+[node name="WallTop" type="TileMapLayer" parent="World/Entities/DualWall2/TopToBottom" unique_id=725743339 groups=["walls"]]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAALAAkAAwACAAMAAQAMAAkAAwACAAMAAQANAAkAAwACAAMAAQAOAAkAAwACAAMAAQAPAAkAAwACAAMAAQAQAAkAAwACAAMAAQA=")
+tile_set = SubResource("TileSet_s0cm8")
+collision_visibility_mode = 1
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World/Entities/DualWall2/TopToBottom" unique_id=161654445]
+position = Vector2(192, 167)
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Entities/DualWall2/TopToBottom/StaticBody2D" unique_id=1102690135]
+z_index = 4
+position = Vector2(32, -9)
+shape = SubResource("RectangleShape2D_n4bst")
+debug_color = Color(0.61262083, 0.43725637, 0.8155487, 0.41960785)
+
+[node name="WhiteSkeleton" parent="World/Entities" unique_id=582161565 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
+position = Vector2(162.00003, 266.00003)
+player = NodePath("../Player")
+
+[node name="Chest" parent="World" unique_id=116387224 instance=ExtResource("14_ho7nn")]
+position = Vector2(117, 348)
+items = Array[ExtResource("15_qjiij")]([ExtResource("16_5iruf")])

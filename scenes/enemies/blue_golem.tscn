@@ -380,9 +380,6 @@ radius = 52.009613
 texture_filter = 1
 collision_layer = 4
 script = ExtResource("1_ubhja")
-speed_on_random_walk = 30.0
-max_health = 200.0
-damage_given = 35.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1078712412]
 position = Vector2(0.25, 13.25)
@@ -414,8 +411,9 @@ target_desired_distance = 15.0
 path_postprocessing = 1
 simplify_epsilon = 8.0
 radius = 8.0
+debug_enabled = true
 debug_use_custom = true
-debug_path_custom_color = Color(0, 0.52156866, 0, 1)
+debug_path_custom_color = Color(0.20632443, 0.30913824, 1, 1)
 
 [node name="AttackRange" type="Area2D" parent="." unique_id=136208199]
 position = Vector2(4, 15)
