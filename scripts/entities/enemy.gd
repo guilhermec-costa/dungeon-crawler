@@ -3,7 +3,6 @@ extends CharacterBody2D
 class_name BaseEnemy
 
 var gold_scene: PackedScene = preload("res://scenes/gold_drop.tscn")
-var damageTakenLabel: PackedScene = preload("res://scenes/damage_label.tscn")
 
 @export var config: EnemyData
 @export var player: Player
@@ -126,6 +125,7 @@ func update_flip_based_on_velocity():
 
 func _chase_player():
 	var target = player.global_position
+	target.x += 5 if is_facing_left() else -5
 
 	pathfinder.target_position = target
 
@@ -202,10 +202,10 @@ func update_animation(new_animation: String):
 # --- Combat ---
 
 func show_damage_label(damage: float, type: DamageTypes.Type):
-	var damage_label: TweenMessage = damageTakenLabel.instantiate()
+	var damage_label := Label.new()
 	add_child(damage_label)
+	
 	damage_label.z_index = 10
-
 	damage_label.position = Vector2(0, -20)
 	damage_label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 
@@ -218,7 +218,7 @@ func show_damage_label(damage: float, type: DamageTypes.Type):
 	damage_label.add_theme_font_size_override("font_size", 18)
 	damage_label.add_theme_constant_override("outline_size", 3)
 	damage_label.add_theme_color_override("font_outline_color", Color.BLACK)
-	damage_label.show_damage_label(damage, 0.7)
+	TweenManager.animate_floating_label(damage_label, str(damage), 0.7)
 
 func take_damage(damage: float, type: DamageTypes.Type) -> void:
 	var previous_state = state

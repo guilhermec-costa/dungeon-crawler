@@ -203,7 +203,7 @@ data = PackedByteArray("//vQRAAM5Gd6qxGINtKf7uUhGYisVrH82hTEgAL0vdsCnsAAGVm6/30m
 [node name="Player" type="CharacterBody2D" unique_id=898338159]
 modulate = Color(0.47768176, 0.5452191, 0.50288934, 1)
 visibility_layer = 6
-position = Vector2(538, 344)
+position = Vector2(38, 32)
 scale = Vector2(0.95, 0.95)
 collision_layer = 2
 collision_mask = 65
@@ -253,10 +253,9 @@ stream = ExtResource("5_qlg0r")
 pitch_scale = 1.6
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=162400643]
-visible = false
-position = Vector2(-4, 17)
-scale = Vector2(0.245, 0.243)
-color = Color(0.46792364, 0.51728076, 0.8260207, 1)
+position = Vector2(2.1052654, -7.50785)
+scale = Vector2(0.17487144, 0.13296115)
+color = Color(0.16691089, 0.16987538, 0.17114422, 1)
 texture = ExtResource("7_fjrip")
 texture_scale = 0.87
 height = 38.0
@@ -274,5 +273,8 @@ collision_mask = 5
 
 [node name="StaminaRecoveryTimer" type="Timer" parent="." unique_id=85647905]
 wait_time = 2.0
+
+[node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=29050422]
+current = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

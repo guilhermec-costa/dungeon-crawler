@@ -1,0 +1,81 @@
+[gd_scene format=4 uid="uid://brhosjctyuge1"]
+
+[ext_resource type="Texture2D" uid="uid://tiohi8w5b6pr" path="res://assets/map/0x72_DungeonTilesetII_v1.7/atlas_floor-16x16.png" id="1_2wmwv"]
+[ext_resource type="Script" uid="uid://dyap1dmxhp8nw" path="res://scripts/map_elements/spike_trap.gd" id="1_3o2ei"]
+[ext_resource type="Texture2D" uid="uid://didcdwd16o0a1" path="res://assets/light.png" id="3_y5pmd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3o2ei"]
+atlas = ExtResource("1_2wmwv")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y5pmd"]
+atlas = ExtResource("1_2wmwv")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dx8au"]
+atlas = ExtResource("1_2wmwv")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8xtfk"]
+atlas = ExtResource("1_2wmwv")
+region = Rect2(48, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7bkgt"]
+animations = [{
+"frames": [{
+"duration": 20.0,
+"texture": SubResource("AtlasTexture_3o2ei")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_y5pmd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dx8au")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_8xtfk")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7bkgt"]
+size = Vector2(14, 13)
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_y5pmd"]
+data = PackedByteArray("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")
+format = 3
+mix_rate = 22050
+
+[node name="SpikeTrap" type="Node2D" unique_id=292556448]
+position = Vector2(-1, 2)
+script = ExtResource("1_3o2ei")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=230005423]
+texture_filter = 1
+position = Vector2(9, 6)
+sprite_frames = SubResource("SpriteFrames_7bkgt")
+autoplay = "default"
+frame_progress = 0.6217894
+
+[node name="Area2D" type="Area2D" parent="." unique_id=17800402]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=271505654]
+position = Vector2(9, 5.5)
+shape = SubResource("RectangleShape2D_7bkgt")
+debug_color = Color(0.38014755, 0.21844733, 0.41708535, 0.41960785)
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1066081753]
+position = Vector2(9.5, 6.02)
+scale = Vector2(0.03320313, 0.031171875)
+color = Color(0.3922966, 0.38812172, 0.38916194, 1)
+texture = ExtResource("3_y5pmd")
+
+[node name="SpikeSound" type="AudioStreamPlayer2D" parent="." unique_id=1382847004]
+position = Vector2(8, 6)
+stream = SubResource("AudioStreamWAV_y5pmd")
+volume_db = -23.164
+max_distance = 150.0
+max_polyphony = 5

@@ -5,6 +5,7 @@ class_name Player
 signal player_dead
 signal damage_taken
 signal update_stamina
+signal room_change_requested(room: Node2D)
 
 @onready var raycast: RayCast2D = $CollisionRay
 @onready var sword_area: SwordArea = $SwordArea
@@ -23,8 +24,6 @@ signal update_stamina
 		return speed * sprinting_multiplier \
 			if (can_sprint and is_sprinting) else speed
 
-
-var damageTakenLabel: PackedScene = preload("res://scenes/damage_label.tscn")
 var is_dead: bool = false
 var is_sprinting: bool = false
 var stamina_cost := {
@@ -286,23 +285,22 @@ func _on_frame_changed():
 		$SwordArea/CollisionShape2D.call_deferred("set_disabled", false)
 
 func show_tween_message(message: String):
-	var damage_label: TweenMessage = damageTakenLabel.instantiate()
-	add_child(damage_label)
-	damage_label.position = Vector2(0, 32)
-	damage_label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	damage_label.modulate = Color(0.0, 0.68, 0.3)
-	damage_label.add_theme_constant_override("outline_size", 4)
-	damage_label.add_theme_color_override("font_outline_color", Color.YELLOW_GREEN)
-	damage_label.show_text_label(message, 0.7)
+	var label: TweenMessage = Label.new()
+	add_child(label)
+	label.position = Vector2(0, 32)
+	label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	label.modulate = Color(0.0, 0.68, 0.3)
+	label.add_theme_constant_override("outline_size", 4)
+	label.add_theme_color_override("font_outline_color", Color.YELLOW_GREEN)
+	label.show_text_label(message, 0.7)
 
 func show_no_stamina_message():
-	var label: TweenMessage = damageTakenLabel.instantiate()
+	var label := Label.new()
 	add_child(label)
 
 	label.position = Vector2(0, 32)
 	label.z_index = 10
 	label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-
 	label.modulate = Color(1.0, 0.9, 0.2)
 
 	label.add_theme_constant_override("outline_size", 4)
@@ -310,23 +308,28 @@ func show_no_stamina_message():
 		"font_outline_color",
 		Color.BLACK
 	)
-	label.show_text_label("NO STAMINA!", 0.7)
+	
+	TweenManager.animate_floating_label(label, "NO STAMINA!", 0.7)
 	
 func show_damage_label(damage: float):
-	var damage_label: TweenMessage = damageTakenLabel.instantiate()
-	damage_label.z_index = 10
-	add_child(damage_label)
-	damage_label.position = Vector2(0, 32)
-	damage_label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	damage_label.modulate = Color(1.0, 0.3, 0.3)
-	damage_label.add_theme_constant_override("outline_size", 4)
-	damage_label.add_theme_color_override("font_outline_color", Color.BLACK)
-	damage_label.show_damage_label(damage, 0.7)
+	var label := Label.new()
+	label.z_index = 10
+	add_child(label)
+	label.position = Vector2(0, 5)
+	label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	label.modulate = Color(1.0, 0.0, 0.0)
+	
+	label.add_theme_constant_override("outline_size", 4)
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	
+	TweenManager.animate_floating_label(label, str(damage), 0.7)
 
 func enter_interectable(interactable: Interactable):
-	print("enter interactable")
 	current_interactable = interactable
 
 func exit_interactable(interactable: Interactable):
 	if current_interactable == interactable:
 		current_interactable = null
+
+func enter_room(room: Node2D):
+	room_change_requested.emit(room)

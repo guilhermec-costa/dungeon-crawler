@@ -1,7 +1,7 @@
 extends Node
 
-const phase1Scene = preload("res://scenes/phases/phase_1.tscn")
-const phase2Scene = preload("res://scenes/phases/phase_2.tscn")
+const phase1_scene: PackedScene = preload("res://scenes/phases/phase_1.tscn")
+const secret_room: PackedScene = preload("res://scenes/secret_room.tscn")
 
 @onready var game_menu: GameMenu = $GameMenu
 @onready var pause_menu = $PauseMenu
@@ -34,7 +34,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			pause_menu.hide()
 		
 func start_game():
-	var phase1: Phase1 = phase1Scene.instantiate()
+	var phase1: Phase1 = phase1_scene.instantiate()
 	current_phase = phase1
 	current_phase.process_mode = Node.PROCESS_MODE_PAUSABLE
 	add_child(phase1)
