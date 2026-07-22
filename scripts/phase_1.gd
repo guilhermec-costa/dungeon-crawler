@@ -41,6 +41,7 @@ func _on_player_deplete_stamina() -> void:
 	player_hud.update_stamina()
 
 func _on_player_room_change_request(room: Node2D, spawn_position: Vector2):
+	await TransitionManager.fade_out()
 	player.position_on_last_room = player.global_position
 	player.last_leaved_room = player.current_room
 	player.current_room = room
@@ -48,3 +49,4 @@ func _on_player_room_change_request(room: Node2D, spawn_position: Vector2):
 	player.global_position = spawn_position
 	player.last_leaved_room.hide()
 	player.current_room.show()
+	await TransitionManager.fade_in()
