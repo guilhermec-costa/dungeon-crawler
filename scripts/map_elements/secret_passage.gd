@@ -1,7 +1,7 @@
 class_name SecretPassage
 extends Interactable
 
-@export var secret_room: Node2D
+@export var secret_room: SecretRoom
 
 func _ready():
 	body_entered.connect(_on_body_entered)
@@ -17,4 +17,4 @@ func _on_body_exited(body):
 		body.exit_interactable(self)
 
 func interact(player: Player):
-	player.enter_room(secret_room)
+	player.enter_room(secret_room, secret_room.player_start_position.global_position)

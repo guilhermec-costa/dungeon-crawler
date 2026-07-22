@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://8rcby5b6kbga" path="res://assets/healthbar/life_mana_full.png" id="2_ujnyd"]
 [ext_resource type="Texture2D" uid="uid://c7ojgbqebv5ch" path="res://assets/frames/100.png" id="3_er5qu"]
 [ext_resource type="Texture2D" uid="uid://dhkp3qj0u671h" path="res://assets/loreon_knight/sword_1/ready_1.png" id="6_8y7rk"]
-[ext_resource type="Script" uid="uid://otbv8uel765x" path="res://scenes/hotbar.gd" id="8_8y7rk"]
+[ext_resource type="Script" uid="uid://otbv8uel765x" path="res://scripts/hotbar.gd" id="8_8y7rk"]
 [ext_resource type="PackedScene" uid="uid://h5l18ovjacls" path="res://scenes/inventory_slot_ui.tscn" id="9_8y7rk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s25gh"]

@@ -5,7 +5,7 @@ class_name Player
 signal player_dead
 signal damage_taken
 signal update_stamina
-signal room_change_requested(room: Node2D)
+signal room_change_requested(room: Node2D, spawn_position: Vector2)
 
 @onready var raycast: RayCast2D = $CollisionRay
 @onready var sword_area: SwordArea = $SwordArea
@@ -25,7 +25,11 @@ signal room_change_requested(room: Node2D)
 			if (can_sprint and is_sprinting) else speed
 
 var is_dead: bool = false
-var is_sprinting: bool = false
+var is_sprinting: bool = false:
+	get:
+		return is_sprinting
+	set(value):
+		is_sprinting = value
 var stamina_cost := {
 	"roll": 30.0,
 	"main_attack": 20.0,
@@ -41,7 +45,9 @@ var stamina: float = 0.0:
 	set(value):
 		stamina = clamp(value, 0, max_stamina)
 		update_stamina.emit()
-
+var last_leaved_room: Node2D
+var current_room: Node2D
+var position_on_last_room := Vector2.ZERO
 
 func consume_stamina(amount: float):
 	stamina -= amount
@@ -331,5 +337,5 @@ func exit_interactable(interactable: Interactable):
 	if current_interactable == interactable:
 		current_interactable = null
 
-func enter_room(room: Node2D):
-	room_change_requested.emit(room)
+func enter_room(room: Node2D, spawn_position: Vector2):
+	room_change_requested.emit(room, spawn_position)

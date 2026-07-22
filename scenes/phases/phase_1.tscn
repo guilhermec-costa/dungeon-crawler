@@ -3836,7 +3836,4 @@ position = Vector2(162.00003, 266.00003)
 player = NodePath("../Player")
 
 [node name="SecretRoom" parent="World" unique_id=1969997345 instance=ExtResource("16_qjiij")]
-position = Vector2(266, 474)
-
-[node name="PlayerStartPosition" type="Marker2D" parent="World/SecretRoom" unique_id=330018507]
-position = Vector2(212, 295)
+position = Vector2(97, 537)
