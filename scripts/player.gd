@@ -69,10 +69,10 @@ enum State {
 var state := State.	IDLE
 
 func _draw():
-	draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.2, 0.6))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2(0.95, 0.6))
 	var shadow_color = Color.BLACK
 	shadow_color.a = 0.15
-	draw_circle(Vector2.DOWN * 28, 10, shadow_color)
+	draw_circle(Vector2.DOWN * 25, 10, shadow_color)
 	
 func die():
 	is_dead = true
@@ -103,6 +103,9 @@ var camera_control_enabled: bool = true
 func collect_gold(goldData: ItemData, amount: float):
 	current_gold += amount
 	inventory.add_item(goldData, amount)
+	var label := MessageLabel.new()
+	var gold_message = "+%d" % int(amount)
+	animate_message_label(gold_message, FloatingTextConfigs.GOLD_COLLECTED)
 	
 	
 func _input(event: InputEvent) -> void:
@@ -264,7 +267,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 func take_damage(damage: float):
 	if state == State.ROLLING:
 		if (randf() * 100) < dodge_chance:
-			show_tween_message("DODGE!")
+			animate_message_label("DODGE!", FloatingTextConfigs.MESSAGE)
 			return
 		
 	if is_dead: 
@@ -272,7 +275,7 @@ func take_damage(damage: float):
 		
 	health -= damage
 	damage_taken.emit()
-	show_damage_label(damage)
+	animate_message_label(str(damage), FloatingTextConfigs.NORMAL_DAMAGE)
 	
 	if health <= 0:
 		die()
@@ -290,46 +293,15 @@ func _on_frame_changed():
 			AudioManager.play_sfx($SwordAttackSound.stream)
 		$SwordArea/CollisionShape2D.call_deferred("set_disabled", false)
 
-func show_tween_message(message: String):
-	var label: TweenMessage = Label.new()
-	add_child(label)
-	label.position = Vector2(0, 32)
-	label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	label.modulate = Color(0.0, 0.68, 0.3)
-	label.add_theme_constant_override("outline_size", 4)
-	label.add_theme_color_override("font_outline_color", Color.YELLOW_GREEN)
-	label.show_text_label(message, 0.7)
-
 func show_no_stamina_message():
-	var label := Label.new()
+	animate_message_label("NO STAMINA!", FloatingTextConfigs.WARNING_MESSAGE)
+
+func animate_message_label(text: String, config: FloatingTextConfig):
+	var label := MessageLabel.new()
 	add_child(label)
-
-	label.position = Vector2(0, 32)
-	label.z_index = 10
-	label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	label.modulate = Color(1.0, 0.9, 0.2)
-
-	label.add_theme_constant_override("outline_size", 4)
-	label.add_theme_color_override(
-		"font_outline_color",
-		Color.BLACK
-	)
+	label.setup(text, config)
+	TweenManager.animate_floating_label(label)
 	
-	TweenManager.animate_floating_label(label, "NO STAMINA!", 0.7)
-	
-func show_damage_label(damage: float):
-	var label := Label.new()
-	label.z_index = 10
-	add_child(label)
-	label.position = Vector2(0, 5)
-	label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	label.modulate = Color(1.0, 0.0, 0.0)
-	
-	label.add_theme_constant_override("outline_size", 4)
-	label.add_theme_color_override("font_outline_color", Color.BLACK)
-	
-	TweenManager.animate_floating_label(label, str(damage), 0.7)
-
 func enter_interectable(interactable: Interactable):
 	current_interactable = interactable
 

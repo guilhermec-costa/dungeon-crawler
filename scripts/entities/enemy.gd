@@ -202,23 +202,15 @@ func update_animation(new_animation: String):
 # --- Combat ---
 
 func show_damage_label(damage: float, type: DamageTypes.Type):
-	var damage_label := Label.new()
-	add_child(damage_label)
-	
-	damage_label.z_index = 10
-	damage_label.position = Vector2(0, -20)
-	damage_label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-
+	var label = MessageLabel.new()
+	add_child(label)
 	match type:
 		DamageTypes.Type.NORMAL:
-			damage_label.modulate = Color.WHITE
+			label.setup(str(damage), FloatingTextConfigs.NORMAL_DAMAGE)
 		DamageTypes.Type.CRITICAL:
-			damage_label.modulate = Color(1.0, 0.85, 0.0)
+			label.setup(str(damage), FloatingTextConfigs.CRITICAL_DAMAGE)
 
-	damage_label.add_theme_font_size_override("font_size", 18)
-	damage_label.add_theme_constant_override("outline_size", 3)
-	damage_label.add_theme_color_override("font_outline_color", Color.BLACK)
-	TweenManager.animate_floating_label(damage_label, str(damage), 0.7)
+	TweenManager.animate_floating_label(label)
 
 func take_damage(damage: float, type: DamageTypes.Type) -> void:
 	var previous_state = state

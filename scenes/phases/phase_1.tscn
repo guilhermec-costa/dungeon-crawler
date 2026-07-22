@@ -3538,6 +3538,7 @@ player = NodePath("../World/Entities/Player")
 [node name="Room" type="Node" parent="." unique_id=1115462353]
 
 [node name="PhaseLight" type="DirectionalLight2D" parent="." unique_id=815560919]
+light_mask = 0
 position = Vector2(-17, 36)
 scale = Vector2(-0.25519067, -0.021846019)
 color = Color(0.24360749, 0.2818836, 0.29364765, 1)
@@ -3707,6 +3708,7 @@ position = Vector2(161, 448)
 secret_room = NodePath("../../SecretRoom")
 
 [node name="Entities" type="Node2D" parent="World" unique_id=260787806]
+light_mask = 2
 visibility_layer = 2
 z_index = 1
 y_sort_enabled = true

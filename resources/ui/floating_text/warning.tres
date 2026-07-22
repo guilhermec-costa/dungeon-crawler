@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="MessageLabelConfig" format=3 uid="uid://bvm6k5v7vxcqe"]
+
+[ext_resource type="Script" uid="uid://b86vhsnf4hu0h" path="res://scripts/data/message_label_config.gd" id="1_x1770"]
+
+[resource]
+script = ExtResource("1_x1770")
+color = Color(0.79253995, 0.42047966, 0.17843422, 1)
+metadata/_custom_type_script = "uid://b86vhsnf4hu0h"

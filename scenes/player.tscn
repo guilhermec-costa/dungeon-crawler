@@ -202,7 +202,8 @@ data = PackedByteArray("//vQRAAM5Gd6qxGINtKf7uUhGYisVrH82hTEgAL0vdsCnsAAGVm6/30m
 
 [node name="Player" type="CharacterBody2D" unique_id=898338159]
 modulate = Color(0.47768176, 0.5452191, 0.50288934, 1)
-visibility_layer = 6
+light_mask = 2
+visibility_layer = 2
 position = Vector2(38, 32)
 scale = Vector2(0.95, 0.95)
 collision_layer = 2

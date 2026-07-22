@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="FloatingTextConfig" format=3 uid="uid://beb2lla8woxun"]
+
+[ext_resource type="Script" uid="uid://b86vhsnf4hu0h" path="res://scripts/data/message_label_config.gd" id="1_mrmso"]
+
+[resource]
+script = ExtResource("1_mrmso")
+font_size = 14
+metadata/_custom_type_script = "uid://b86vhsnf4hu0h"

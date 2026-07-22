@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c6oey1u4gscfu"]
+
+[ext_resource type="Script" uid="uid://gfht3myfsdee" path="res://scripts/UI/message_label.gd" id="1_3wx75"]
+
+[node name="MessageLabel" type="Label" unique_id=955672576]
+light_mask = 16
+script = ExtResource("1_3wx75")

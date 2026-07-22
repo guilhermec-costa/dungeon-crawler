@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://d1c0m221qiys4"]
+
+[ext_resource type="PackedScene" uid="uid://ch4hpitq4c3k7" path="res://scenes/chest.tscn" id="1_pf3qv"]
+[ext_resource type="PackedScene" uid="uid://cwu0gaawvtd4n" path="res://scenes/player.tscn" id="2_oxsjb"]
+
+[node name="ChestOpen" type="Node2D" unique_id=1997842516]
+
+[node name="Chest" parent="." unique_id=1954145144 instance=ExtResource("1_pf3qv")]
+position = Vector2(17, 12)
+
+[node name="Player" parent="." unique_id=898338159 instance=ExtResource("2_oxsjb")]
+position = Vector2(-13, 8)

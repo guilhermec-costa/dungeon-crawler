@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FloatingTextConfig" format=3 uid="uid://lbp4ygd7dslf"]
+
+[ext_resource type="Script" uid="uid://b86vhsnf4hu0h" path="res://scripts/data/message_label_config.gd" id="1_lj2ds"]
+
+[resource]
+script = ExtResource("1_lj2ds")
+color = Color(0.9519189, 0.8281184, 0.28083083, 1)
+font_size = 9
+outline_size = 2
+duration = 0.5
+metadata/_custom_type_script = "uid://b86vhsnf4hu0h"
