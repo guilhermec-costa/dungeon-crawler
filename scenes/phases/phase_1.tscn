@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://diskk4pjmg7b7" path="res://scenes/map_elements/secret_passage.tscn" id="13_5iruf"]
 [ext_resource type="PackedScene" uid="uid://d37qmuwcvb80v" path="res://scenes/enemies/white_skeleton.tscn" id="14_5iruf"]
 [ext_resource type="PackedScene" uid="uid://bvmkrk5rwygo6" path="res://scenes/secret_room.tscn" id="16_qjiij"]
+[ext_resource type="PackedScene" uid="uid://ctoiqnxh5b08a" path="res://scenes/enemies/yellow_skeleton.tscn" id="17_cveml"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_rytft"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -3538,6 +3539,7 @@ player = NodePath("../World/Entities/Player")
 [node name="Room" type="Node" parent="." unique_id=1115462353]
 
 [node name="PhaseLight" type="DirectionalLight2D" parent="." unique_id=815560919]
+visible = false
 light_mask = 0
 position = Vector2(-17, 36)
 scale = Vector2(-0.25519067, -0.021846019)
@@ -3600,70 +3602,72 @@ scale = Vector2(0.86, 0.86)
 position = Vector2(493.99997, 345)
 scale = Vector2(0.86, 0.86)
 
-[node name="Torch2" parent="World/DungeonMap/Decorations" unique_id=1156117351 instance=ExtResource("10_wawk4")]
+[node name="Torchs" type="Node2D" parent="World/DungeonMap/Decorations" unique_id=1531949220]
+
+[node name="Torch2" parent="World/DungeonMap/Decorations/Torchs" unique_id=1156117351 instance=ExtResource("10_wawk4")]
 position = Vector2(340, 270)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch17" parent="World/DungeonMap/Decorations" unique_id=884532625 instance=ExtResource("10_wawk4")]
+[node name="Torch17" parent="World/DungeonMap/Decorations/Torchs" unique_id=884532625 instance=ExtResource("10_wawk4")]
 position = Vector2(663, 256)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch15" parent="World/DungeonMap/Decorations" unique_id=535235719 instance=ExtResource("10_wawk4")]
+[node name="Torch15" parent="World/DungeonMap/Decorations/Torchs" unique_id=535235719 instance=ExtResource("10_wawk4")]
 position = Vector2(502, 380)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch16" parent="World/DungeonMap/Decorations" unique_id=992320063 instance=ExtResource("10_wawk4")]
+[node name="Torch16" parent="World/DungeonMap/Decorations/Torchs" unique_id=992320063 instance=ExtResource("10_wawk4")]
 position = Vector2(332, 437)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch3" parent="World/DungeonMap/Decorations" unique_id=466695696 instance=ExtResource("10_wawk4")]
+[node name="Torch3" parent="World/DungeonMap/Decorations/Torchs" unique_id=466695696 instance=ExtResource("10_wawk4")]
 position = Vector2(435, 99.00001)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch7" parent="World/DungeonMap/Decorations" unique_id=1555232895 instance=ExtResource("10_wawk4")]
+[node name="Torch7" parent="World/DungeonMap/Decorations/Torchs" unique_id=1555232895 instance=ExtResource("10_wawk4")]
 position = Vector2(559, 97)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch9" parent="World/DungeonMap/Decorations" unique_id=1348143953 instance=ExtResource("10_wawk4")]
+[node name="Torch9" parent="World/DungeonMap/Decorations/Torchs" unique_id=1348143953 instance=ExtResource("10_wawk4")]
 position = Vector2(291, 132)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch12" parent="World/DungeonMap/Decorations" unique_id=8154223 instance=ExtResource("10_wawk4")]
+[node name="Torch12" parent="World/DungeonMap/Decorations/Torchs" unique_id=8154223 instance=ExtResource("10_wawk4")]
 position = Vector2(704.00006, 125)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch14" parent="World/DungeonMap/Decorations" unique_id=734330364 instance=ExtResource("10_wawk4")]
+[node name="Torch14" parent="World/DungeonMap/Decorations/Torchs" unique_id=734330364 instance=ExtResource("10_wawk4")]
 position = Vector2(160, 132)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch4" parent="World/DungeonMap/Decorations" unique_id=232482575 instance=ExtResource("10_wawk4")]
+[node name="Torch4" parent="World/DungeonMap/Decorations/Torchs" unique_id=232482575 instance=ExtResource("10_wawk4")]
 position = Vector2(483, 291)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch5" parent="World/DungeonMap/Decorations" unique_id=1297417449 instance=ExtResource("10_wawk4")]
+[node name="Torch5" parent="World/DungeonMap/Decorations/Torchs" unique_id=1297417449 instance=ExtResource("10_wawk4")]
 position = Vector2(62.999996, 321)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch6" parent="World/DungeonMap/Decorations" unique_id=947522712 instance=ExtResource("10_wawk4")]
+[node name="Torch6" parent="World/DungeonMap/Decorations/Torchs" unique_id=947522712 instance=ExtResource("10_wawk4")]
 position = Vector2(139, 436)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch8" parent="World/DungeonMap/Decorations" unique_id=1841955128 instance=ExtResource("10_wawk4")]
+[node name="Torch8" parent="World/DungeonMap/Decorations/Torchs" unique_id=1841955128 instance=ExtResource("10_wawk4")]
 position = Vector2(336.99997, 546)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch11" parent="World/DungeonMap/Decorations" unique_id=1197005450 instance=ExtResource("10_wawk4")]
+[node name="Torch11" parent="World/DungeonMap/Decorations/Torchs" unique_id=1197005450 instance=ExtResource("10_wawk4")]
 position = Vector2(523, 539)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch13" parent="World/DungeonMap/Decorations" unique_id=161638509 instance=ExtResource("10_wawk4")]
+[node name="Torch13" parent="World/DungeonMap/Decorations/Torchs" unique_id=161638509 instance=ExtResource("10_wawk4")]
 position = Vector2(519, 484)
 scale = Vector2(0.35, 0.35)
 
-[node name="Torch10" parent="World/DungeonMap/Decorations" unique_id=673930919 instance=ExtResource("10_wawk4")]
+[node name="Torch10" parent="World/DungeonMap/Decorations/Torchs" unique_id=673930919 instance=ExtResource("10_wawk4")]
 position = Vector2(677, 499)
-rotation = -0.39752516
-scale = Vector2(0.35, 0.35)
+rotation = -0.39752513
+scale = Vector2(0.35000002, 0.35000002)
 
 [node name="WallBase" type="TileMapLayer" parent="World/DungeonMap" unique_id=475996126 groups=["walls"]]
 texture_filter = 1
@@ -3834,6 +3838,10 @@ debug_color = Color(0.61262083, 0.43725637, 0.8155487, 0.41960785)
 
 [node name="WhiteSkeleton" parent="World/Entities" unique_id=582161565 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
 position = Vector2(162.00003, 266.00003)
+player = NodePath("../Player")
+
+[node name="YellowSkeleton" parent="World/Entities" unique_id=65233277 node_paths=PackedStringArray("player") instance=ExtResource("17_cveml")]
+position = Vector2(163, 398)
 player = NodePath("../Player")
 
 [node name="SecretRoom" parent="World" unique_id=1969997345 instance=ExtResource("16_qjiij")]

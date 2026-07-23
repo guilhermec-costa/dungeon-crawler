@@ -34,6 +34,10 @@ func change_state(new_state: State) -> void:
 	if state == State.DEAD:
 		return
 	
+	if state == State.ATTACKING and new_state == State.TAKING_DAMAGE:
+		if randf() < config.cancel_attack_on_damage_chance:
+			return
+		
 	state = new_state
 
 func create_patrol_circle():
@@ -198,9 +202,6 @@ func update_animation(new_animation: String):
 	if new_animation != $AnimatedSprite2D.animation or not $AnimatedSprite2D.is_playing():
 		$AnimatedSprite2D.play(new_animation)
 
-
-# --- Combat ---
-
 func show_damage_label(damage: float, type: DamageTypes.Type):
 	var label = MessageLabel.new()
 	add_child(label)
@@ -214,6 +215,7 @@ func show_damage_label(damage: float, type: DamageTypes.Type):
 
 func take_damage(damage: float, type: DamageTypes.Type) -> void:
 	var previous_state = state
+	
 	change_state(State.TAKING_DAMAGE)
 	if config.resistence != 0:
 		damage = max(0.0, damage * (1.0 - config.resistence))

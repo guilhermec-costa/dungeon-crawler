@@ -152,6 +152,7 @@ collision_layer = 64
 collision_mask = 6
 script = ExtResource("1_sy5e1")
 items = Array[ExtResource("3_yhylo")]([])
+interaction_position = Vector2(-5, -12)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=316515945]

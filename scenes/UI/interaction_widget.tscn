@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://b07e1b4uwtysa"]
+
+[ext_resource type="Script" uid="uid://bbtvhmv4lvnin" path="res://scripts/UI/interaction_widget.gd" id="1_1vmbw"]
+[ext_resource type="FontFile" uid="uid://dql3qyssgj4k8" path="res://assets/fonts/Tiny RPG - Vampire Ire.ttf" id="1_jnueg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7p2v0"]
+bg_color = Color(0.43962178, 0.60729504, 0.82815224, 0.3882353)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.21950099, 0.21950105, 0.21950084, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="InteractionWidget" type="Node2D" unique_id=1717868745]
+script = ExtResource("1_1vmbw")
+
+[node name="Panel" type="Panel" parent="." unique_id=112363206]
+custom_minimum_size = Vector2(16, 16)
+clip_contents = true
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.155, 0.155)
+theme_override_styles/panel = SubResource("StyleBoxFlat_7p2v0")
+
+[node name="Label" type="Label" parent="Panel" unique_id=1708201163]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_jnueg")
+theme_override_font_sizes/font_size = 23
+text = "F"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -108,30 +108,37 @@ func collect_gold(goldData: ItemData, amount: float):
 	animate_message_label(gold_message, FloatingTextConfigs.GOLD_COLLECTED)
 	
 	
+func handle_mouse_event(event: InputEventMouseButton) -> void:
+	if event.is_pressed():
+		match event.button_index:
+			MOUSE_BUTTON_WHEEL_UP:
+				if camera_control_enabled:
+					var new_zoom = $Camera2D.zoom + Vector2(0.1, 0.1)
+					if new_zoom <= Vector2(8, 8): 
+						$Camera2D.zoom = new_zoom
+			MOUSE_BUTTON_WHEEL_DOWN:
+				if camera_control_enabled:
+					var new_zoom = $Camera2D.zoom - Vector2(0.1, 0.1)
+					if new_zoom >= Vector2(0.5, 0.5):	
+						$Camera2D.zoom = new_zoom
+			MOUSE_BUTTON_LEFT:
+
+				if not state == State.ATTACKING:
+					if stamina > stamina_cost["main_attack"]:
+						_attack()
+					else:
+						show_no_stamina_message()
+
+func handle_keyboard_event(event: InputEventKey) -> void:
+	if event.is_action_pressed("interact"):
+		if current_interactable:
+			current_interactable.interact(self)
+		
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.is_pressed():
-			match event.button_index:
-				MOUSE_BUTTON_WHEEL_UP:
-					if camera_control_enabled:
-						var new_zoom = $Camera2D.zoom + Vector2(0.1, 0.1)
-						if new_zoom <= Vector2(8, 8): 
-							$Camera2D.zoom = new_zoom
-				MOUSE_BUTTON_WHEEL_DOWN:
-					if camera_control_enabled:
-						var new_zoom = $Camera2D.zoom - Vector2(0.1, 0.1)
-						if new_zoom >= Vector2(0.5, 0.5):	
-							$Camera2D.zoom = new_zoom
-				MOUSE_BUTTON_LEFT:
-					if current_interactable:
-						current_interactable.interact(self)
-						return
-						
-					if not state == State.ATTACKING:
-						if stamina > stamina_cost["main_attack"]:
-							_attack()
-						else:
-							show_no_stamina_message()
+		handle_mouse_event(event)
+	if event is InputEventKey:
+		handle_keyboard_event(event)
 
 func _attack():
 	state = State.ATTACKING
