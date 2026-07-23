@@ -21,12 +21,20 @@ func process_special_movement(delta):
 	and dash_controller.can_dash() \
 	and is_on_hit_frame():
 		dash_controller.try_dash(global_position,player.global_position)
-		
+
+func apply_player_damage():
+	if hit_window_open:
+		if $AreaDamageRange.overlaps_body(player):
+			player.take_damage(config.damage_given)
+			hit_window_open = false
+			
 func _on_frame_changed() -> void:
-	if state == State.ATTACKING and $AnimatedSprite2D.frame == attack_hit_frame:
-		for body in $AreaDamageRange.get_overlapping_bodies():
-			if body is Player:
-				player.take_damage(config.damage_given)
+	if state != State.ATTACKING:
+		hit_window_open = false
+		return
+		
+	if state == State.ATTACKING and is_on_hit_frame():
+		hit_window_open = true
 		if not attack_sound.playing:
 			attack_sound.play()
 
@@ -34,7 +42,8 @@ func _on_frame_changed() -> void:
 func _physics_process(delta: float) -> void:
 	if state == State.DEAD:
 		return
-		
+	
+	apply_player_damage()
 	super._physics_process(delta)
 	
 func _process(delta: float) -> void:

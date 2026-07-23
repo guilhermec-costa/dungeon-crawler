@@ -12,6 +12,7 @@ var gold_scene: PackedScene = preload("res://scenes/gold_drop.tscn")
 @onready var start_chase_area: Area2D = $StartChaseArea
 @onready var limit_chase_area: Area2D = $LimitChaseArea
 
+
 var dash_controller: DashBehavior
 
 var health: float
@@ -19,6 +20,7 @@ var walk_direction := Vector2.ZERO
 var spawn_origin: Vector2
 var state: State = State.IDLE
 var attack_hit_frame: int = 0
+var hit_window_open := false
 
 enum State {
 	IDLE,

@@ -18,6 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://d37qmuwcvb80v" path="res://scenes/enemies/white_skeleton.tscn" id="14_5iruf"]
 [ext_resource type="PackedScene" uid="uid://bvmkrk5rwygo6" path="res://scenes/secret_room.tscn" id="16_qjiij"]
 [ext_resource type="PackedScene" uid="uid://ctoiqnxh5b08a" path="res://scenes/enemies/yellow_skeleton.tscn" id="17_cveml"]
+[ext_resource type="PackedScene" uid="uid://bn2i4magehkux" path="res://scenes/enemies/blue_golem.tscn" id="18_ogbs8"]
+[ext_resource type="Resource" uid="uid://dafx4xnxn61at" path="res://resources/blue_golem.tres" id="19_0koia"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_rytft"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -3842,6 +3844,19 @@ player = NodePath("../Player")
 
 [node name="YellowSkeleton" parent="World/Entities" unique_id=65233277 node_paths=PackedStringArray("player") instance=ExtResource("17_cveml")]
 position = Vector2(163, 398)
+player = NodePath("../Player")
+
+[node name="BlueGolem" parent="World/Entities" unique_id=1334460780 node_paths=PackedStringArray("player") instance=ExtResource("18_ogbs8")]
+position = Vector2(374, 361)
+config = ExtResource("19_0koia")
+player = NodePath("../Player")
+
+[node name="WhiteSkeleton2" parent="World/Entities" unique_id=1214283877 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
+position = Vector2(455, 359)
+player = NodePath("../Player")
+
+[node name="WhiteSkeleton3" parent="World/Entities" unique_id=348190965 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
+position = Vector2(462, 426)
 player = NodePath("../Player")
 
 [node name="SecretRoom" parent="World" unique_id=1969997345 instance=ExtResource("16_qjiij")]

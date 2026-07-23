@@ -133,7 +133,7 @@ debug_color = Color(0.752983, 0.4295562, 0.43559608, 0.24705882)
 stream = SubResource("AudioStreamMP3_nsc55")
 volume_db = -22.187
 pitch_scale = 2.33
-max_distance = 250.0
+max_distance = 120.0
 max_polyphony = 5
 
 [node name="SwordHitSound" type="AudioStreamPlayer2D" parent="." unique_id=1757392559]

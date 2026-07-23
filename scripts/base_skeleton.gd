@@ -22,7 +22,6 @@ func process_special_movement(delta):
 func _ready():
 	attack_hit_frame = 5
 	$SwordArea.monitoring = true
-	$SwordArea/CollisionShape2D.disabled = true
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	$AttackRange.body_entered.connect(on_enter_attack_range)
 	$AttackRange.body_exited.connect(on_exit_attack_range)
@@ -38,13 +37,17 @@ func on_flip_right() -> void:
 	$SwordArea/CollisionShape2D.position.x += SWORD_COLLIDER_OFFSET
 	$SwordArea/CollisionShape2D.rotation *= -1
 
-# --- Attack ---
-
+func apply_player_damage():
+	if hit_window_open:
+		if $SwordArea.overlaps_body(player):
+			hit_window_open = false
+			player.take_damage(config.damage_given)
+			
 func _physics_process(delta: float) -> void:
 	if state == State.DEAD:
 		return
 	
-	
+	apply_player_damage()
 	super._physics_process(delta)
 	
 func _process(_delta: float) -> void:
@@ -63,21 +66,21 @@ func _process(_delta: float) -> void:
 	super._process(_delta)
 	
 func _on_frame_changed() -> void:
-	if state == State.ATTACKING and is_on_hit_frame():
-		for body in $SwordArea.get_overlapping_bodies():
-			if body is Player:
-				player.take_damage(config.damage_given)
+	if state != State.ATTACKING:
+		hit_window_open = false
+		return
+		
+	if state == State.ATTACKING and is_on_frame(attack_hit_frame):
+		hit_window_open = true
 		if not sword_hit_sound.playing:
 			sword_hit_sound.play()
 
 func on_enter_attack_range(body: Node2D) -> void:
 	if state == State.DEAD:
 		return
-		
+	
 	if body is Player:
-		
 		state = State.ATTACKING
-		$SwordArea/CollisionShape2D.call_deferred("set_disabled", false)
 		$WalkTimer.stop()
 
 func on_exit_attack_range(body: Node2D) -> void:
@@ -92,8 +95,6 @@ func on_exit_attack_range(body: Node2D) -> void:
 			state = State.ATTACKING
 		else:
 			state = State.CHASING
-		
-		$SwordArea/CollisionShape2D.call_deferred("set_disabled", true)
 	
 func die() -> void:
 	sword_hit_sound.stop()
