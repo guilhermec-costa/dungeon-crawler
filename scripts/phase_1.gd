@@ -30,9 +30,12 @@ func _ready() -> void:
 	secret_room.hide()
 	
 func start():
+			
+	player.state = Player.State.IDLE
 	if OS.has_feature("cutscene_enabled"):
 		player.state = Player.State.CUTSCENE
 		await phase1_animation_player.play()
+
 	player.start()
 
 

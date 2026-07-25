@@ -7,8 +7,11 @@ signal damage_taken
 signal update_stamina
 signal room_change_requested(room: Node2D, spawn_position: Vector2)
 
+@onready var running_sound: AudioStreamPlayer2D = $RunningSound
+@onready var walk_sound: AudioStreamPlayer2D = $WalkSound
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var raycast: RayCast2D = $CollisionRay
+@onready var animated_sprite: PlayerAnimatedSprite = $AnimatedSprite2D
 @onready var sword_area: SwordArea = $SwordArea
 @export var roll_speed_multiplier: float = 1.6
 @export var sprinting_multiplier: float = 1.5
@@ -17,27 +20,28 @@ signal room_change_requested(room: Node2D, spawn_position: Vector2)
 @export var dodge_chance: float = 5.0
 @export var current_gold: float = 0.0
 @export var sprint_stamina_cost_per_second: float = 15.0
-@export var stamina_recovery_rate: float = 22.0
+@export var stamina_recovery_rate: float = 27.0
 @export var stamina_recovery_delay: float = 0.75
+var current_attack: AttackConfig = AttackConfig.new("attack1", 20)
 @export var speed: float = 25:
 	get: 
 		var can_sprint = stamina > 0
 		return speed * sprinting_multiplier \
 			if (can_sprint and is_sprinting) else speed
 
-var is_dead: bool = false
 var is_sprinting: bool = false:
 	get:
 		return is_sprinting and velocity.length() > 0
 	set(value):
 		is_sprinting = value
+		
 var stamina_cost := {
-	"roll": 30.0,
-	"main_attack": 20.0,
+	"roll": 30.0
 }
+
 var inventory := Inventory.new(4)
-var stamina_controller := StaminaController.new()
 var current_interactable: Interactable
+
 var stamina_recovery_timer := 0.0
 var health: float
 var stamina: float = 0.0:
@@ -49,15 +53,17 @@ var stamina: float = 0.0:
 var last_leaved_room: Node2D
 var current_room: Node2D
 var position_on_last_room := Vector2.ZERO
-
-func consume_stamina(amount: float):
-	stamina -= amount
-	stamina_recovery_timer = stamina_recovery_delay
-
-const SWORD_COLLIDER_OFFSET = 35
 const RAYCAST_OFFSET = 20
 const PLAYER_ATTACK_OFFSET = 20
 const PLAYER_COLLIDER_X = 0
+	
+func start():
+	change_state(State.IDLE)
+	sword_area.set_disabled(true)
+	
+func consume_stamina(amount: float):
+	stamina -= amount
+	stamina_recovery_timer = stamina_recovery_delay
 
 enum State {
 	IDLE,
@@ -65,39 +71,50 @@ enum State {
 	RUNNING,
 	ATTACKING,
 	ROLLING,
-	CUTSCENE
+	CUTSCENE,
+	DEAD
 }
 
 var state := State.	IDLE
 
-func _draw():
-	draw_set_transform(Vector2.ZERO, 0.0, Vector2(0.95, 0.6))
-	var shadow_color = Color.BLACK
-	shadow_color.a = 0.15
-	draw_circle(Vector2.DOWN * 25, 10, shadow_color)
-	
-func die():
-	is_dead = true
-	$AnimatedSprite2D.play("death")
-	if $RunningSound.playing:
-		$RunningSound.stop()
+func change_state(new_state: State):
+	if state == State.DEAD:
+		return
 		
-	await $AnimatedSprite2D.animation_finished
+	if new_state == State.DEAD:
+		running_sound.stop()
+		walk_sound.stop()
+	
+	if new_state == State.WALKING:
+		running_sound.stop()
+		is_sprinting = false
+
+	if new_state == State.RUNNING:
+		walk_sound.stop()
+		is_sprinting = true
+	
+	if new_state == State.IDLE:
+		is_sprinting = false
+		
+	state = new_state
+
+func die():
+	change_state(State.DEAD)
+	animated_sprite.play("death")
+	running_sound.stop()
+
+	await animated_sprite.animation_finished
 	await get_tree().create_timer(0.5).timeout
 	player_dead.emit()
 	
 	
 func _ready():
 	$Camera2D.zoom = Vector2(8, 8)
-	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
-	$AnimatedSprite2D.animation_changed.connect(_on_animation_changed)
+	animated_sprite.frame_changed.connect(_on_frame_changed)
+	animated_sprite.animation_changed.connect(_on_animation_changed)
+	animated_sprite.setup(sword_area)
 	health = max_health
 	stamina = max_stamina
-	
-func start():
-	state = State.IDLE
-	$SwordArea.monitoring = true
-	$SwordArea/CollisionShape2D.disabled = true
 
 func collect_gold(goldData: ItemData, amount: float):
 	current_gold += amount
@@ -122,15 +139,11 @@ func handle_mouse_event(event: InputEventMouseButton) -> void:
 						$Camera2D.zoom = new_zoom
 			MOUSE_BUTTON_LEFT:
 				if not state == State.ATTACKING:
-					if stamina > stamina_cost["main_attack"]:
-						_attack()
-					else:
-						show_no_stamina_message()
+					_attack()
 
 func handle_keyboard_event(event: InputEventKey) -> void:
-	if event.is_action_pressed("interact"):
-		if current_interactable:
-			current_interactable.interact(self)
+	if event.is_action_pressed("interact") and current_interactable:
+		current_interactable.interact(self)
 		
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -139,25 +152,34 @@ func _input(event: InputEvent) -> void:
 		handle_keyboard_event(event)
 
 func _attack():
-	state = State.ATTACKING
+	var next_attack = get_next_attack()
+	if stamina > next_attack.stamina_cost:
+		current_attack = next_attack
+		change_state(State.ATTACKING)
+	else:
+		show_no_stamina_message()
 
 func is_stopped() -> bool:
 	return velocity == Vector2.ZERO
 		
+func in_processable_state() -> bool:
+	return state != State.CUTSCENE and state != State.DEAD
+
+func in_movement_state() -> bool:
+	return state == State.RUNNING or state == State.WALKING
+	
 func _physics_process(delta: float) -> void:
-	if state == State.CUTSCENE or is_dead:
+	if not in_processable_state():
 		return
 				
 	if Input.is_action_just_pressed("roll"):
 		_start_roll()
-	
-	if Input.is_action_pressed("sprint"):
-		if not is_sprinting:
-			is_sprinting = true
-			state = State.RUNNING
-	elif Input.is_action_just_released("sprint"):
-			is_sprinting = false
-			state = State.IDLE
+		
+	if state != State.ROLLING and state != State.ATTACKING:
+		if Input.is_action_pressed("sprint"):
+			change_state(State.RUNNING)
+		elif Input.is_action_just_released("sprint"):
+			change_state(State.IDLE)git a
 		
 		
 	match state:
@@ -173,9 +195,8 @@ func _physics_process(delta: float) -> void:
 				raycast.target_position.x += -RAYCAST_OFFSET if direction.x > 0 else RAYCAST_OFFSET
 				raycast.target_position = direction * 30
 
-				
 			velocity = direction * speed
-			update_flip(direction)
+			animated_sprite.update_flip(direction)
 			move_and_slide()
 
 
@@ -183,24 +204,17 @@ func _start_roll():
 	if stamina < stamina_cost["roll"]:
 		show_no_stamina_message()
 		return
-		
-	state = State.ROLLING
+	
+	change_state(State.ROLLING)
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if direction == Vector2.ZERO:
-		direction = Vector2.LEFT if is_facing_left() else Vector2.RIGHT
+		direction = Vector2.LEFT if animated_sprite.is_facing_left() else Vector2.RIGHT
 		
-	update_flip(direction)
+	animated_sprite.update_flip(direction)
 	velocity = direction * speed * roll_speed_multiplier
 	consume_stamina(stamina_cost["roll"])
-	
-func _process(delta: float) -> void:
-	if state == State.CUTSCENE or is_dead:
-		return
-	
-	if (state == State.ROLLING or state == State.ATTACKING) \
-		and $RunningSound.playing:
-		$RunningSound.stop()
-	
+
+func handle_sprinting(delta: float) -> void:
 	if is_sprinting:
 		consume_stamina(sprint_stamina_cost_per_second * delta)
 	else:
@@ -208,75 +222,69 @@ func _process(delta: float) -> void:
 			stamina_recovery_timer -= delta
 		else:
 			stamina += stamina_recovery_rate * delta
+			
+func _process(delta: float) -> void:
+	if not in_processable_state():
+		return
 	
+	if not in_movement_state():
+		walk_sound.stop()
+		running_sound.stop()
+	
+	handle_sprinting(delta)
+
+	print("state: ", State.keys()[state])	
 	match state:
 		State.ROLLING, State.ATTACKING:
 			pass
 		_:
 			if velocity == Vector2.ZERO:
-				state = State.IDLE
-				$RunningSound.stop()
+				change_state(State.IDLE)
+				running_sound.stop()
 			else:
 				if is_sprinting:
-					state = State.RUNNING
+					change_state(State.RUNNING)
+					if not running_sound.playing:
+						running_sound.play()
 				else:
-					state = State.WALKING
-				if not $RunningSound.playing:
-					$RunningSound.play()
+					change_state(State.WALKING)
+					if not walk_sound.playing:
+						walk_sound.play()
 	
-	update_animation(get_animation_from_state())
-
-func is_facing_left():
-	return $AnimatedSprite2D.flip_h
-	
-func is_facing_right():
-	return not $AnimatedSprite2D.flip_h
-	
-func update_flip(direction: Vector2) -> void:
-	if direction.x > 0:
-		if is_facing_left():
-			$SwordArea/CollisionShape2D.position.x += SWORD_COLLIDER_OFFSET
-		$AnimatedSprite2D.flip_h = false
-	elif direction.x < 0:
-		if is_facing_right():
-			$SwordArea/CollisionShape2D.position.x -= SWORD_COLLIDER_OFFSET
-		$AnimatedSprite2D.flip_h = true
-			
-func update_animation(new_animation: String) -> void:
-	if $AnimatedSprite2D.animation != new_animation:
-		$AnimatedSprite2D.play(new_animation)
+	animated_sprite.update_animation(get_animation_from_state())
 		
 func get_animation_from_state() -> String:
 	match state:
 		State.IDLE:
 			return "idle"
 		State.ATTACKING:
-			return "attack"
+			return current_attack.animation_name
+		State.ROLLING:
+			return "roll"
 		State.WALKING:
 			return "walk"
 		State.RUNNING:
 			return "run"
-		State.ROLLING:
-			return "roll"
 		_:
 			return "idle"
 			
 func _on_animated_sprite_2d_animation_finished() -> void:
-	if $AnimatedSprite2D.animation == "roll":
-		state = State.IDLE
+	if animated_sprite.animation == "roll":
+		change_state(State.IDLE)
 		
-	if $AnimatedSprite2D.animation == "attack":
-		state = State.IDLE
-		$SwordArea/CollisionShape2D.call_deferred("set_disabled", true)
+	if animated_sprite.animation == "attack1" \
+	or animated_sprite.animation == "attack2":
+		change_state(State.IDLE)
+		sword_area.set_disabled(true)
  
 func take_damage(damage: float):
+	if not in_processable_state():
+		return
+		
 	if state == State.ROLLING:
 		if (randf() * 100) < dodge_chance:
 			animate_message_label("DODGE!", FloatingTextConfigs.MESSAGE)
 			return
-		
-	if is_dead: 
-		return
 		
 	health -= damage
 	damage_taken.emit()
@@ -287,16 +295,44 @@ func take_damage(damage: float):
 		return
 
 
-func _on_animation_changed():
-	if state != State.ATTACKING and not $SwordArea/CollisionShape2D.disabled:
-		$SwordArea/CollisionShape2D.call_deferred("set_disabled", true)
+class AttackConfig:
+	var animation_name: String
+	var stamina_cost: float
+	
+	func  _init(anim_name, stam_cost) -> void:
+		self.animation_name = anim_name
+		self.stamina_cost = stam_cost
+
+var attack_config: Dictionary[String, AttackConfig] = {
+	"attack1": AttackConfig.new("attack1", 20),
+	"attack2": AttackConfig.new("attack2", 25)
+}
 		
+func _on_animation_changed():
+	if state != State.ATTACKING and not sword_area.is_disabled():
+		sword_area.set_disabled(true)
+
+var last_attack_time: float = Time.get_unix_time_from_system()
+
+func get_next_attack():
+	if current_attack.animation_name == "attack2":
+		return attack_config["attack1"]
+			
+	var current_time = Time.get_unix_time_from_system()
+	var time_passed = current_time - last_attack_time
+	if time_passed < 1:
+		return attack_config["attack2"]
+		
+	return attack_config["attack1"]
+
+
 func _on_frame_changed():
-	if state == State.ATTACKING and $AnimatedSprite2D.frame == 2:
-		consume_stamina(stamina_cost["main_attack"])
+	if state == State.ATTACKING and animated_sprite.frame == 2:
+		consume_stamina(current_attack.stamina_cost)
+		last_attack_time = Time.get_unix_time_from_system()
 		if not $SwordAttackSound.playing:
 			AudioManager.play_sfx($SwordAttackSound.stream)
-		$SwordArea/CollisionShape2D.call_deferred("set_disabled", false)
+		sword_area.set_disabled(false)
 
 func show_no_stamina_message():
 	animate_message_label("NO STAMINA!", FloatingTextConfigs.WARNING_MESSAGE)
@@ -318,10 +354,16 @@ func enter_room(room: Node2D, spawn_position: Vector2):
 	room_change_requested.emit(room, spawn_position)
 	
 func play_cutscene_animation(name: String):
-	var state_before_cutscene = state
-	state = State.CUTSCENE
+	var state_before_cutscene: State = state
+	change_state(State.CUTSCENE)
 	
 	animation_player.play(name)
 	await animation_player.animation_finished
 	
-	state = state_before_cutscene
+	change_state(state_before_cutscene)
+
+func _draw():
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2(0.95, 0.6))
+	var shadow_color = Color.BLACK
+	shadow_color.a = 0.15
+	draw_circle(Vector2.DOWN * 25, 10, shadow_color)

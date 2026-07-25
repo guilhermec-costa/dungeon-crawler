@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://cwu0gaawvtd4n"]
 
 [ext_resource type="Script" uid="uid://cm70y2fkaovlw" path="res://scripts/player.gd" id="1_g2els"]
-[ext_resource type="Script" uid="uid://cjjnmkyiqm1f6" path="res://scripts/sword_area.gd" id="2_fjrip"]
+[ext_resource type="Script" uid="uid://cjjnmkyiqm1f6" path="res://scripts/entities/player/sword_area.gd" id="2_fjrip"]
 [ext_resource type="Script" uid="uid://cbmsh8w8r31ki" path="res://scripts/data/weapon_data.gd" id="3_d2wvv"]
 [ext_resource type="AudioStream" uid="uid://denkrjqp4ibqi" path="res://assets/audio/sword.mp3" id="5_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://c1sawr18fmdsg" path="res://assets/loreon_knight/sword_1/attack1_remade.png" id="6_3v2ag"]
@@ -38,6 +38,8 @@
 [ext_resource type="Texture2D" uid="uid://c84fiivpxo0i8" path="res://assets/loreon_knight/sword_1/walk_4.png" id="33_cs1tg"]
 [ext_resource type="Texture2D" uid="uid://deixkwc862e6n" path="res://assets/loreon_knight/sword_1/walk_5.png" id="34_2dvfe"]
 [ext_resource type="Texture2D" uid="uid://bcma4odswwx1k" path="res://assets/loreon_knight/sword_1/walk_6.png" id="35_giy8y"]
+[ext_resource type="Script" uid="uid://kucebo152p4r" path="res://scripts/entities/player/animated_sprite_2d.gd" id="37_cs1tg"]
+[ext_resource type="AudioStream" uid="uid://benesukbqq1r6" path="res://assets/audio/walking_concrete.mp3" id="39_j2b1d"]
 
 [sub_resource type="Resource" id="Resource_y4r1p"]
 script = ExtResource("3_d2wvv")
@@ -119,7 +121,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_51ujp")
 }],
 "loop": 0,
-"name": &"attack",
+"name": &"attack1",
 "speed": 8.0
 }, {
 "frames": [{
@@ -375,9 +377,14 @@ scale = Vector2(0.95, 0.95)
 collision_layer = 2
 collision_mask = 65
 script = ExtResource("1_g2els")
+roll_speed_multiplier = null
+sprinting_multiplier = null
 max_health = 100.0
 max_stamina = 100.0
 dodge_chance = 8.0
+current_gold = null
+sprint_stamina_cost_per_second = null
+stamina_recovery_rate = null
 stamina_recovery_delay = 0.6
 speed = 45.0
 metadata/_edit_group_ = true
@@ -406,6 +413,7 @@ rotation = -6.2831855
 sprite_frames = SubResource("SpriteFrames_1bnh4")
 animation = &"stand"
 frame = 2
+script = ExtResource("37_cs1tg")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1288535891]
@@ -431,8 +439,13 @@ height = 38.0
 [node name="RunningSound" type="AudioStreamPlayer2D" parent="." unique_id=595661868]
 position = Vector2(-521, -326)
 stream = SubResource("AudioStreamMP3_fjrip")
-volume_db = -30.131
+volume_db = -20.0
 pitch_scale = 1.23
+
+[node name="WalkSound" type="AudioStreamPlayer2D" parent="." unique_id=296688781]
+stream = ExtResource("39_j2b1d")
+volume_db = -15.403
+pitch_scale = 1.44
 
 [node name="CollisionRay" type="RayCast2D" parent="." unique_id=986344877]
 position = Vector2(1.5384617, -10.769214)

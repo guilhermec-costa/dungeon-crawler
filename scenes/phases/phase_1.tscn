@@ -3569,6 +3569,7 @@ script = ExtResource("1_5xy5e")
 player = NodePath("../World/Entities/Player")
 
 [node name="PhaseLight" type="DirectionalLight2D" parent="." unique_id=815560919]
+visible = false
 light_mask = 0
 position = Vector2(-17, 36)
 scale = Vector2(-0.25519067, -0.021846019)
