@@ -62,7 +62,7 @@ scale = Vector2(1.91, 1.91)
 value = 100.0
 texture_under = SubResource("AtlasTexture_s25gh")
 texture_progress = SubResource("AtlasTexture_7bkgt")
-tint_progress = Color(0.69041634, 0.7934268, 1, 1)
+tint_progress = Color(1.5113056e-05, 0.99898046, 0, 1)
 
 [node name="HealthBar" type="TextureProgressBar" parent="Stats" unique_id=759953530]
 texture_filter = 1

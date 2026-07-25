@@ -30,10 +30,10 @@ func _ready() -> void:
 	secret_room.hide()
 	
 func start():
-	await phase1_animation_player.play()
-
-	dungeon_map.show()
-	player.start($PlayerStartPosition.position)
+	if OS.has_feature("cutscene_enabled"):
+		player.state = Player.State.CUTSCENE
+		await phase1_animation_player.play()
+	player.start()
 
 
 func _on_player_damage_taken() -> void:

@@ -28,7 +28,7 @@ signal room_change_requested(room: Node2D, spawn_position: Vector2)
 var is_dead: bool = false
 var is_sprinting: bool = false:
 	get:
-		return is_sprinting
+		return is_sprinting and velocity.length() > 0
 	set(value):
 		is_sprinting = value
 var stamina_cost := {
@@ -65,6 +65,7 @@ enum State {
 	RUNNING,
 	ATTACKING,
 	ROLLING,
+	CUTSCENE
 }
 
 var state := State.	IDLE
@@ -93,8 +94,7 @@ func _ready():
 	health = max_health
 	stamina = max_stamina
 	
-func start(initial_pos: Vector2):
-	self.position = initial_pos
+func start():
 	state = State.IDLE
 	$SwordArea.monitoring = true
 	$SwordArea/CollisionShape2D.disabled = true
@@ -140,13 +140,12 @@ func _input(event: InputEvent) -> void:
 
 func _attack():
 	state = State.ATTACKING
-	#var current_attack_animation =
-	
+
 func is_stopped() -> bool:
 	return velocity == Vector2.ZERO
 		
 func _physics_process(delta: float) -> void:
-	if is_dead:
+	if state == State.CUTSCENE or is_dead:
 		return
 				
 	if Input.is_action_just_pressed("roll"):
@@ -195,7 +194,7 @@ func _start_roll():
 	consume_stamina(stamina_cost["roll"])
 	
 func _process(delta: float) -> void:
-	if is_dead:
+	if state == State.CUTSCENE or is_dead:
 		return
 	
 	if (state == State.ROLLING or state == State.ATTACKING) \
@@ -319,9 +318,10 @@ func enter_room(room: Node2D, spawn_position: Vector2):
 	room_change_requested.emit(room, spawn_position)
 	
 func play_cutscene_animation(name: String):
-	set_process(false)
+	var state_before_cutscene = state
+	state = State.CUTSCENE
 	
 	animation_player.play(name)
 	await animation_player.animation_finished
 	
-	set_process(true)
+	state = state_before_cutscene

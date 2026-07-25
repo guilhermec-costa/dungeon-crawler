@@ -13,21 +13,11 @@ var player_can_take_damage := true
 var player: Player
 
 func _ready() -> void:
-	area2d.body_entered.connect(_on_body_entered)
-	area2d.body_exited.connect(_on_body_exited)
+	area2d.area_entered.connect(_on_area_2d_area_entered)
+	area2d.area_exited.connect(_on_area_2d_area_exited)
 	animated_sprite.frame_changed.connect(_on_frame_changed)
 	animated_sprite.animation_looped.connect(_on_animation_looped)
 
-func _on_body_entered(body: Node2D) -> void:
-	if body is Player:
-		player_on_range = true
-		player = body
-		
-func _on_body_exited(body: Node2D) -> void:
-	if body is Player:
-		player_on_range = false
-		player = null
-		
 func _on_frame_changed() -> void:
 	if animated_sprite.frame >= start_attack_frame \
 	and animated_sprite.frame <= end_attack_frame:
@@ -38,3 +28,16 @@ func _on_frame_changed() -> void:
 
 func _on_animation_looped():
 	player_can_take_damage = true
+
+const player_footer_collider_name = "FootCollider"
+func _on_area_2d_area_entered(area: Area2D) -> void:
+		if area.name == player_footer_collider_name:
+			player = area.get_parent()
+			player_on_range = true
+
+
+func _on_area_2d_area_exited(area: Area2D) -> void:
+	print(area)
+	if area.name == player_footer_collider_name:
+		player_on_range = false
+		player = null

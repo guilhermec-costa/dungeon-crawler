@@ -374,7 +374,7 @@ radius = 89.44457
 radius = 158.8605
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7bkgt"]
-radius = 52.009613
+radius = 35.0
 
 [node name="BlueGolem" type="CharacterBody2D" unique_id=1334460780]
 texture_filter = 1
