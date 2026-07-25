@@ -1,7 +1,5 @@
 [gd_scene format=3 uid="uid://cywaovqr01vo6"]
 
-[ext_resource type="Texture2D" uid="uid://2ca3i5k8xbt5" path="res://assets/healthbar/empty_lifegreenbar.png" id="1_iraov"]
-[ext_resource type="Texture2D" uid="uid://d1nnu2q6r321a" path="res://assets/healthbar/life_greenbar.png" id="1_mlvnn"]
 [ext_resource type="Script" uid="uid://c7qrcvq2y7q5k" path="res://scenes/player_hud.gd" id="1_s25gh"]
 [ext_resource type="Texture2D" uid="uid://u3vbu0fcm3nw" path="res://assets/healthbar/life_mana_empty.png" id="2_lqhkl"]
 [ext_resource type="Texture2D" uid="uid://8rcby5b6kbga" path="res://assets/healthbar/life_mana_full.png" id="2_ujnyd"]
@@ -18,16 +16,9 @@ region = Rect2(13.023293, 53.815624, 111.01154, 8.182514)
 atlas = ExtResource("2_ujnyd")
 region = Rect2(12.735279, 28.95629, 111.41138, 8.07493)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mlvnn"]
-atlas = ExtResource("1_iraov")
-region = Rect2(7.799, 42.098, 122.217, 33.542)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_iraov"]
-region = Rect2(0, 0, 101, 184)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_otbg0"]
-atlas = ExtResource("1_mlvnn")
-region = Rect2(8.193176, 27.132683, 117.47502, 28.41454)
+[sub_resource type="AtlasTexture" id="AtlasTexture_8y7rk"]
+atlas = ExtResource("2_ujnyd")
+region = Rect2(12.735279, 21.701591, 111.41138, 8.324043)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_er5qu"]
 atlas = ExtResource("6_8y7rk")
@@ -55,27 +46,33 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 60.35503
 offset_top = -47.337284
-offset_right = 171.35504
-offset_bottom = -7.3372803
+offset_right = 214.0153
+offset_bottom = -37.423717
 grow_vertical = 0
 scale = Vector2(1.91, 1.91)
 value = 100.0
+nine_patch_stretch = true
 texture_under = SubResource("AtlasTexture_s25gh")
 texture_progress = SubResource("AtlasTexture_7bkgt")
 tint_progress = Color(1.5113056e-05, 0.99898046, 0, 1)
 
-[node name="HealthBar" type="TextureProgressBar" parent="Stats" unique_id=759953530]
+[node name="HealthBar" type="TextureProgressBar" parent="Stats" unique_id=1788017588]
 texture_filter = 1
-layout_mode = 0
-offset_left = 47.0
-offset_right = 192.0
-offset_bottom = 184.0
-scale = Vector2(2.4826596, 2.282364)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 60.35503
+offset_top = -75.739655
+offset_right = 240.03842
+offset_bottom = -63.967293
+grow_vertical = 0
+scale = Vector2(1.91, 1.91)
 value = 100.0
-texture_under = SubResource("AtlasTexture_mlvnn")
-texture_over = SubResource("AtlasTexture_iraov")
-texture_progress = SubResource("AtlasTexture_otbg0")
-tint_progress = Color(1, 0.09094118, 0.05946324, 1)
+nine_patch_stretch = true
+texture_under = SubResource("AtlasTexture_s25gh")
+texture_progress = SubResource("AtlasTexture_8y7rk")
+tint_progress = Color(1, 0.45241636, 0.38395938, 1)
 
 [node name="PortraitWidget" type="Control" parent="Stats" unique_id=466449333]
 clip_contents = true
@@ -103,16 +100,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.835, 0.835)
 
-[node name="ColorRect" type="ColorRect" parent="Stats/PortraitWidget/PortraitContainer" unique_id=1259266702]
-visible = false
-layout_mode = 0
-offset_left = -2.4123955
-offset_right = 75.99054
-offset_bottom = 75.99054
-color = Color(0, 0, 0, 1)
-
 [node name="Portrait" type="TextureRect" parent="Stats/PortraitWidget/PortraitContainer" unique_id=1749889812]
-modulate = Color(0.737193, 0.7371929, 0.7371929, 1)
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
@@ -120,16 +108,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -40.40766
-offset_top = -33.170467
-offset_right = 23.922935
-offset_bottom = 20.103313
+offset_left = -33.170475
+offset_top = -37.39217
+offset_right = 31.160126
+offset_bottom = 15.881611
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.2, 1.2)
+scale = Vector2(1.425, 1.425)
 texture = SubResource("AtlasTexture_er5qu")
 
 [node name="Frame" type="TextureRect" parent="Stats/PortraitWidget/PortraitContainer" unique_id=1045125051]
+visible = false
 layout_mode = 0
 offset_left = -13.268186
 offset_top = -6.030997

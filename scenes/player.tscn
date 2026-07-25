@@ -269,7 +269,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wnwbv"]
-size = Vector2(15.384621, 29.230764)
+size = Vector2(15.384621, 31.174023)
 
 [sub_resource type="AudioStreamMP3" id="AudioStreamMP3_fjrip"]
 resource_local_to_scene = true
@@ -377,14 +377,9 @@ scale = Vector2(0.95, 0.95)
 collision_layer = 2
 collision_mask = 65
 script = ExtResource("1_g2els")
-roll_speed_multiplier = null
-sprinting_multiplier = null
 max_health = 100.0
 max_stamina = 100.0
 dodge_chance = 8.0
-current_gold = null
-sprint_stamina_cost_per_second = null
-stamina_recovery_rate = null
 stamina_recovery_delay = 0.6
 speed = 45.0
 metadata/_edit_group_ = true
@@ -412,12 +407,11 @@ position = Vector2(2, -1)
 rotation = -6.2831855
 sprite_frames = SubResource("SpriteFrames_1bnh4")
 animation = &"stand"
-frame = 2
 script = ExtResource("37_cs1tg")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1288535891]
-position = Vector2(1.5384521, 0.76916504)
+position = Vector2(1.5384521, -0.20246506)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_wnwbv")
 
@@ -429,9 +423,9 @@ stream = ExtResource("5_qlg0r")
 pitch_scale = 1.6
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=162400643]
-position = Vector2(2.1052654, -7.50785)
-scale = Vector2(0.17487144, 0.13296115)
-color = Color(0.16691089, 0.16987538, 0.17114422, 1)
+position = Vector2(1.0526323, -1.0526314)
+scale = Vector2(0.13469827, 0.111067005)
+color = Color(0.3699908, 0.36998847, 0.37398008, 1)
 texture = ExtResource("7_fjrip")
 texture_scale = 0.87
 height = 38.0
@@ -439,8 +433,8 @@ height = 38.0
 [node name="RunningSound" type="AudioStreamPlayer2D" parent="." unique_id=595661868]
 position = Vector2(-521, -326)
 stream = SubResource("AudioStreamMP3_fjrip")
-volume_db = -20.0
-pitch_scale = 1.23
+volume_db = -28.044
+pitch_scale = 1.1
 
 [node name="WalkSound" type="AudioStreamPlayer2D" parent="." unique_id=296688781]
 stream = ExtResource("39_j2b1d")

@@ -68,14 +68,14 @@ shape = SubResource("RectangleShape2D_7bkgt")
 debug_color = Color(0.38014755, 0.21844733, 0.41708535, 0.41960785)
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1066081753]
-position = Vector2(9.5, 6.02)
-scale = Vector2(0.03320313, 0.031171875)
-color = Color(0.3922966, 0.38812172, 0.38916194, 1)
+position = Vector2(9, 5)
+scale = Vector2(0.044921875, 0.037109375)
+color = Color(0.2798477, 0.2767304, 0.27673054, 1)
 texture = ExtResource("3_y5pmd")
 
 [node name="SpikeSound" type="AudioStreamPlayer2D" parent="." unique_id=1382847004]
 position = Vector2(8, 6)
 stream = SubResource("AudioStreamWAV_y5pmd")
 volume_db = -23.164
-max_distance = 150.0
+max_distance = 70.0
 max_polyphony = 5

@@ -54,7 +54,6 @@ var last_leaved_room: Node2D
 var current_room: Node2D
 var position_on_last_room := Vector2.ZERO
 const RAYCAST_OFFSET = 20
-const PLAYER_ATTACK_OFFSET = 20
 const PLAYER_COLLIDER_X = 0
 	
 func start():
@@ -78,6 +77,9 @@ enum State {
 var state := State.	IDLE
 
 func change_state(new_state: State):
+	if state == new_state:
+		return
+
 	if state == State.DEAD:
 		return
 		
@@ -179,7 +181,7 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_pressed("sprint"):
 			change_state(State.RUNNING)
 		elif Input.is_action_just_released("sprint"):
-			change_state(State.IDLE)git a
+			change_state(State.IDLE)
 		
 		
 	match state:
@@ -214,7 +216,7 @@ func _start_roll():
 	velocity = direction * speed * roll_speed_multiplier
 	consume_stamina(stamina_cost["roll"])
 
-func handle_sprinting(delta: float) -> void:
+func handle_sprinting(delta: float) -> void:		
 	if is_sprinting:
 		consume_stamina(sprint_stamina_cost_per_second * delta)
 	else:
@@ -233,7 +235,6 @@ func _process(delta: float) -> void:
 	
 	handle_sprinting(delta)
 
-	print("state: ", State.keys()[state])	
 	match state:
 		State.ROLLING, State.ATTACKING:
 			pass
@@ -242,7 +243,7 @@ func _process(delta: float) -> void:
 				change_state(State.IDLE)
 				running_sound.stop()
 			else:
-				if is_sprinting:
+				if is_sprinting and stamina > 0:
 					change_state(State.RUNNING)
 					if not running_sound.playing:
 						running_sound.play()
