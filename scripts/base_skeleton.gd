@@ -50,6 +50,10 @@ func _physics_process(delta: float) -> void:
 	apply_player_damage()
 	super._physics_process(delta)
 	
+func take_damage(damage: float, type: DamageTypes.Type) -> void:
+	play_animation_player("hurt")
+	super.take_damage(damage, type)
+	
 func _process(_delta: float) -> void:
 	if state == State.DEAD:
 		return
@@ -108,3 +112,6 @@ func die() -> void:
 	
 	drop_gold()
 	queue_free()
+
+func play_animation_player(animation: String) -> void:
+	$AnimationPlayer.play(animation)

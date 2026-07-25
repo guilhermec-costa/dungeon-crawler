@@ -7,6 +7,7 @@ signal damage_taken
 signal update_stamina
 signal room_change_requested(room: Node2D, spawn_position: Vector2)
 
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var raycast: RayCast2D = $CollisionRay
 @onready var sword_area: SwordArea = $SwordArea
 @export var roll_speed_multiplier: float = 1.6
@@ -98,8 +99,6 @@ func start(initial_pos: Vector2):
 	$SwordArea.monitoring = true
 	$SwordArea/CollisionShape2D.disabled = true
 
-var camera_control_enabled: bool = true
-
 func collect_gold(goldData: ItemData, amount: float):
 	current_gold += amount
 	inventory.add_item(goldData, amount)
@@ -112,17 +111,16 @@ func handle_mouse_event(event: InputEventMouseButton) -> void:
 	if event.is_pressed():
 		match event.button_index:
 			MOUSE_BUTTON_WHEEL_UP:
-				if camera_control_enabled:
+				if OS.has_feature("camera_control_enabled"):
 					var new_zoom = $Camera2D.zoom + Vector2(0.1, 0.1)
 					if new_zoom <= Vector2(8, 8): 
 						$Camera2D.zoom = new_zoom
 			MOUSE_BUTTON_WHEEL_DOWN:
-				if camera_control_enabled:
+				if OS.has_feature("camera_control_enabled"):
 					var new_zoom = $Camera2D.zoom - Vector2(0.1, 0.1)
 					if new_zoom >= Vector2(0.5, 0.5):	
 						$Camera2D.zoom = new_zoom
 			MOUSE_BUTTON_LEFT:
-
 				if not state == State.ATTACKING:
 					if stamina > stamina_cost["main_attack"]:
 						_attack()
@@ -142,6 +140,7 @@ func _input(event: InputEvent) -> void:
 
 func _attack():
 	state = State.ATTACKING
+	#var current_attack_animation =
 	
 func is_stopped() -> bool:
 	return velocity == Vector2.ZERO
@@ -318,3 +317,11 @@ func exit_interactable(interactable: Interactable):
 
 func enter_room(room: Node2D, spawn_position: Vector2):
 	room_change_requested.emit(room, spawn_position)
+	
+func play_cutscene_animation(name: String):
+	set_process(false)
+	
+	animation_player.play(name)
+	await animation_player.animation_finished
+	
+	set_process(true)

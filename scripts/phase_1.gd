@@ -6,9 +6,11 @@ var yellowSkeletonScene: PackedScene = preload("res://scenes/enemies/yellow_skel
 var whiteSkeletonScene: PackedScene = preload("res://scenes/enemies/white_skeleton.tscn")
 var blue_golem: PackedScene = preload("res://scenes/enemies/blue_golem.tscn")
 
+@onready var phase1_animation_player: PlayerEnterPhase1 = $Cutscenes/PlayerEnterPhase1
+
 @onready var player_hud: PlayerHUD = $PlayerHUD
 @onready var entities = $World/Entities
-@onready var player: Player = entities.get_node("Player")
+@onready var player: Player = $World/Entities/Player
 @onready var secret_room: Node2D = $World/SecretRoom
 @onready var dungeon_map: Node2D = $World/DungeonMap
 
@@ -20,18 +22,18 @@ func _ready() -> void:
 	player_hud.update_max_stamina()
 	player_hud.update_stamina()
 	
-	secret_room.hide()
-	
 	player.current_room = dungeon_map
 	player.damage_taken.connect(_on_player_damage_taken)
 	player.update_stamina.connect(_on_player_deplete_stamina)
 	player.room_change_requested.connect(_on_player_room_change_request)
 	
-func spawn_mobs():
-	player.start($PlayerStartPosition.position)
+	secret_room.hide()
 	
 func start():
-	spawn_mobs()
+	await phase1_animation_player.play()
+
+	dungeon_map.show()
+	player.start($PlayerStartPosition.position)
 
 
 func _on_player_damage_taken() -> void:

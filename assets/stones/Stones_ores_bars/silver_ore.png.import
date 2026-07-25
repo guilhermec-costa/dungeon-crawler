@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbb4u5j4nnycg"
-path="res://.godot/imported/minimap_icons.png-2a9561e16b041ac29b0d86020281bbb7.ctex"
+uid="uid://cotncnwhmtu53"
+path="res://.godot/imported/silver_ore.png-285d09f75eed7ae47c1e577091e56c67.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/minimap_icons.png"
-dest_files=["res://.godot/imported/minimap_icons.png-2a9561e16b041ac29b0d86020281bbb7.ctex"]
+source_file="res://assets/stones/Stones_ores_bars/silver_ore.png"
+dest_files=["res://.godot/imported/silver_ore.png-285d09f75eed7ae47c1e577091e56c67.ctex"]
 
 [params]
 

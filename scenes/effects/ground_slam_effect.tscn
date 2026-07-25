@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bnshafihw4h3i"]
+
+[ext_resource type="Texture2D" uid="uid://suqg2x7q0731" path="res://assets/stones/Stones_ores_bars/stone_1.png" id="1_2mg51"]
+[ext_resource type="Script" uid="uid://be4aj52vcpqq4" path="res://scripts/ground_slam_effect.gd" id="1_22slu"]
+[ext_resource type="Texture2D" uid="uid://dl12s46s080mm" path="res://assets/inpact_ring.png" id="2_q3dww"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2mg51"]
+lifetime_randomness = 0.2
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 29.8
+direction = Vector3(0, 0, 0)
+orbit_velocity_min = 9.49949e-08
+orbit_velocity_max = 0.1070001
+radial_velocity_min = -2.2351742e-05
+radial_velocity_max = 5.9499774
+gravity = Vector3(0, 60, 0)
+scale_min = 0.049999997
+scale_max = 0.089999996
+
+[node name="GroundSlamEffect" type="Node2D" unique_id=1892576260]
+script = ExtResource("1_22slu")
+
+[node name="DustParticles" type="GPUParticles2D" parent="." unique_id=1224443133]
+modulate = Color(0.5370113, 0.5370113, 0.5370113, 1)
+texture_filter = 1
+emitting = false
+amount = 120
+texture = ExtResource("1_2mg51")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_2mg51")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1045211345]
+modulate = Color(0.58703476, 0.7225088, 1, 1)
+scale = Vector2(0.025, 0.025)
+texture = ExtResource("2_q3dww")

@@ -3,6 +3,7 @@ class_name BlueGolem
 extends BaseEnemy
 
 @onready var attack_sound: AudioStreamPlayer2D = $AttackSound
+var slam_effect: PackedScene = preload("res://scenes/effects/ground_slam_effect.tscn")
 
 func _ready():
 	attack_hit_frame = 7
@@ -35,6 +36,10 @@ func _on_frame_changed() -> void:
 		
 	if state == State.ATTACKING and is_on_hit_frame():
 		hit_window_open = true
+		var effect: SlamEffect = slam_effect.instantiate()
+		effect.position = Vector2(0, 20)
+		add_child(effect)
+		effect.play()
 		if not attack_sound.playing:
 			attack_sound.play()
 

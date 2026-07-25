@@ -82,9 +82,6 @@ func _draw():
 	shadow_color.a = 0.4
 	draw_circle(Vector2.DOWN * 50, 10, shadow_color)
 
-
-# --- Flip ---
-
 func is_facing_left() -> bool:
 	return $AnimatedSprite2D.flip_h
 
@@ -101,14 +98,11 @@ func flip_to_right():
 		$AnimatedSprite2D.flip_h = false
 		on_flip_right()
 
-# virtuals
 func on_flip_left() -> void:
 	pass
 
 func on_flip_right() -> void:
 	pass
-
-# -----
 
 func update_flip_based_on_player_position():
 	if not is_instance_valid(player):
@@ -126,8 +120,6 @@ func update_flip_based_on_velocity():
 	elif velocity.x < 0:
 		flip_to_left()
 
-
-# --- Movement ---
 
 func _chase_player():
 	var target = player.global_position
