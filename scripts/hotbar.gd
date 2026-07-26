@@ -7,3 +7,7 @@ extends HBoxContainer
 	$InventorySlotUI3,
 	$InventorySlotUI4
 ]
+
+func _ready() -> void:
+	for i in slots.size():
+		slots[i].setup(i)

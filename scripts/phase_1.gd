@@ -7,7 +7,6 @@ var whiteSkeletonScene: PackedScene = preload("res://scenes/enemies/white_skelet
 var blue_golem: PackedScene = preload("res://scenes/enemies/blue_golem.tscn")
 
 @onready var phase1_animation_player: PlayerEnterPhase1 = $Cutscenes/PlayerEnterPhase1
-
 @onready var player_hud: PlayerHUD = $PlayerHUD
 @onready var entities = $World/Entities
 @onready var player: Player = $World/Entities/Player
@@ -17,33 +16,18 @@ var blue_golem: PackedScene = preload("res://scenes/enemies/blue_golem.tscn")
 var last_position_on_dungeon_map: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
-	player_hud.update_max_health()
-	player_hud.update_health()
-	player_hud.update_max_stamina()
-	player_hud.update_stamina()
-	
 	player.current_room = dungeon_map
-	player.damage_taken.connect(_on_player_damage_taken)
-	player.update_stamina.connect(_on_player_deplete_stamina)
 	player.room_change_requested.connect(_on_player_room_change_request)
-	
+
 	secret_room.hide()
 	
 func start():
-			
 	player.state = Player.State.IDLE
 	if OS.has_feature("cutscene_enabled"):
 		player.state = Player.State.CUTSCENE
 		await phase1_animation_player.play()
 
 	player.start()
-
-
-func _on_player_damage_taken() -> void:
-	player_hud.update_health()
-
-func _on_player_deplete_stamina() -> void:
-	player_hud.update_stamina()
 
 func _on_player_room_change_request(room: Node2D, spawn_position: Vector2):
 	await TransitionManager.fade_out()

@@ -6,6 +6,7 @@ signal player_dead
 signal damage_taken
 signal update_stamina
 signal room_change_requested(room: Node2D, spawn_position: Vector2)
+signal initialized
 
 @onready var running_sound: AudioStreamPlayer2D = $RunningSound
 @onready var walk_sound: AudioStreamPlayer2D = $WalkSound
@@ -13,21 +14,19 @@ signal room_change_requested(room: Node2D, spawn_position: Vector2)
 @onready var raycast: RayCast2D = $CollisionRay
 @onready var animated_sprite: PlayerAnimatedSprite = $AnimatedSprite2D
 @onready var sword_area: SwordArea = $SwordArea
-@export var roll_speed_multiplier: float = 1.6
-@export var sprinting_multiplier: float = 1.5
-@export var max_health: float
-@export var max_stamina: float
-@export var dodge_chance: float = 5.0
+@export var config: PlayerConfig
 @export var current_gold: float = 0.0
-@export var sprint_stamina_cost_per_second: float = 15.0
-@export var stamina_recovery_rate: float = 27.0
-@export var stamina_recovery_delay: float = 0.75
+
+@export var game_items: GameItems
+
 var current_attack: AttackConfig = AttackConfig.new("attack1", 20)
-@export var speed: float = 25:
+
+var speed: float:
 	get: 
 		var can_sprint = stamina > 0
-		return speed * sprinting_multiplier \
-			if (can_sprint and is_sprinting) else speed
+		return config.base_speed * (
+			config.sprinting_multiplier if can_sprint and is_sprinting else 1.0
+		)
 
 var is_sprinting: bool = false:
 	get:
@@ -48,8 +47,9 @@ var stamina: float = 0.0:
 	get:
 		return stamina
 	set(value):
-		stamina = clamp(value, 0, max_stamina)
+		stamina = clamp(value, 0, config.max_stamina)
 		update_stamina.emit()
+		
 var last_leaved_room: Node2D
 var current_room: Node2D
 var position_on_last_room := Vector2.ZERO
@@ -62,7 +62,7 @@ func start():
 	
 func consume_stamina(amount: float):
 	stamina -= amount
-	stamina_recovery_timer = stamina_recovery_delay
+	stamina_recovery_timer = config.stamina_recovery_delay
 
 enum State {
 	IDLE,
@@ -108,15 +108,18 @@ func die():
 	await animated_sprite.animation_finished
 	await get_tree().create_timer(0.5).timeout
 	player_dead.emit()
-	
-	
+
+
 func _ready():
 	$Camera2D.zoom = Vector2(8, 8)
 	animated_sprite.frame_changed.connect(_on_frame_changed)
 	animated_sprite.animation_changed.connect(_on_animation_changed)
 	animated_sprite.setup(sword_area)
-	health = max_health
-	stamina = max_stamina
+	health = config.max_health
+	stamina = config.max_stamina
+	
+	inventory.add_item(game_items.life_potion, 3)
+	initialized.emit()
 
 func collect_gold(goldData: ItemData, amount: float):
 	current_gold += amount
@@ -213,17 +216,17 @@ func _start_roll():
 		direction = Vector2.LEFT if animated_sprite.is_facing_left() else Vector2.RIGHT
 		
 	animated_sprite.update_flip(direction)
-	velocity = direction * speed * roll_speed_multiplier
+	velocity = direction * speed * config.roll_speed_multiplier
 	consume_stamina(stamina_cost["roll"])
 
 func handle_sprinting(delta: float) -> void:		
 	if is_sprinting:
-		consume_stamina(sprint_stamina_cost_per_second * delta)
+		consume_stamina(config.sprint_stamina_cost_per_second * delta)
 	else:
 		if stamina_recovery_timer > 0:
 			stamina_recovery_timer -= delta
 		else:
-			stamina += stamina_recovery_rate * delta
+			stamina += config.stamina_recovery_rate * delta
 			
 func _process(delta: float) -> void:
 	if not in_processable_state():
@@ -283,12 +286,13 @@ func take_damage(damage: float):
 		return
 		
 	if state == State.ROLLING:
-		if (randf() * 100) < dodge_chance:
+		if (randf() * 100) < config.dodge_chance:
 			animate_message_label("DODGE!", FloatingTextConfigs.MESSAGE)
 			return
 		
 	health -= damage
 	damage_taken.emit()
+	animation_player.play("hurt")
 	animate_message_label(str(damage), FloatingTextConfigs.NORMAL_DAMAGE)
 	
 	if health <= 0:
@@ -368,3 +372,7 @@ func _draw():
 	var shadow_color = Color.BLACK
 	shadow_color.a = 0.15
 	draw_circle(Vector2.DOWN * 25, 10, shadow_color)
+	
+func _on_item_consume(item: ItemData, quantity: int = 1) -> void:
+	inventory.consume_item(item, quantity)
+	print(item)

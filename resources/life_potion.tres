@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://du4nsqkp4sg62"]
+
+[ext_resource type="Texture2D" uid="uid://biuxybfivpiw2" path="res://assets/potions/life/sprites/Small Vial - RED - 0000.png" id="1_d3nsa"]
+[ext_resource type="Script" uid="uid://ca28ye276k74g" path="res://scripts/data/item_data.gd" id="1_ntm7y"]
+
+[resource]
+script = ExtResource("1_ntm7y")
+id = "4"
+display_name = "Life Potion"
+icon = ExtResource("1_d3nsa")
+description = "Life Potion"
+consumable = true
+icon_scale = Vector2(0.605, 1)
+metadata/_custom_type_script = "uid://ca28ye276k74g"

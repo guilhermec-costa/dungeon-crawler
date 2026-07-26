@@ -5,13 +5,13 @@
 [ext_resource type="PackedScene" uid="uid://cywaovqr01vo6" path="res://scenes/player_hud.tscn" id="2_wi8qh"]
 [ext_resource type="PackedScene" uid="uid://cwu0gaawvtd4n" path="res://scenes/player.tscn" id="5_j1gp7"]
 [ext_resource type="PackedScene" uid="uid://8dnuvy8klbkr" path="res://scenes/decorations/skeleton_dead_decoration.tscn" id="6_5xy5e"]
-[ext_resource type="Texture2D" uid="uid://bij844jftjwop" path="res://assets/map/catacombs/decorative.png" id="7_3dyyi"]
+[ext_resource type="Texture2D" uid="uid://bij844jftjwop" path="res://assets/map/decorative.png" id="7_3dyyi"]
 [ext_resource type="AudioStream" uid="uid://b4ff41jr536w5" path="res://assets/audio/dungeon_ambience.mp3" id="8_wi8qh"]
 [ext_resource type="AudioStream" uid="uid://rdbrx4ar23iq" path="res://assets/audio/cave_droplets.mp3" id="9_ybf6q"]
-[ext_resource type="Texture2D" uid="uid://tiohi8w5b6pr" path="res://assets/map/0x72_DungeonTilesetII_v1.7/atlas_floor-16x16.png" id="10_j1gp7"]
+[ext_resource type="Texture2D" uid="uid://tiohi8w5b6pr" path="res://assets/map/atlas_floor-16x16.png" id="10_j1gp7"]
 [ext_resource type="PackedScene" uid="uid://cypiubbgwu7oj" path="res://scenes/torch.tscn" id="10_wawk4"]
-[ext_resource type="Texture2D" uid="uid://cn8msjajm2x1b" path="res://assets/map/0x72_DungeonTilesetII_v1.7/atlas_walls_high-16x32.png" id="11_ijf1m"]
-[ext_resource type="Texture2D" uid="uid://dwobia8v1e2dx" path="res://assets/map/0x72_DungeonTilesetII_v1.7/atlas_walls_low-16x16.png" id="12_3dyyi"]
+[ext_resource type="Texture2D" uid="uid://cn8msjajm2x1b" path="res://assets/map/atlas_walls_high-16x32.png" id="11_ijf1m"]
+[ext_resource type="Texture2D" uid="uid://dwobia8v1e2dx" path="res://assets/map/atlas_walls_low-16x16.png" id="12_3dyyi"]
 [ext_resource type="PackedScene" uid="uid://brhosjctyuge1" path="res://scenes/map_elements/spike_trap.tscn" id="12_drpsh"]
 [ext_resource type="Script" uid="uid://cv7htmerfgy3e" path="res://scripts/map_elements/dual_wall.gd" id="12_ho7nn"]
 [ext_resource type="PackedScene" uid="uid://diskk4pjmg7b7" path="res://scenes/map_elements/secret_passage.tscn" id="13_5iruf"]
@@ -3787,7 +3787,7 @@ modulate = Color(0.6627451, 0.75686276, 0.7411765, 1)
 position = Vector2(255, 162)
 
 [node name="SecretPassage" parent="World/DungeonMap" unique_id=1954145144 node_paths=PackedStringArray("secret_room") instance=ExtResource("13_5iruf")]
-position = Vector2(161, 448)
+position = Vector2(801, 146)
 secret_room = NodePath("../../SecretRoom")
 
 [node name="Lights" type="Node" parent="World/DungeonMap" unique_id=2145247813]

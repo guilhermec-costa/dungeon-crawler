@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bnshafihw4h3i"]
 
-[ext_resource type="Texture2D" uid="uid://suqg2x7q0731" path="res://assets/stones/Stones_ores_bars/stone_1.png" id="1_2mg51"]
+[ext_resource type="Texture2D" uid="uid://suqg2x7q0731" path="res://assets/stones/stone_1.png" id="1_2mg51"]
 [ext_resource type="Script" uid="uid://be4aj52vcpqq4" path="res://scripts/ground_slam_effect.gd" id="1_22slu"]
 [ext_resource type="Texture2D" uid="uid://dl12s46s080mm" path="res://assets/inpact_ring.png" id="2_q3dww"]
 

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PlayerConfig" format=3 uid="uid://d1g7kqx2nm7tr"]
+
+[ext_resource type="Script" uid="uid://db8ycljhdmlmt" path="res://scripts/entities/player/player_config.gd" id="1_ha3w6"]
+
+[resource]
+script = ExtResource("1_ha3w6")
+sprinting_multiplier = 2.5
+max_health = 100.0
+max_stamina = 100.0
+metadata/_custom_type_script = "uid://db8ycljhdmlmt"

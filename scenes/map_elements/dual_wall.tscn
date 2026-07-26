@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cyq8pwu041xr3"]
 
-[ext_resource type="Texture2D" uid="uid://dwobia8v1e2dx" path="res://assets/map/0x72_DungeonTilesetII_v1.7/atlas_walls_low-16x16.png" id="1_gog0o"]
+[ext_resource type="Texture2D" uid="uid://dwobia8v1e2dx" path="res://assets/map/atlas_walls_low-16x16.png" id="1_gog0o"]
 [ext_resource type="Script" uid="uid://cv7htmerfgy3e" path="res://scripts/map_elements/dual_wall.gd" id="1_pd3m7"]
-[ext_resource type="Texture2D" uid="uid://cn8msjajm2x1b" path="res://assets/map/0x72_DungeonTilesetII_v1.7/atlas_walls_high-16x32.png" id="2_pd3m7"]
+[ext_resource type="Texture2D" uid="uid://cn8msjajm2x1b" path="res://assets/map/atlas_walls_high-16x32.png" id="2_pd3m7"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_drpsh"]
 tile_data = PackedInt32Array(0, 131072, 3, 65536, 131073, 65543)

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c7qrcvq2y7q5k" path="res://scenes/player_hud.gd" id="1_s25gh"]
 [ext_resource type="Texture2D" uid="uid://u3vbu0fcm3nw" path="res://assets/healthbar/life_mana_empty.png" id="2_lqhkl"]
 [ext_resource type="Texture2D" uid="uid://8rcby5b6kbga" path="res://assets/healthbar/life_mana_full.png" id="2_ujnyd"]
-[ext_resource type="Texture2D" uid="uid://c7ojgbqebv5ch" path="res://assets/frames/100.png" id="3_er5qu"]
+[ext_resource type="Script" uid="uid://e3nuy3sggaag" path="res://scripts/portrait_container.gd" id="4_lqhkl"]
 [ext_resource type="Texture2D" uid="uid://dhkp3qj0u671h" path="res://assets/loreon_knight/sword_1/ready_1.png" id="6_8y7rk"]
 [ext_resource type="Script" uid="uid://otbv8uel765x" path="res://scripts/hotbar.gd" id="8_8y7rk"]
 [ext_resource type="PackedScene" uid="uid://h5l18ovjacls" path="res://scenes/inventory_slot_ui.tscn" id="9_8y7rk"]
@@ -23,6 +23,43 @@ region = Rect2(12.735279, 21.701591, 111.41138, 8.324043)
 [sub_resource type="AtlasTexture" id="AtlasTexture_er5qu"]
 atlas = ExtResource("6_8y7rk")
 region = Rect2(19.127127, 10.537494, 11.365368, 13.119756)
+
+[sub_resource type="Animation" id="Animation_lqhkl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Portrait:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ujnyd"]
+resource_name = "hurt"
+length = 0.19999999999999998
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Portrait:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.19437584, 0.14415261, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lqhkl"]
+_data = {
+&"RESET": SubResource("Animation_lqhkl"),
+&"hurt": SubResource("Animation_ujnyd")
+}
 
 [node name="HUD" type="CanvasLayer" unique_id=379781472]
 layer = 2
@@ -99,6 +136,7 @@ offset_bottom = 39.88568
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.835, 0.835)
+script = ExtResource("4_lqhkl")
 
 [node name="Portrait" type="TextureRect" parent="Stats/PortraitWidget/PortraitContainer" unique_id=1749889812]
 texture_filter = 1
@@ -117,14 +155,8 @@ grow_vertical = 2
 scale = Vector2(1.425, 1.425)
 texture = SubResource("AtlasTexture_er5qu")
 
-[node name="Frame" type="TextureRect" parent="Stats/PortraitWidget/PortraitContainer" unique_id=1045125051]
-visible = false
-layout_mode = 0
-offset_left = -13.268186
-offset_top = -6.030997
-offset_right = 86.73181
-offset_bottom = 93.969
-texture = ExtResource("3_er5qu")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Stats/PortraitWidget/PortraitContainer" unique_id=1166250028]
+libraries/ = SubResource("AnimationLibrary_lqhkl")
 
 [node name="Hotbar" type="HBoxContainer" parent="." unique_id=1173520020]
 texture_filter = 1

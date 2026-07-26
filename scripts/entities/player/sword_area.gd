@@ -28,7 +28,6 @@ func _on_body_entered(body: Node2D) -> void:
 		var current_time = Time.get_unix_time_from_system()
 		var time_passed = current_time - last_damage_time
 		last_damage_time = current_time
-		print("time passed in seconds: ", time_passed)
 		body.take_damage(damage, damage_type)
 		
 func set_facing_right():

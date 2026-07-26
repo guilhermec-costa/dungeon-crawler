@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://dkdy7kx16hltj"]
 
-[ext_resource type="Texture2D" uid="uid://tiohi8w5b6pr" path="res://assets/map/0x72_DungeonTilesetII_v1.7/atlas_floor-16x16.png" id="1_knoy4"]
+[ext_resource type="Texture2D" uid="uid://tiohi8w5b6pr" path="res://assets/map/atlas_floor-16x16.png" id="1_knoy4"]
 [ext_resource type="PackedScene" uid="uid://cwu0gaawvtd4n" path="res://scenes/player.tscn" id="2_y0js1"]
 [ext_resource type="PackedScene" uid="uid://bn2i4magehkux" path="res://scenes/enemies/blue_golem.tscn" id="3_q6mg8"]
 [ext_resource type="Resource" uid="uid://dafx4xnxn61at" path="res://resources/blue_golem.tres" id="4_knoy4"]

@@ -1,8 +1,10 @@
 [gd_scene format=4 uid="uid://cwu0gaawvtd4n"]
 
 [ext_resource type="Script" uid="uid://cm70y2fkaovlw" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="Resource" uid="uid://d1g7kqx2nm7tr" path="res://resources/player_config.tres" id="2_2dvfe"]
 [ext_resource type="Script" uid="uid://cjjnmkyiqm1f6" path="res://scripts/entities/player/sword_area.gd" id="2_fjrip"]
 [ext_resource type="Script" uid="uid://cbmsh8w8r31ki" path="res://scripts/data/weapon_data.gd" id="3_d2wvv"]
+[ext_resource type="Resource" uid="uid://r6lluixrhn0m" path="res://resources/game_items.tres" id="3_giy8y"]
 [ext_resource type="AudioStream" uid="uid://denkrjqp4ibqi" path="res://assets/audio/sword.mp3" id="5_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://c1sawr18fmdsg" path="res://assets/loreon_knight/sword_1/attack1_remade.png" id="6_3v2ag"]
 [ext_resource type="Texture2D" uid="uid://bidj1qu17hv0n" path="res://assets/loreon_knight/sword_1/attack4_remade.png" id="6_487ah"]
@@ -301,6 +303,34 @@ tracks/1/keys = {
 "update": 1,
 "values": [&"stand"]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2dvfe"]
+resource_name = "hurt"
+length = 0.23333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.99999326, 0.45197308, 0.38778508, 1), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_t4otl"]
 resource_name = "standup"
@@ -361,6 +391,7 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j2b1d"]
 _data = {
 &"RESET": SubResource("Animation_j2b1d"),
+&"hurt": SubResource("Animation_2dvfe"),
 &"standup": SubResource("Animation_t4otl"),
 &"walk": SubResource("Animation_cs1tg")
 }
@@ -377,11 +408,8 @@ scale = Vector2(0.95, 0.95)
 collision_layer = 2
 collision_mask = 65
 script = ExtResource("1_g2els")
-max_health = 100.0
-max_stamina = 100.0
-dodge_chance = 8.0
-stamina_recovery_delay = 0.6
-speed = 45.0
+config = ExtResource("2_2dvfe")
+game_items = ExtResource("3_giy8y")
 metadata/_edit_group_ = true
 
 [node name="SwordArea" type="Area2D" parent="." unique_id=87376858]
@@ -407,6 +435,7 @@ position = Vector2(2, -1)
 rotation = -6.2831855
 sprite_frames = SubResource("SpriteFrames_1bnh4")
 animation = &"stand"
+frame = 2
 script = ExtResource("37_cs1tg")
 metadata/_edit_group_ = true
 
