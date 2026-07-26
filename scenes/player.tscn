@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://cwu0gaawvtd4n"]
 
-[ext_resource type="Script" uid="uid://cm70y2fkaovlw" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://cm70y2fkaovlw" path="res://scripts/entities/player/player.gd" id="1_g2els"]
 [ext_resource type="Resource" uid="uid://d1g7kqx2nm7tr" path="res://resources/player_config.tres" id="2_2dvfe"]
 [ext_resource type="Script" uid="uid://cjjnmkyiqm1f6" path="res://scripts/entities/player/sword_area.gd" id="2_fjrip"]
 [ext_resource type="Script" uid="uid://cbmsh8w8r31ki" path="res://scripts/data/weapon_data.gd" id="3_d2wvv"]
@@ -181,7 +181,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"idle",
-"speed": 6.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -435,7 +435,6 @@ position = Vector2(2, -1)
 rotation = -6.2831855
 sprite_frames = SubResource("SpriteFrames_1bnh4")
 animation = &"stand"
-frame = 2
 script = ExtResource("37_cs1tg")
 metadata/_edit_group_ = true
 
@@ -445,7 +444,10 @@ scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_wnwbv")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2090020350]
-position = Vector2(-4, 8)
+position = Vector2(-7.1525574e-07, 1.4305115e-06)
+offset = Vector2(30, 0)
+limit_smoothed = true
+position_smoothing_speed = 1.0
 
 [node name="SwordAttackSound" type="AudioStreamPlayer2D" parent="." unique_id=1054610655]
 stream = ExtResource("5_qlg0r")

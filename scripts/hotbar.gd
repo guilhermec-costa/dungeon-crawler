@@ -10,4 +10,4 @@ extends HBoxContainer
 
 func _ready() -> void:
 	for i in slots.size():
-		slots[i].setup(i)
+		slots[i].setup(i + 1)

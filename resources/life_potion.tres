@@ -5,10 +5,10 @@
 
 [resource]
 script = ExtResource("1_ntm7y")
-id = "4"
+id = 1
 display_name = "Life Potion"
 icon = ExtResource("1_d3nsa")
 description = "Life Potion"
 consumable = true
-icon_scale = Vector2(0.605, 1)
+icon_scale = Vector2(0.44, 1)
 metadata/_custom_type_script = "uid://ca28ye276k74g"

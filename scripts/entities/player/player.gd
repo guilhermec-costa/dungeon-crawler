@@ -4,9 +4,11 @@ class_name Player
 
 signal player_dead
 signal damage_taken
-signal update_stamina
+signal update_stats
 signal room_change_requested(room: Node2D, spawn_position: Vector2)
 signal initialized
+
+const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 
 @onready var running_sound: AudioStreamPlayer2D = $RunningSound
 @onready var walk_sound: AudioStreamPlayer2D = $WalkSound
@@ -20,6 +22,8 @@ signal initialized
 @export var game_items: GameItems
 
 var current_attack: AttackConfig = AttackConfig.new("attack1", 20)
+var recovering_health: float = false
+var health_before_recovering: float
 
 var speed: float:
 	get: 
@@ -42,13 +46,18 @@ var inventory := Inventory.new(4)
 var current_interactable: Interactable
 
 var stamina_recovery_timer := 0.0
-var health: float
+var health: float:
+	get:
+		return health
+	set(value):
+		health = clamp(value, 0, config.max_health)
+		update_stats.emit()
 var stamina: float = 0.0:
 	get:
 		return stamina
 	set(value):
 		stamina = clamp(value, 0, config.max_stamina)
-		update_stamina.emit()
+		update_stats.emit()
 		
 var last_leaved_room: Node2D
 var current_room: Node2D
@@ -115,7 +124,8 @@ func _ready():
 	animated_sprite.frame_changed.connect(_on_frame_changed)
 	animated_sprite.animation_changed.connect(_on_animation_changed)
 	animated_sprite.setup(sword_area)
-	health = config.max_health
+	health = config.start_health
+	health_before_recovering = config.start_health
 	stamina = config.max_stamina
 	
 	inventory.add_item(game_items.life_potion, 3)
@@ -124,7 +134,7 @@ func _ready():
 func collect_gold(goldData: ItemData, amount: float):
 	current_gold += amount
 	inventory.add_item(goldData, amount)
-	var label := MessageLabel.new()
+	var label: MessageLabel = MESSAGE_LABEL_SCENE.instantiate()
 	var gold_message = "+%d" % int(amount)
 	animate_message_label(gold_message, FloatingTextConfigs.GOLD_COLLECTED)
 	
@@ -227,6 +237,16 @@ func handle_sprinting(delta: float) -> void:
 			stamina_recovery_timer -= delta
 		else:
 			stamina += config.stamina_recovery_rate * delta
+
+func handle_life_recovering(delta: float) -> void:
+	if recovering_health:
+		var recovered_amount := health - health_before_recovering
+
+		if recovered_amount < 20:
+			health += config.life_recovery_rate * delta	
+		else:
+			recovering_health = false
+			health_before_recovering = health
 			
 func _process(delta: float) -> void:
 	if not in_processable_state():
@@ -237,6 +257,7 @@ func _process(delta: float) -> void:
 		running_sound.stop()
 	
 	handle_sprinting(delta)
+	handle_life_recovering(delta)
 
 	match state:
 		State.ROLLING, State.ATTACKING:
@@ -343,7 +364,7 @@ func show_no_stamina_message():
 	animate_message_label("NO STAMINA!", FloatingTextConfigs.WARNING_MESSAGE)
 
 func animate_message_label(text: String, config: FloatingTextConfig):
-	var label := MessageLabel.new()
+	var label: MessageLabel = MESSAGE_LABEL_SCENE.instantiate()
 	add_child(label)
 	label.setup(text, config)
 	TweenManager.animate_floating_label(label)
@@ -372,7 +393,15 @@ func _draw():
 	var shadow_color = Color.BLACK
 	shadow_color.a = 0.15
 	draw_circle(Vector2.DOWN * 25, 10, shadow_color)
+
+func recover_health() -> void:
+	health_before_recovering = health
+	recovering_health = true
+	var label = "+%d" % 20
+	animate_message_label(label, FloatingTextConfigs.LIFE_RECOVERED)
 	
 func _on_item_consume(item: ItemData, quantity: int = 1) -> void:
 	inventory.consume_item(item, quantity)
-	print(item)
+	match item.id:
+		ItemData.ItemID.LIFE_POTION:
+			recover_health()

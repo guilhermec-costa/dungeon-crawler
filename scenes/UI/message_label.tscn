@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" uid="uid://gfht3myfsdee" path="res://scripts/UI/message_label.gd" id="1_3wx75"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jprxo"]
+light_mode = 1
+
 [node name="MessageLabel" type="Label" unique_id=955672576]
-light_mask = 16
+light_mask = 0
+material = SubResource("CanvasItemMaterial_jprxo")
 script = ExtResource("1_3wx75")

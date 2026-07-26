@@ -44,5 +44,6 @@ func consume_item(item: ItemData, quantity: int) -> void:
 	slots[item] -= quantity
 	if slots[item] <= 0:
 		free_space(item)
-		
+	
+	print("slots", slots)
 	inventory_update.emit()

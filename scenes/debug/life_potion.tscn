@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://blr3u2lxvpvce"]
+
+[ext_resource type="PackedScene" uid="uid://cywaovqr01vo6" path="res://scenes/player_hud.tscn" id="1_vy6k8"]
+[ext_resource type="PackedScene" uid="uid://cwu0gaawvtd4n" path="res://scenes/player.tscn" id="2_wffe7"]
+[ext_resource type="Script" uid="uid://db8ycljhdmlmt" path="res://scripts/entities/player/player_config.gd" id="3_km1x8"]
+
+[sub_resource type="Resource" id="Resource_km1x8"]
+script = ExtResource("3_km1x8")
+sprinting_multiplier = 2.5
+max_health = 100.0
+start_health = 20.0
+max_stamina = 100.0
+metadata/_custom_type_script = "uid://db8ycljhdmlmt"
+
+[node name="LifePotion" type="Node2D" unique_id=1550587190]
+
+[node name="HUD" parent="." unique_id=379781472 node_paths=PackedStringArray("player") instance=ExtResource("1_vy6k8")]
+player = NodePath("../Player")
+
+[node name="Player" parent="." unique_id=898338159 instance=ExtResource("2_wffe7")]
+position = Vector2(503, 284)
+config = SubResource("Resource_km1x8")

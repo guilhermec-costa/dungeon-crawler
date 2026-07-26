@@ -9,7 +9,7 @@ region = Rect2(0.9183922, 13.550793, 16.53981, 33.297245)
 
 [resource]
 script = ExtResource("1_xpyog")
-id = "2"
+id = 2
 display_name = "Corrupted Key"
 icon = SubResource("AtlasTexture_xpyog")
 description = "The final key..."

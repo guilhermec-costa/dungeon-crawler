@@ -3637,6 +3637,7 @@ position = Vector2(493.99997, 345)
 scale = Vector2(0.86, 0.86)
 
 [node name="Torchs" type="Node2D" parent="World/DungeonMap/Decorations" unique_id=1531949220]
+visible = false
 
 [node name="Torch2" parent="World/DungeonMap/Decorations/Torchs" unique_id=1156117351 instance=ExtResource("10_wawk4")]
 position = Vector2(340, 270)

@@ -96,11 +96,12 @@ navigation_polygon = SubResource("NavigationPolygon_wjse1")
 
 [node name="Entities" type="Node2D" parent="." unique_id=194956702]
 z_index = 2
-position = Vector2(110, 124)
+position = Vector2(2, 0)
 
 [node name="Player" parent="Entities" unique_id=898338159 instance=ExtResource("1_mnsup")]
+position = Vector2(164, 206)
 
 [node name="WhiteSkeleton" parent="Entities" unique_id=582161565 node_paths=PackedStringArray("player") instance=ExtResource("2_wjse1")]
-position = Vector2(166.00003, 30.000061)
+position = Vector2(271, 163.99998)
 config = SubResource("Resource_ntigl")
 player = NodePath("../Player")

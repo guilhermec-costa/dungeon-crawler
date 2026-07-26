@@ -18,8 +18,8 @@ func setup(_index: int) -> void:
 	 
 func set_item(_item: ItemData, quantity: int):
 	icon.texture = _item.icon
-	#icon.scale = _item.icon_scale
 	icon.visible = true
+	icon.scale = Vector2.ONE
 	tooltip_text = _item.description
 	amount.text = str(quantity)
 	self.item = _item
@@ -28,10 +28,19 @@ func clear():
 	icon.texture = null
 	icon.visible = false
 	amount.text = ""
+	self.item = null
+
+func can_consume_item(event: InputEvent):
+	var relative_index = event.keycode - base_index_from_zero
+	if relative_index >= 0 and relative_index == index \
+	and item != null:
+		return true
+		
+	return false
 	
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.is_pressed() and not event.is_echo():
 			var relative_index = event.keycode - base_index_from_zero
-			if relative_index >= 0 and relative_index == index:
+			if can_consume_item(event):
 				consume_item.emit(item, 1)

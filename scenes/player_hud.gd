@@ -15,7 +15,7 @@ func _ready() -> void:
 	
 	player.inventory.inventory_update.connect(_on_inventory_update)
 	player.damage_taken.connect(_on_player_damage_taken)
-	player.update_stamina.connect(_on_player_deplete_stamina)
+	player.update_stats.connect(on_player_update_stats)
 	player.initialized.connect(_on_player_initialized)
 		
 	for slot in hotbar.slots:
@@ -47,14 +47,17 @@ func update_stamina():
 	self.staminabar.value = player.stamina
 
 func _on_player_initialized():
+	update_stats()
+
+func on_player_update_stats() -> void:
+	update_stats()
+	
+func update_stats():
 	update_max_health()
 	update_health()
 	update_max_stamina()
 	update_stamina()
-
+	
 func _on_player_damage_taken() -> void:
 	update_health()
 	play_ui_hurt_animation()
-
-func _on_player_deplete_stamina() -> void:
-	update_stamina()

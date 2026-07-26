@@ -196,8 +196,9 @@ func update_animation(new_animation: String):
 	if new_animation != $AnimatedSprite2D.animation or not $AnimatedSprite2D.is_playing():
 		$AnimatedSprite2D.play(new_animation)
 
+const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 func show_damage_label(damage: float, type: DamageTypes.Type):
-	var label = MessageLabel.new()
+	var label: MessageLabel = MESSAGE_LABEL_SCENE.instantiate()
 	add_child(label)
 	match type:
 		DamageTypes.Type.NORMAL:
