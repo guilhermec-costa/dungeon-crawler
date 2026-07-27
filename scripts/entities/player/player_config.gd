@@ -6,7 +6,7 @@ extends Resource
 @export var max_health: float
 @export var start_health: float
 @export var max_stamina: float
-@export var dodge_chance: float = 5.0
+@export var dodge_chance: float = 1
 @export var sprint_stamina_cost_per_second: float = 15.0
 @export var stamina_recovery_rate: float = 27.0
 @export var life_recovery_rate: float = 35

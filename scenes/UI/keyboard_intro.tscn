@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://cmiycj7e2ku1x"]
+
+[ext_resource type="Texture2D" uid="uid://c17n1nvw34on2" path="res://assets/keyboard/A.png" id="1_0o75c"]
+[ext_resource type="Texture2D" uid="uid://bos7gde25h1ot" path="res://assets/keyboard/F.png" id="1_bju4u"]
+[ext_resource type="Script" uid="uid://c3lf4inefks7n" path="res://scenes/UI/keyboard_intro.gd" id="1_gmap5"]
+[ext_resource type="Texture2D" uid="uid://dq6c00pqef1si" path="res://assets/keyboard/W.png" id="2_bju4u"]
+[ext_resource type="FontFile" uid="uid://dte1v3ghcwv75" path="res://assets/fonts/m5x7.ttf" id="2_oqi26"]
+[ext_resource type="Texture2D" uid="uid://1grw1wtwsdqo" path="res://assets/keyboard/S.png" id="3_gmap5"]
+[ext_resource type="Texture2D" uid="uid://dm802khev6f1i" path="res://assets/keyboard/D.png" id="4_1sqrr"]
+[ext_resource type="PackedScene" uid="uid://d3ht7qds5sdr8" path="res://scenes/UI/tutorial_key.tscn" id="6_1sqrr"]
+[ext_resource type="Texture2D" uid="uid://cb81xos6b5gea" path="res://assets/keyboard/SPACE.png" id="7_uprne"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7bkgt"]
+font = ExtResource("2_oqi26")
+font_color = Color(0.9384497, 0.9384497, 0.9384497, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gmap5"]
+font = ExtResource("2_oqi26")
+font_color = Color(0.8819366, 0.8819366, 0.88193655, 1)
+
+[node name="KeyboardIntro" type="CanvasLayer" unique_id=699495161]
+layer = 6
+script = ExtResource("1_gmap5")
+
+[node name="Commands" type="Node2D" parent="." unique_id=1095983135]
+texture_filter = 1
+position = Vector2(116, -87)
+
+[node name="Movement" type="Node2D" parent="Commands" unique_id=1898036013]
+position = Vector2(359, 21)
+
+[node name="Label" type="Label" parent="Commands/Movement" unique_id=1399436771]
+offset_left = 149.0
+offset_top = 122.0
+offset_right = 224.0
+offset_bottom = 145.0
+text = "MOVEMENT"
+label_settings = SubResource("LabelSettings_7bkgt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AKey" parent="Commands/Movement" unique_id=477330393 instance=ExtResource("6_1sqrr")]
+position = Vector2(149, 194)
+texture = ExtResource("1_0o75c")
+
+[node name="SKey" parent="Commands/Movement" unique_id=60129201 instance=ExtResource("6_1sqrr")]
+position = Vector2(185, 194)
+texture = ExtResource("3_gmap5")
+
+[node name="WKey" parent="Commands/Movement" unique_id=268548548 instance=ExtResource("6_1sqrr")]
+position = Vector2(185, 161)
+texture = ExtResource("2_bju4u")
+
+[node name="DKey" parent="Commands/Movement" unique_id=338339085 instance=ExtResource("6_1sqrr")]
+position = Vector2(221, 194)
+texture = ExtResource("4_1sqrr")
+
+[node name="TutorialKey" parent="Commands/Movement" unique_id=339433458 instance=ExtResource("6_1sqrr")]
+position = Vector2(187.00003, 225.99998)
+scale = Vector2(1.6698498, 1.78)
+texture = ExtResource("7_uprne")
+
+[node name="Interaction" type="Node2D" parent="Commands" unique_id=1887895333]
+position = Vector2(343, 33)
+
+[node name="Label" type="Label" parent="Commands/Interaction" unique_id=2033596726]
+offset_left = 317.0
+offset_top = 111.0
+offset_right = 393.0
+offset_bottom = 134.0
+text = "INTERACT"
+label_settings = SubResource("LabelSettings_gmap5")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FKey" parent="Commands/Interaction" unique_id=2144220647 instance=ExtResource("6_1sqrr")]
+position = Vector2(357, 150)
+texture = ExtResource("1_bju4u")

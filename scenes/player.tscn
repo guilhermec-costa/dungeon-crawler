@@ -42,6 +42,8 @@
 [ext_resource type="Texture2D" uid="uid://bcma4odswwx1k" path="res://assets/loreon_knight/sword_1/walk_6.png" id="35_giy8y"]
 [ext_resource type="Script" uid="uid://kucebo152p4r" path="res://scripts/entities/player/animated_sprite_2d.gd" id="37_cs1tg"]
 [ext_resource type="AudioStream" uid="uid://benesukbqq1r6" path="res://assets/audio/walking_concrete.mp3" id="39_j2b1d"]
+[ext_resource type="AudioStream" uid="uid://vca04hgmqb81" path="res://assets/audio/player_take_damage.mp3" id="42_fdfoy"]
+[ext_resource type="AudioStream" uid="uid://cwjdn0v51d6gc" path="res://assets/audio/potion_drink.wav" id="44_hhpqf"]
 
 [sub_resource type="Resource" id="Resource_y4r1p"]
 script = ExtResource("3_d2wvv")
@@ -354,7 +356,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.43333334, 0.8666667, 1.3, 1.7333333),
+"times": PackedFloat32Array(0, 0.43333334, 0.8666667, 2.0666666, 2.5333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4]
@@ -382,7 +384,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.16666667, 0.4, 0.6, 0.73333335, 0.8666667),
+"times": PackedFloat32Array(0.13333334, 0.43333334, 0.73333335, 1.0666667, 1.4333333, 1.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
@@ -464,12 +466,15 @@ height = 38.0
 [node name="RunningSound" type="AudioStreamPlayer2D" parent="." unique_id=595661868]
 position = Vector2(-521, -326)
 stream = SubResource("AudioStreamMP3_fjrip")
-volume_db = -28.044
-pitch_scale = 1.1
+volume_db = -13.679
+
+[node name="TakeDamageSound" type="AudioStreamPlayer2D" parent="." unique_id=1325334966]
+stream = ExtResource("42_fdfoy")
+volume_db = -10.917
 
 [node name="WalkSound" type="AudioStreamPlayer2D" parent="." unique_id=296688781]
 stream = ExtResource("39_j2b1d")
-volume_db = -15.403
+volume_db = -5.635
 pitch_scale = 1.44
 
 [node name="CollisionRay" type="RayCast2D" parent="." unique_id=986344877]
@@ -495,5 +500,10 @@ collision_mask = 0
 position = Vector2(-0.5263138, 8.684212)
 shape = SubResource("RectangleShape2D_7bkgt")
 debug_color = Color(0.9163825, 0.20684665, 0.50994754, 0.41960785)
+
+[node name="PotionDrinkSound" type="AudioStreamPlayer2D" parent="." unique_id=336330391]
+stream = ExtResource("44_hhpqf")
+volume_db = -18.961
+pitch_scale = 0.83
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

@@ -40,11 +40,14 @@ func start_game():
 	add_child(phase1)
 	var player: Player = phase1.player
 	player.player_dead.connect(_on_player_died)
+	
+	await TransitionManager.fade_out()
+	game_menu.hide_menu()
 	phase1.start()
+	await TransitionManager.fade_in(4)
 
 
 func _on_game_menu_start_game() -> void:
-	game_menu.hide()
 	start_game()
 
 func _on_game_quit() -> void:

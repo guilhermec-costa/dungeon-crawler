@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b07e1b4uwtysa"]
 
 [ext_resource type="Script" uid="uid://bbtvhmv4lvnin" path="res://scripts/UI/interaction_widget.gd" id="1_1vmbw"]
-[ext_resource type="FontFile" uid="uid://dql3qyssgj4k8" path="res://assets/fonts/Tiny RPG - Vampire Ire.ttf" id="1_jnueg"]
+[ext_resource type="FontFile" uid="uid://dte1v3ghcwv75" path="res://assets/fonts/m5x7.ttf" id="2_1vmbw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7p2v0"]
 bg_color = Color(0.43962178, 0.60729504, 0.82815224, 0.3882353)
@@ -15,7 +15,12 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="LabelSettings" id="LabelSettings_jnueg"]
+font = ExtResource("2_1vmbw")
+font_size = 28
+
 [node name="InteractionWidget" type="Node2D" unique_id=1717868745]
+z_index = 10
 script = ExtResource("1_1vmbw")
 
 [node name="Panel" type="Panel" parent="." unique_id=112363206]
@@ -33,14 +38,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
+offset_left = -13.548388
+offset_top = -20.0
+offset_right = 26.451614
+offset_bottom = 18.709675
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("1_jnueg")
 theme_override_font_sizes/font_size = 23
-text = "F"
+text = "F "
+label_settings = SubResource("LabelSettings_jnueg")
 horizontal_alignment = 1
 vertical_alignment = 1

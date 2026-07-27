@@ -9,7 +9,6 @@ region = Rect2(101.40318, 137.66368, 20.601997, 15.983093)
 
 [resource]
 script = ExtResource("1_kmk1b")
-id = "1"
 display_name = "Gold"
 icon = SubResource("AtlasTexture_drpsh")
 description = "Gold that can be collected from dead corpses"

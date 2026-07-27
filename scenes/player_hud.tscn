@@ -22,7 +22,7 @@ region = Rect2(12.735279, 21.701591, 111.41138, 8.324043)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_er5qu"]
 atlas = ExtResource("6_8y7rk")
-region = Rect2(19.127127, 10.537494, 11.365368, 13.119756)
+region = Rect2(18.189863, 12.801936, 10.026102, 9.616822)
 
 [sub_resource type="Animation" id="Animation_lqhkl"]
 length = 0.001
@@ -69,10 +69,10 @@ script = ExtResource("1_s25gh")
 modulate = Color(0.6239568, 0.51527005, 0.5535336, 1)
 layout_mode = 3
 anchors_preset = 0
-offset_left = 48.0
-offset_top = 27.0
-offset_right = 470.4852
-offset_bottom = 121.67456
+offset_left = 18.0
+offset_top = 21.000002
+offset_right = 440.4852
+offset_bottom = 115.67456
 scale = Vector2(0.845, 0.845)
 
 [node name="StaminaBar" type="TextureProgressBar" parent="Stats" unique_id=259797205]
@@ -139,6 +139,7 @@ scale = Vector2(0.835, 0.835)
 script = ExtResource("4_lqhkl")
 
 [node name="Portrait" type="TextureRect" parent="Stats/PortraitWidget/PortraitContainer" unique_id=1749889812]
+self_modulate = Color(0.6378432, 0.6378432, 0.6378431, 1)
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
@@ -146,13 +147,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -33.170475
-offset_top = -37.39217
-offset_right = 31.160126
-offset_bottom = 15.881611
+offset_left = -22.31468
+offset_top = -21.711582
+offset_right = 42.015915
+offset_bottom = 31.562202
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.425, 1.425)
+scale = Vector2(1.115, 1.115)
 texture = SubResource("AtlasTexture_er5qu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Stats/PortraitWidget/PortraitContainer" unique_id=1166250028]

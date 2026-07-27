@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://d3ht7qds5sdr8"]
+
+[ext_resource type="Texture2D" uid="uid://dha5mr55hpe0n" path="res://assets/keyboard/0.png" id="1_hlom2"]
+
+[node name="TutorialKey" type="Sprite2D" unique_id=477330393]
+self_modulate = Color(0.5804995, 0.31874016, 0.1578416, 1)
+texture_filter = 1
+position = Vector2(73, 64)
+scale = Vector2(1.97, 1.97)
+texture = ExtResource("1_hlom2")

@@ -22,12 +22,12 @@ func _ready() -> void:
 	secret_room.hide()
 	
 func start():
-	player.state = Player.State.IDLE
 	if OS.has_feature("cutscene_enabled"):
-		player.state = Player.State.CUTSCENE
+		player.change_state(Player.State.CUTSCENE)
 		await phase1_animation_player.play()
-
-	player.start()
+	
+	player.change_state(Player.State.IDLE)
+	player.start($PlayerStartPosition.global_position)
 
 func _on_player_room_change_request(room: Node2D, spawn_position: Vector2):
 	await TransitionManager.fade_out()

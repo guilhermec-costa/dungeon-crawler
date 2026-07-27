@@ -12,6 +12,8 @@ const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 
 @onready var running_sound: AudioStreamPlayer2D = $RunningSound
 @onready var walk_sound: AudioStreamPlayer2D = $WalkSound
+@onready var take_damage_sound: AudioStreamPlayer2D = $TakeDamageSound
+@onready var drink_potion_life: AudioStreamPlayer2D = $PotionDrinkSound
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var raycast: RayCast2D = $CollisionRay
 @onready var animated_sprite: PlayerAnimatedSprite = $AnimatedSprite2D
@@ -22,8 +24,7 @@ const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 @export var game_items: GameItems
 
 var current_attack: AttackConfig = AttackConfig.new("attack1", 20)
-var recovering_health: float = false
-var health_before_recovering: float
+var target_recovery_health: float = 0
 
 var speed: float:
 	get: 
@@ -65,7 +66,8 @@ var position_on_last_room := Vector2.ZERO
 const RAYCAST_OFFSET = 20
 const PLAYER_COLLIDER_X = 0
 	
-func start():
+func start(start_position: Vector2):
+	global_position = start_position
 	change_state(State.IDLE)
 	sword_area.set_disabled(true)
 	
@@ -85,12 +87,19 @@ enum State {
 
 var state := State.	IDLE
 
+
 func change_state(new_state: State):
 	if state == new_state:
 		return
 
 	if state == State.DEAD:
 		return
+		
+	if state == State.CUTSCENE:
+		set_process_input(true)
+		
+	if new_state == State.CUTSCENE:
+		set_process_input(false)
 		
 	if new_state == State.DEAD:
 		running_sound.stop()
@@ -120,12 +129,12 @@ func die():
 
 
 func _ready():
-	$Camera2D.zoom = Vector2(8, 8)
+	$Camera2D.zoom = Vector2(6.2, 6.2)
 	animated_sprite.frame_changed.connect(_on_frame_changed)
 	animated_sprite.animation_changed.connect(_on_animation_changed)
 	animated_sprite.setup(sword_area)
 	health = config.start_health
-	health_before_recovering = config.start_health
+	target_recovery_health = config.start_health
 	stamina = config.max_stamina
 	
 	inventory.add_item(game_items.life_potion, 3)
@@ -184,6 +193,7 @@ func in_movement_state() -> bool:
 	return state == State.RUNNING or state == State.WALKING
 	
 func _physics_process(delta: float) -> void:
+	print("state: ", State.keys()[state])
 	if not in_processable_state():
 		return
 				
@@ -239,14 +249,10 @@ func handle_sprinting(delta: float) -> void:
 			stamina += config.stamina_recovery_rate * delta
 
 func handle_life_recovering(delta: float) -> void:
-	if recovering_health:
-		var recovered_amount := health - health_before_recovering
-
-		if recovered_amount < 20:
-			health += config.life_recovery_rate * delta	
-		else:
-			recovering_health = false
-			health_before_recovering = health
+	if health < target_recovery_health:
+		health += config.life_recovery_rate * delta	
+	else:
+		target_recovery_health = 0
 			
 func _process(delta: float) -> void:
 	if not in_processable_state():
@@ -307,11 +313,12 @@ func take_damage(damage: float):
 		return
 		
 	if state == State.ROLLING:
-		if (randf() * 100) < config.dodge_chance:
-			animate_message_label("DODGE!", FloatingTextConfigs.MESSAGE)
+		if randf()  < config.dodge_chance:
+			animate_message_label("DODGE!", FloatingTextConfigs.DODGE_MESSAGE)
 			return
 		
 	health -= damage
+	take_damage_sound.play()
 	damage_taken.emit()
 	animation_player.play("hurt")
 	animate_message_label(str(damage), FloatingTextConfigs.NORMAL_DAMAGE)
@@ -380,13 +387,10 @@ func enter_room(room: Node2D, spawn_position: Vector2):
 	room_change_requested.emit(room, spawn_position)
 	
 func play_cutscene_animation(name: String):
-	var state_before_cutscene: State = state
 	change_state(State.CUTSCENE)
 	
 	animation_player.play(name)
 	await animation_player.animation_finished
-	
-	change_state(state_before_cutscene)
 
 func _draw():
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2(0.95, 0.6))
@@ -395,9 +399,9 @@ func _draw():
 	draw_circle(Vector2.DOWN * 25, 10, shadow_color)
 
 func recover_health() -> void:
-	health_before_recovering = health
-	recovering_health = true
+	target_recovery_health = health + 20
 	var label = "+%d" % 20
+	drink_potion_life.play()
 	animate_message_label(label, FloatingTextConfigs.LIFE_RECOVERED)
 	
 func _on_item_consume(item: ItemData, quantity: int = 1) -> void:
