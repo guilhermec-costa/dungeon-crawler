@@ -93,6 +93,8 @@ collision_layer = 4
 motion_mode = 1
 safe_margin = 0.01
 script = ExtResource("1_ptjri")
+attack_hit_frame = 5
+end_attack_frame = 0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=599365077]
 texture_filter = 1

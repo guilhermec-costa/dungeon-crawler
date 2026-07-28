@@ -394,12 +394,12 @@ data = PackedByteArray("//vUZAAABoNyMQUV4ABZC/bcoAwAGbIdL/j2gALiw6Y/DtAA+hCSTugc
 
 [node name="WhiteSkeleton" unique_id=582161565 instance=ExtResource("1_ff8hq")]
 config = ExtResource("2_vsgni")
+end_attack_frame = 7
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=599365077]
 sprite_frames = SubResource("SpriteFrames_au15w")
-animation = &"take_damage"
-frame = 4
-frame_progress = 1.0
+animation = &"attack"
+frame = 7
 
 [node name="AttackRange" parent="." index="3" unique_id=1278185032]
 position = Vector2(-11.464968, 0)

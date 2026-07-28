@@ -17,3 +17,9 @@ extends Resource
 @export var dash_cooldown: float
 @export var drop_id_on_death: ItemData.ItemID
 @export var drop_amount_on_death: int 
+
+# shadow
+@export var shadow_offset := Vector2(0, 50)
+@export var shadow_radius := 10.0
+@export var shadow_scale := Vector2(1.0, 0.6)
+@export var shadow_alpha := 0.4

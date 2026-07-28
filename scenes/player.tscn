@@ -438,7 +438,6 @@ position = Vector2(2, -1)
 rotation = -6.2831855
 sprite_frames = SubResource("SpriteFrames_1bnh4")
 animation = &"stand"
-frame = 2
 script = ExtResource("37_cs1tg")
 metadata/_edit_group_ = true
 

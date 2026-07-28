@@ -2,9 +2,9 @@ extends BaseEnemy
 
 class_name BaseSkeleton
 
-var SWORD_COLLIDER_OFFSET = 50.0
+@export var SWORD_COLLIDER_OFFSET = 50.0
 
-@onready var running_sound: AudioStreamPlayer2D = $RunningSound
+@onready var running_soundd: AudioStreamPlayer2D = $RunningSound
 @onready var sword_hit_sound: AudioStreamPlayer2D = $SwordHitSound
 
 func process_special_movement(delta):
@@ -25,7 +25,6 @@ func _ready():
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	$AttackRange.body_entered.connect(on_enter_attack_range)
 	$AttackRange.body_exited.connect(on_exit_attack_range)
-	config.gold_drop_amount_on_death = 10
 	super._ready()
 
 

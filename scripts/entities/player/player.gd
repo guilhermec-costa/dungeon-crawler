@@ -24,6 +24,7 @@ const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 
 var current_attack: AttackConfig = AttackConfig.new("attack1", 20)
 var target_recovery_health: float = 0
+var recover_life_window: bool = false
 
 var speed: float:
 	get: 
@@ -247,10 +248,14 @@ func handle_sprinting(delta: float) -> void:
 			stamina += config.stamina_recovery_rate * delta
 
 func handle_life_recovering(delta: float) -> void:
+	if not recover_life_window:
+		return
+		
 	if health < target_recovery_health:
 		health += config.life_recovery_rate * delta	
 	else:
 		target_recovery_health = 0
+		recover_life_window = false
 			
 func _process(delta: float) -> void:
 	if not in_processable_state():
@@ -358,12 +363,16 @@ func get_next_attack():
 
 
 func _on_frame_changed():
-	if state == State.ATTACKING and animated_sprite.frame == 2:
-		consume_stamina(current_attack.stamina_cost)
-		last_attack_time = Time.get_unix_time_from_system()
-		if not $SwordAttackSound.playing:
-			AudioManager.play_sfx($SwordAttackSound.stream)
-		sword_area.set_disabled(false)
+	if state == State.ATTACKING:
+		if animated_sprite.frame == 2:
+			consume_stamina(current_attack.stamina_cost)
+			last_attack_time = Time.get_unix_time_from_system()
+			if not $SwordAttackSound.playing:
+				AudioManager.play_sfx($SwordAttackSound.stream)
+			sword_area.set_disabled(false)
+		
+		if animated_sprite.frame == 4:
+			sword_area.set_disabled(true)
 
 func show_no_stamina_message():
 	animate_message_label("NO STAMINA!", FloatingTextConfigs.WARNING_MESSAGE)
@@ -393,6 +402,7 @@ func play_cutscene_animation(name: String):
 func recover_health() -> void:
 	target_recovery_health = health + 20
 	var label = "+%d" % 20
+	recover_life_window = true
 	drink_potion_life.play()
 	animate_message_label(label, FloatingTextConfigs.LIFE_RECOVERED)
 	

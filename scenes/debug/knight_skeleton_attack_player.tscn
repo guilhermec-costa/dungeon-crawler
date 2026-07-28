@@ -1,12 +1,12 @@
-[gd_scene format=4 uid="uid://d0pgxsqmgqfks"]
+[gd_scene format=4 uid="uid://ou3ssdmjrhyf"]
 
-[ext_resource type="PackedScene" uid="uid://cwu0gaawvtd4n" path="res://scenes/player.tscn" id="1_mnsup"]
-[ext_resource type="PackedScene" uid="uid://d37qmuwcvb80v" path="res://scenes/enemies/white_skeleton.tscn" id="2_wjse1"]
-[ext_resource type="Texture2D" uid="uid://tiohi8w5b6pr" path="res://assets/map/atlas_floor-16x16.png" id="3_wjse1"]
-[ext_resource type="PackedScene" uid="uid://cywaovqr01vo6" path="res://scenes/player_hud.tscn" id="5_ntigl"]
+[ext_resource type="PackedScene" uid="uid://cywaovqr01vo6" path="res://scenes/player_hud.tscn" id="1_wpcf3"]
+[ext_resource type="Texture2D" uid="uid://tiohi8w5b6pr" path="res://assets/map/atlas_floor-16x16.png" id="2_il136"]
+[ext_resource type="PackedScene" uid="uid://cwu0gaawvtd4n" path="res://scenes/player.tscn" id="3_r06pl"]
+[ext_resource type="PackedScene" uid="uid://blg2a1h73n7us" path="res://scenes/enemies/skeleton_knight.tscn" id="6_il136"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vyyy2"]
-texture = ExtResource("3_wjse1")
+texture = ExtResource("2_il136")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -64,7 +64,7 @@ agent_radius = 5.0
 
 [node name="SkeletonAttackPlayer" type="Node2D" unique_id=1516318623]
 
-[node name="HUD" parent="." unique_id=379781472 node_paths=PackedStringArray("player") instance=ExtResource("5_ntigl")]
+[node name="HUD" parent="." unique_id=379781472 node_paths=PackedStringArray("player") instance=ExtResource("1_wpcf3")]
 player = NodePath("../Entities/Player")
 
 [node name="Map" type="TileMapLayer" parent="." unique_id=221265219]
@@ -81,9 +81,12 @@ navigation_polygon = SubResource("NavigationPolygon_wjse1")
 z_index = 2
 position = Vector2(2, 0)
 
-[node name="Player" parent="Entities" unique_id=898338159 instance=ExtResource("1_mnsup")]
+[node name="Player" parent="Entities" unique_id=898338159 instance=ExtResource("3_r06pl")]
 position = Vector2(164, 206)
 
-[node name="WhiteSkeleton" parent="Entities" unique_id=765992637 node_paths=PackedStringArray("player") instance=ExtResource("2_wjse1")]
-position = Vector2(276.00003, 199.00003)
+[node name="SkeletonKnight" parent="Entities" unique_id=84490788 node_paths=PackedStringArray("player") instance=ExtResource("6_il136")]
+position = Vector2(301.00003, 187)
+SWORD_COLLIDER_OFFSET = 70.0
 player = NodePath("../Player")
+attack_hit_frame = 0
+end_attack_frame = 1

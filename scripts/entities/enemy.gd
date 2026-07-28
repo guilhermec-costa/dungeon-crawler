@@ -4,6 +4,10 @@ class_name BaseEnemy
 
 @export var config: EnemyData
 @export var player: Player
+@export var right_offset := Vector2.ZERO
+@export var left_offset := Vector2.ZERO
+@export var attack_hit_frame: int = 0
+@export var end_attack_frame: int = 1
 
 @onready var health_bar: HealthBar = $HealthBar
 @onready var pathfinder: NavigationAgent2D = $NavigationAgent2D
@@ -17,7 +21,6 @@ var health: float
 var walk_direction := Vector2.ZERO
 var spawn_origin: Vector2
 var state: State = State.IDLE
-var attack_hit_frame: int = 0
 var hit_window_open := false
 
 enum State {
@@ -75,10 +78,12 @@ func _ready():
 
 
 func _draw():
-	draw_set_transform(Vector2.ZERO, 0.0, Vector2(1, 0.6))
-	var shadow_color = Color.BLACK
-	shadow_color.a = 0.4
-	draw_circle(Vector2.DOWN * 50, 10, shadow_color)
+	draw_set_transform(Vector2.ZERO, 0.0, config.shadow_scale)
+
+	var color := Color.BLACK
+	color.a = config.shadow_alpha
+
+	draw_circle(config.shadow_offset, config.shadow_radius, color)
 
 func is_facing_left() -> bool:
 	return $AnimatedSprite2D.flip_h
@@ -89,11 +94,13 @@ func is_facing_right() -> bool:
 func flip_to_left():
 	if not $AnimatedSprite2D.flip_h:
 		$AnimatedSprite2D.flip_h = true
+		$AnimatedSprite2D.offset = left_offset
 		on_flip_left()
 
 func flip_to_right():
 	if $AnimatedSprite2D.flip_h:
 		$AnimatedSprite2D.flip_h = false
+		$AnimatedSprite2D.offset = right_offset
 		on_flip_right()
 
 func on_flip_left() -> void:
@@ -101,11 +108,12 @@ func on_flip_left() -> void:
 
 func on_flip_right() -> void:
 	pass
-
+	
 func update_flip_based_on_player_position():
 	if not is_instance_valid(player):
 		return
-	var pos_diff = player.position.x - position.x
+		
+	var pos_diff = player.global_position.x - global_position.x
 	if abs(pos_diff) > 5:
 		if pos_diff < 0:
 			flip_to_left()
