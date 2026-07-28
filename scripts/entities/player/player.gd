@@ -19,7 +19,6 @@ const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 @onready var animated_sprite: PlayerAnimatedSprite = $AnimatedSprite2D
 @onready var sword_area: SwordArea = $SwordArea
 @export var config: PlayerConfig
-@export var current_gold: float = 0.0
 @export var initial_items: Dictionary[ItemData, int]
 @export var game_items: GameItems
 
@@ -137,19 +136,16 @@ func _ready():
 	target_recovery_health = config.start_health
 	stamina = config.max_stamina
 	
-	print("initial items: ", initial_items)
 	for item in initial_items.keys():
 		inventory.add_item(item, initial_items[item])
 		
-	initialized.emit()
+	initialized.emit()	
 
-func collect_gold(goldData: ItemData, amount: float):
-	current_gold += amount
-	inventory.add_item(goldData, amount)
+func collect_item(item: ItemData, amount: float) -> void:
+	inventory.add_item(item, amount)
 	var label: MessageLabel = MESSAGE_LABEL_SCENE.instantiate()
-	var gold_message = "+%d" % int(amount)
-	animate_message_label(gold_message, FloatingTextConfigs.GOLD_COLLECTED)
-	
+	if item.collect_sound:
+		AudioManager.play_sfx(item.collect_sound)
 	
 func handle_mouse_event(event: InputEventMouseButton) -> void:
 	if event.is_pressed():

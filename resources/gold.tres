@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bbp3l72why12s"]
 
 [ext_resource type="Texture2D" uid="uid://bpfrl8e3nx36w" path="res://assets/collectables.png" id="1_b1u1o"]
+[ext_resource type="AudioStream" uid="uid://d7h6ho7e2ntu" path="res://assets/audio/coin_collect.mp3" id="1_dytpx"]
 [ext_resource type="Script" uid="uid://ca28ye276k74g" path="res://scripts/data/item_data.gd" id="1_kmk1b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_drpsh"]
@@ -12,4 +13,5 @@ script = ExtResource("1_kmk1b")
 display_name = "Gold"
 icon = SubResource("AtlasTexture_drpsh")
 description = "Gold that can be collected from dead corpses"
+collect_sound = ExtResource("1_dytpx")
 metadata/_custom_type_script = "uid://ca28ye276k74g"

@@ -67,7 +67,7 @@ func on_enter_attack_range(body: Node2D) -> void:
 
 
 func die():
-	drop_gold()
+	drop_item()
 	super.die()
 	
 func on_exit_attack_range(body: Node2D) -> void:

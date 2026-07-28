@@ -110,7 +110,7 @@ func die() -> void:
 
 	await $AnimatedSprite2D.animation_finished
 	
-	drop_gold()
+	drop_item()
 	queue_free()
 
 func play_animation_player(animation: String) -> void:

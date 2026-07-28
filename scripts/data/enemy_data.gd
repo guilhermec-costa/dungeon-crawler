@@ -15,3 +15,5 @@ extends Resource
 @export var dash_duration: float
 @export var dash_chance: float
 @export var dash_cooldown: float
+@export var drop_id_on_death: ItemData.ItemID
+@export var drop_amount_on_death: int 

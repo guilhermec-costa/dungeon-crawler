@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://felws1lvf8a1"]
+
+[ext_resource type="PackedScene" uid="uid://cbnxv05t6s3yc" path="res://scenes/drops/base_drop.tscn" id="1_n2ik2"]
+[ext_resource type="Texture2D" uid="uid://ctr3t6y6dfo2j" path="res://assets/runes/vector-rune-grey.svg" id="2_2nhr4"]
+[ext_resource type="Resource" uid="uid://bacnfjd4xs7yp" path="res://resources/ui/runes/grey_rune.tres" id="2_5dmgh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2ik2"]
+atlas = ExtResource("2_2nhr4")
+region = Rect2(-3.4262695, 0, 56.53784, 91.56885)
+
+[node name="GreyRuneDrop" unique_id=362545682 instance=ExtResource("1_n2ik2")]
+item = ExtResource("2_5dmgh")
+
+[node name="Sprite2D" parent="." index="0" unique_id=1550990129]
+scale = Vector2(0.105, 0.105)
+texture = SubResource("AtlasTexture_n2ik2")

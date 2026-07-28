@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c5eigfssyu0s7" path="res://assets/enemies/golems/blue/Golem_1_idle.png" id="1_ht6r5"]
 [ext_resource type="Script" uid="uid://dwfaq3tbvp33m" path="res://scripts/blue_golem.gd" id="1_ubhja"]
+[ext_resource type="Resource" uid="uid://dafx4xnxn61at" path="res://resources/blue_golem.tres" id="2_agjj3"]
 [ext_resource type="Texture2D" uid="uid://dqxgu3nwvjg7q" path="res://assets/enemies/golems/blue/Golem_1_attack.png" id="2_bx7dv"]
 [ext_resource type="Texture2D" uid="uid://bsijfwmoxp8nk" path="res://assets/enemies/golems/blue/Golem_1_walk.png" id="3_1svqj"]
 [ext_resource type="Texture2D" uid="uid://didcdwd16o0a1" path="res://assets/light.png" id="3_gqa84"]
@@ -380,6 +381,7 @@ radius = 35.0
 texture_filter = 1
 collision_layer = 4
 script = ExtResource("1_ubhja")
+config = ExtResource("2_agjj3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1078712412]
 position = Vector2(0.25, 13.25)

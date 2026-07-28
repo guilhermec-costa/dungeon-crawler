@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bydpvwk4iys7e" path="res://assets/UI/space.png" id="2_sh7g6"]
 [ext_resource type="Texture2D" uid="uid://didcdwd16o0a1" path="res://assets/light.png" id="4_w3m33"]
 [ext_resource type="Texture2D" uid="uid://dgxsame24ije" path="res://assets/UI/grey.png" id="5_26jbr"]
+[ext_resource type="AudioStream" uid="uid://dc47siiijeihh" path="res://assets/audio/item_placement.wav" id="6_xqb0i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fgifm"]
 size = Vector2(16, 13)
@@ -46,6 +47,7 @@ texture = ExtResource("5_26jbr")
 expand_mode = 1
 
 [node name="Icon" type="TextureRect" parent="Frame" index="0" unique_id=458747430]
+self_modulate = Color(0.3515629, 0.3515629, 0.35156286, 1)
 texture_filter = 1
 custom_maximum_size = Vector2(5, 5)
 layout_mode = 1
@@ -60,3 +62,6 @@ offset_right = 20.816
 offset_bottom = 20.728
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="PlaceSound" type="AudioStreamPlayer2D" parent="." index="4" unique_id=470116093]
+stream = ExtResource("6_xqb0i")

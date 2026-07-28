@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bacnfjd4xs7yp"]
 
+[ext_resource type="AudioStream" uid="uid://wh403y4pj0hv" path="res://assets/audio/collect_rune.wav" id="1_j8n1o"]
 [ext_resource type="Script" uid="uid://ca28ye276k74g" path="res://scripts/data/item_data.gd" id="1_jllos"]
 [ext_resource type="Texture2D" uid="uid://ctr3t6y6dfo2j" path="res://assets/runes/vector-rune-grey.svg" id="1_qhkpw"]
 
@@ -13,4 +14,5 @@ id = 3
 display_name = "Grey Rune"
 icon = SubResource("AtlasTexture_fgifm")
 description = "Grey Rune"
+collect_sound = ExtResource("1_j8n1o")
 metadata/_custom_type_script = "uid://ca28ye276k74g"

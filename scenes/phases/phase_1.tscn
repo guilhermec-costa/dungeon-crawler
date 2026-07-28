@@ -22,9 +22,6 @@
 [ext_resource type="Script" uid="uid://ca28ye276k74g" path="res://scripts/data/item_data.gd" id="17_r0mlc"]
 [ext_resource type="PackedScene" uid="uid://bn2i4magehkux" path="res://scenes/enemies/blue_golem.tscn" id="18_ogbs8"]
 [ext_resource type="Resource" uid="uid://du4nsqkp4sg62" path="res://resources/life_potion.tres" id="18_t723o"]
-[ext_resource type="Resource" uid="uid://dafx4xnxn61at" path="res://resources/blue_golem.tres" id="19_0koia"]
-[ext_resource type="Resource" uid="uid://bacnfjd4xs7yp" path="res://resources/ui/runes/grey_rune.tres" id="19_t723o"]
-[ext_resource type="Resource" uid="uid://ldabrtmvrlry" path="res://resources/ui/runes/blue_rune.tres" id="20_147fn"]
 [ext_resource type="Script" uid="uid://cbnrahvh1mwbg" path="res://scripts/cutscenes/player_enter_phase_1.gd" id="21_me02v"]
 [ext_resource type="PackedScene" uid="uid://d2rtd1o1jhbr3" path="res://scenes/rune_slot.tscn" id="22_fgifm"]
 [ext_resource type="PackedScene" uid="uid://cmiycj7e2ku1x" path="res://scenes/UI/keyboard_intro.tscn" id="23_q3625"]
@@ -3642,7 +3639,7 @@ color = Color(0.20020434, 0.07859359, 0.033259902, 1)
 blend_mode = 2
 
 [node name="PlayerStartPosition" type="Marker2D" parent="." unique_id=2011610962]
-position = Vector2(484, 168)
+position = Vector2(-89, 351)
 
 [node name="DungeonAmbienceSound" type="AudioStreamPlayer2D" parent="." unique_id=686928459]
 stream = ExtResource("8_wi8qh")
@@ -3886,7 +3883,7 @@ energy = 1.97
 texture = ExtResource("14_lie7o")
 
 [node name="PointLight2D3" type="PointLight2D" parent="World/DungeonMap/Lights" unique_id=404253021]
-position = Vector2(488.49997, 243)
+position = Vector2(-110, 353)
 scale = Vector2(0.37304685, 0.11718749)
 color = Color(0.8771647, 0.36618292, 7.70092e-07, 1)
 energy = 1.97
@@ -3991,9 +3988,7 @@ position = Vector2(2, 14)
 y_sort_enabled = true
 position = Vector2(-148, 338)
 initial_items = Dictionary[ExtResource("17_r0mlc"), int]({
-ExtResource("18_t723o"): 7,
-ExtResource("19_t723o"): 1,
-ExtResource("20_147fn"): 3
+ExtResource("18_t723o"): 5
 })
 
 [node name="DualWall" type="Node2D" parent="World/Entities" unique_id=1931496430 node_paths=PackedStringArray("player")]
@@ -4111,7 +4106,7 @@ shape = SubResource("RectangleShape2D_n4bst")
 debug_color = Color(0.61262083, 0.43725637, 0.8155487, 0.41960785)
 
 [node name="WhiteSkeleton" parent="World/Entities" unique_id=582161565 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
-position = Vector2(123.000015, 140.00002)
+position = Vector2(82.000015, 333)
 player = NodePath("../Player")
 
 [node name="WhiteSkeleton4" parent="World/Entities" unique_id=889230092 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
@@ -4124,7 +4119,6 @@ player = NodePath("../Player")
 
 [node name="BlueGolem" parent="World/Entities" unique_id=1334460780 node_paths=PackedStringArray("player") instance=ExtResource("18_ogbs8")]
 position = Vector2(374, 361)
-config = ExtResource("19_0koia")
 player = NodePath("../Player")
 
 [node name="WhiteSkeleton2" parent="World/Entities" unique_id=1214283877 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]

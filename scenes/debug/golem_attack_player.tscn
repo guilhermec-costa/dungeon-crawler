@@ -3,7 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://tiohi8w5b6pr" path="res://assets/map/atlas_floor-16x16.png" id="1_knoy4"]
 [ext_resource type="PackedScene" uid="uid://cwu0gaawvtd4n" path="res://scenes/player.tscn" id="2_y0js1"]
 [ext_resource type="PackedScene" uid="uid://bn2i4magehkux" path="res://scenes/enemies/blue_golem.tscn" id="3_q6mg8"]
-[ext_resource type="Resource" uid="uid://dafx4xnxn61at" path="res://resources/blue_golem.tres" id="4_knoy4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vyyy2"]
 texture = ExtResource("1_knoy4")
@@ -77,9 +76,7 @@ z_index = 2
 
 [node name="Player" parent="Entities" unique_id=898338159 instance=ExtResource("2_y0js1")]
 position = Vector2(43, 61)
-max_health = 10000.0
 
 [node name="BlueGolem" parent="Entities" unique_id=1334460780 node_paths=PackedStringArray("player") instance=ExtResource("3_q6mg8")]
 position = Vector2(151, 39)
-config = ExtResource("4_knoy4")
 player = NodePath("../Player")

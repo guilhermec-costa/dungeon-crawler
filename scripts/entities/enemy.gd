@@ -2,8 +2,6 @@ extends CharacterBody2D
 
 class_name BaseEnemy
 
-var gold_scene: PackedScene = preload("res://scenes/gold_drop.tscn")
-
 @export var config: EnemyData
 @export var player: Player
 
@@ -276,13 +274,15 @@ func _on_walk_timer_timeout():
 		velocity = Vector2.ZERO
 		$WalkTimer.wait_time = config.idle_duration
 		$WalkTimer.start()
-		
-func drop_gold():
-	var _gold_scene: GoldDrop = gold_scene.instantiate()
-	_gold_scene.global_position = global_position
-	_gold_scene.z_index = player.z_index - 1
-	_gold_scene.gold_amount = config.gold_drop_amount_on_death
-	get_parent().add_child(_gold_scene)
+
+func drop_item():
+	DropManager.spawn(
+		config.drop_id_on_death,
+		config.drop_amount_on_death,
+		global_position,
+		get_parent(),
+		player.z_index - 1
+	)
 	
 func is_on_hit_frame():
 	return $AnimatedSprite2D.frame == attack_hit_frame

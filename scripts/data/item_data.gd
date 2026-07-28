@@ -16,3 +16,4 @@ enum ItemID {
 @export var description: String
 @export var consumable: bool
 @export var icon_scale: Vector2 = Vector2.ONE
+@export var collect_sound: AudioStream

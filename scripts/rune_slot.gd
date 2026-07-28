@@ -20,5 +20,6 @@ func interact(player: Player):
 	if rune:
 		rune_placed = true
 		set_frame_item(rune)
+		$PlaceSound.play()
 		player.inventory.free_space(rune)
 		remove_interaction_widget()
