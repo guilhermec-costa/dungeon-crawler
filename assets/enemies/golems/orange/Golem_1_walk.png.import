@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://sfliknf6qpfl"
-path="res://.godot/imported/runeBlack_slab_sheet.png-085bb4bf52fb76a15f428cd4f43b7ad3.ctex"
+uid="uid://0ofsj3gbtoxg"
+path="res://.godot/imported/Golem_1_walk.png-b5c6327e9c88ed73039629a176f3d7f4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/runeBlack_slab_sheet.png"
-dest_files=["res://.godot/imported/runeBlack_slab_sheet.png-085bb4bf52fb76a15f428cd4f43b7ad3.ctex"]
+source_file="res://assets/enemies/golems/orange/Golem_1_walk.png"
+dest_files=["res://.godot/imported/Golem_1_walk.png-b5c6327e9c88ed73039629a176f3d7f4.ctex"]
 
 [params]
 

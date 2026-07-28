@@ -14,14 +14,17 @@ class_name BaseEnemy
 @onready var start_chase_area: Area2D = $StartChaseArea
 @onready var limit_chase_area: Area2D = $LimitChaseArea
 
-
 var dash_controller: DashBehavior
-
 var health: float
 var walk_direction := Vector2.ZERO
 var spawn_origin: Vector2
 var state: State = State.IDLE
 var hit_window_open := false
+
+var attacking := false
+var attack_timer := 0.0
+var current_attack: AttackConfig
+var attacks: Array[AttackConfig]
 
 enum State {
 	IDLE,
@@ -43,6 +46,7 @@ func change_state(new_state: State) -> void:
 		
 	state = new_state
 
+	
 func create_patrol_circle():
 	var patrol_circle := DebugPatrolCircle.new()
 	patrol_circle.radius = config.patrol_radius
@@ -71,6 +75,7 @@ func _ready():
 
 	start_chase_area.body_entered.connect(_on_chase_area_body_entered)
 	limit_chase_area.body_exited.connect(_on_limit_chase_area_body_exited)
+	$AnimatedSprite2D.animation_finished.connect(_on_animation_finished)
 
 	$WalkTimer.timeout.connect(_on_walk_timer_timeout)
 	$WalkTimer.wait_time = config.idle_duration
@@ -171,37 +176,61 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 	
 	process_special_movement(delta)
-	
 	move_and_slide()
 
 func process_special_movement(delta: float) -> void:
 	pass
 
-# --- Animation ---
-
 func _process(_delta: float) -> void:
 	if state == State.DEAD:
 		return
+	
+	if state == State.ATTACKING:
+		process_attack(_delta)
 		
 	update_animation(get_animation_from_state())
 
+func process_attack(delta: float):
+	if attacking:
+		return
+
+	attack_timer -= delta
+
+	if attack_timer > 0:
+		return
+
+	start_attack()
+
+func start_attack():
+	current_attack = attacks.pick_random()
+	$AnimatedSprite2D.play(current_attack.animation_name)
+	attack_timer = randf_range(
+		current_attack.attack_interval_min,
+		current_attack.attack_interval_max
+	)
+	
 func get_animation_from_state() -> String:
 	match state:
 		State.IDLE:
 			return "idle"
 		State.CHASING, State.PATROLLING:
 			return "walk"
-		State.ATTACKING:
-			return "attack"
 		State.TAKING_DAMAGE:
 			return "take_damage"
 		_:
-			return "walk"
+			return ""
 
-func update_animation(new_animation: String):
-	if new_animation != $AnimatedSprite2D.animation or not $AnimatedSprite2D.is_playing():
-		$AnimatedSprite2D.play(new_animation)
+func update_animation(animation: String):
+	if animation.is_empty():
+		return
 
+	if animation != $AnimatedSprite2D.animation or !$AnimatedSprite2D.is_playing():
+		$AnimatedSprite2D.play(animation)
+
+func _on_animation_finished():
+	if attacking:
+		attacking = false
+		
 const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 func show_damage_label(damage: float, type: DamageTypes.Type):
 	var label: MessageLabel = MESSAGE_LABEL_SCENE.instantiate()
@@ -233,7 +262,7 @@ func take_damage(damage: float, type: DamageTypes.Type) -> void:
 	await $AnimatedSprite2D.animation_finished
 	state = previous_state
 	update_animation(get_animation_from_state())
-	
+
 func die():
 	$HealthBar.hide_health_ui()
 	change_state(State.DEAD)
@@ -289,7 +318,7 @@ func drop_item():
 		config.drop_amount_on_death,
 		global_position,
 		get_parent(),
-		player.z_index - 1
+		player.z_index
 	)
 	
 func is_on_hit_frame():

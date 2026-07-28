@@ -25,7 +25,7 @@
 [ext_resource type="Script" uid="uid://cbnrahvh1mwbg" path="res://scripts/cutscenes/player_enter_phase_1.gd" id="21_me02v"]
 [ext_resource type="PackedScene" uid="uid://d2rtd1o1jhbr3" path="res://scenes/rune_slot.tscn" id="22_fgifm"]
 [ext_resource type="PackedScene" uid="uid://cmiycj7e2ku1x" path="res://scenes/UI/keyboard_intro.tscn" id="23_q3625"]
-[ext_resource type="PackedScene" uid="uid://blg2a1h73n7us" path="res://scenes/enemies/skeleton_knight.tscn" id="24_r0mlc"]
+[ext_resource type="PackedScene" uid="uid://i8m7mcvtxl1t" path="res://scenes/enemies/orange_golem.tscn" id="23_t723o"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_rytft"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -1215,7 +1215,9 @@ sources/1 = SubResource("TileSetAtlasSource_5iruf")
 sources/3 = SubResource("TileSetAtlasSource_0koia")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_fgifm"]
-outlines = Array[PackedVector2Array]([PackedVector2Array(93, 138, 396, 142, 397, 111, 580, 114, 578, 139, 820, 142, 820, 171, 579, 161, 579, 208, 400, 206, 400, 173, 244, 182, 242, 206, 180, 201, 182, 223, 91, 222), PackedVector2Array(285, 290, 383, 291, 384, 313, 594, 310, 592, 275, 724, 278, 726, 387, 669, 386, 676, 490, 400, 494, 401, 439, 288, 444), PackedVector2Array(684, 158, 723, 157, 723, 296, 687, 293), PackedVector2Array(141, 479, 275, 500, 274, 561, 618, 564, 618, 474, 671, 475, 677, 597, 139, 600), PackedVector2Array(142, 209, 179, 208, 177, 485, 141, 479), PackedVector2Array(286, 337, 287, 366, 175, 366, 175, 336), PackedVector2Array(175, 336, 177, 382, 124, 372, -160, 386, -159, 338)])
+vertices = PackedVector2Array(1017.9375, 460.28906, 885.1719, 463.6797, 887.8281, 267.92188, 1017.0469, 267.0703, 695.90625, 153.84375, 648.59375, 151.86719, 808, 153.85156, 711, 154.46094, 630, 576.1094, 664.3906, 585.0625, 151.20313, 587.9297, 261.79688, 572.8906, 659.1328, 478.20313, 630, 478.65625, 104.71094, 150.14844, 166.75781, 187.89063, 168.84375, 210.82813, 166.97656, 210.8125, 153.99219, 210.67969, 103.28125, 210.13281, 656.14844, 373.77344, 606.6875, 321.8203, 604.71875, 287.28906, 698.9219, 289.4297, 711, 289.7422, 124.828125, 359.9375, -147.72656, 373.3672, -147.24219, 349.9297, 153.46875, 348.1328, 165.95313, 354, 153.42188, 365.3203, 165.97656, 347.90625, 407.60938, 154.14844, 408.60156, 123.1875, 567.0078, 125.78906, 565.0078, 150.84375, 412, 160.28906, 663.1719, 478.14844, 808, 158.49219, 712.21094, 289.7578, 713.77344, 374.78125, 412.21875, 481.8203, 413.22656, 426.45313, 298.14844, 349.10156, 297.22656, 302.1172, 371.52344, 302.8828, 372.53906, 325.15625, 298.25, 354, 299.7578, 431.46094, 567, 150.85938, 567, 195.85938, 412, 194.13281, 232.90625, 170.61719, 231.03125, 193.07031, 164.92969, 494.89063, 153, 479.1172, 262.8203, 510.2422)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 10, 11), PackedInt32Array(12, 9, 8, 13), PackedInt32Array(14, 15, 16, 17, 18, 19), PackedInt32Array(20, 21, 22, 23, 24), PackedInt32Array(25, 26, 27, 28), PackedInt32Array(29, 30, 25, 28, 31), PackedInt32Array(32, 33, 34, 35, 36), PackedInt32Array(20, 37, 12), PackedInt32Array(6, 38, 7), PackedInt32Array(23, 4, 7, 24), PackedInt32Array(39, 40, 20, 24), PackedInt32Array(13, 41, 42, 21, 20, 12), PackedInt32Array(43, 44, 45, 46, 47), PackedInt32Array(42, 48, 47, 46, 21), PackedInt32Array(35, 49, 50, 51, 36), PackedInt32Array(32, 36, 52, 14), PackedInt32Array(52, 53, 15, 14), PackedInt32Array(28, 18, 17, 31), PackedInt32Array(43, 47, 29, 31), PackedInt32Array(30, 29, 54, 55), PackedInt32Array(10, 55, 54), PackedInt32Array(11, 10, 54, 56)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(93, 138, 396, 142, 397, 111, 580, 114, 578, 139, 820, 142, 820, 171, 579, 161, 579, 208, 400, 206, 400, 173, 244, 182, 242, 206, 180, 201, 182, 223, 91, 222), PackedVector2Array(285, 290, 383, 291, 384, 313, 594, 310, 592, 275, 724, 278, 726, 387, 669, 386, 676, 490, 400, 494, 401, 439, 288, 444), PackedVector2Array(684, 158, 723, 157, 723, 296, 687, 293), PackedVector2Array(141, 479, 275, 500, 274, 561, 618, 564, 618, 474, 671, 475, 677, 597, 139, 600), PackedVector2Array(142, 209, 179, 208, 177, 485, 141, 479), PackedVector2Array(286, 337, 287, 366, 175, 366, 175, 336), PackedVector2Array(175, 336, 177, 382, 124, 372, -160, 386, -159, 338), PackedVector2Array(876, 256, 1029, 255, 1030, 472, 873, 476)])
 parsed_geometry_type = 0
 agent_radius = 12.0
 
@@ -3629,7 +3631,6 @@ script = ExtResource("1_5xy5e")
 player = NodePath("../World/Entities/Player")
 
 [node name="PhaseLight" type="DirectionalLight2D" parent="." unique_id=815560919]
-visible = false
 light_mask = 0
 position = Vector2(-17, 36)
 rotation = -3.1415927
@@ -3639,13 +3640,12 @@ blend_mode = 2
 range_item_cull_mask = 3
 
 [node name="Atmosphere" type="DirectionalLight2D" parent="." unique_id=17210541]
-visible = false
 position = Vector2(322, 260)
 color = Color(0.20020434, 0.07859359, 0.033259902, 1)
 blend_mode = 2
 
 [node name="PlayerStartPosition" type="Marker2D" parent="." unique_id=2011610962]
-position = Vector2(-89, 351)
+position = Vector2(801, 353)
 
 [node name="DungeonAmbienceSound" type="AudioStreamPlayer2D" parent="." unique_id=686928459]
 stream = ExtResource("8_wi8qh")
@@ -3673,6 +3673,7 @@ tile_set = SubResource("TileSet_cveml")
 navigation_enabled = false
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="World/DungeonMap" unique_id=2013342206]
+position = Vector2(1, 0)
 navigation_polygon = SubResource("NavigationPolygon_fgifm")
 use_edge_connections = false
 
@@ -3861,6 +3862,13 @@ secret_room = NodePath("../../SecretRoom")
 
 [node name="PointLight2D" type="PointLight2D" parent="World/DungeonMap/Lights" unique_id=446733517]
 position = Vector2(231.5, 256.5)
+scale = Vector2(0.18164063, 0.18945314)
+color = Color(0.98489755, 0.4125772, 1.92523e-07, 1)
+energy = 1.97
+texture = ExtResource("14_lie7o")
+
+[node name="PointLight2D13" type="PointLight2D" parent="World/DungeonMap/Lights" unique_id=1421960730]
+position = Vector2(-126, 359.00003)
 scale = Vector2(0.18164063, 0.18945314)
 color = Color(0.98489755, 0.4125772, 1.92523e-07, 1)
 energy = 1.97
@@ -4111,15 +4119,19 @@ shape = SubResource("RectangleShape2D_n4bst")
 debug_color = Color(0.61262083, 0.43725637, 0.8155487, 0.41960785)
 
 [node name="WhiteSkeleton" parent="World/Entities" unique_id=582161565 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
-position = Vector2(82.000015, 333)
+position = Vector2(102, 332.00003)
+player = NodePath("../Player")
+
+[node name="WhiteSkeleton5" parent="World/Entities" unique_id=1873088204 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
+position = Vector2(192, 148.00003)
 player = NodePath("../Player")
 
 [node name="WhiteSkeleton4" parent="World/Entities" unique_id=889230092 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
-position = Vector2(200, 142.00002)
+position = Vector2(116.00001, 144)
 player = NodePath("../Player")
 
 [node name="YellowSkeleton" parent="World/Entities" unique_id=65233277 node_paths=PackedStringArray("player") instance=ExtResource("17_cveml")]
-position = Vector2(157.00002, 168.00005)
+position = Vector2(161, 213)
 player = NodePath("../Player")
 
 [node name="BlueGolem" parent="World/Entities" unique_id=1334460780 node_paths=PackedStringArray("player") instance=ExtResource("18_ogbs8")]
@@ -4134,6 +4146,10 @@ player = NodePath("../Player")
 position = Vector2(462, 426)
 player = NodePath("../Player")
 
+[node name="OrangeGolem" parent="World/Entities" unique_id=1121246697 node_paths=PackedStringArray("player") instance=ExtResource("23_t723o")]
+position = Vector2(488, 143)
+player = NodePath("../Player")
+
 [node name="SecretRoom" parent="World" unique_id=1969997345 instance=ExtResource("16_qjiij")]
 position = Vector2(118, 706)
 
@@ -4142,10 +4158,6 @@ position = Vector2(118, 706)
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="World/SecretRoom/Entities2" unique_id=1542183553]
 position = Vector2(97, 214)
 navigation_polygon = SubResource("NavigationPolygon_r0mlc")
-
-[node name="SkeletonKnight" parent="World/SecretRoom/Entities2" unique_id=1495029414 node_paths=PackedStringArray("player") instance=ExtResource("24_r0mlc")]
-position = Vector2(527, 300)
-player = NodePath("../../../Entities/Player")
 
 [node name="Cutscenes" type="Node" parent="." unique_id=78145900]
 

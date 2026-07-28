@@ -22,7 +22,7 @@ const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 @export var initial_items: Dictionary[ItemData, int]
 @export var game_items: GameItems
 
-var current_attack: AttackConfig = AttackConfig.new("attack1", 20)
+var current_attack: AttackConfig = AttackConfig.new("attack1", 20, 3)
 var target_recovery_health: float = 0
 var recover_life_window: bool = false
 
@@ -330,18 +330,9 @@ func take_damage(damage: float):
 		die()
 		return
 
-
-class AttackConfig:
-	var animation_name: String
-	var stamina_cost: float
-	
-	func  _init(anim_name, stam_cost) -> void:
-		self.animation_name = anim_name
-		self.stamina_cost = stam_cost
-
 var attack_config: Dictionary[String, AttackConfig] = {
-	"attack1": AttackConfig.new("attack1", 20),
-	"attack2": AttackConfig.new("attack2", 25)
+	"attack1": AttackConfig.new("attack1", 20, 3),
+	"attack2": AttackConfig.new("attack2", 25, 3)
 }
 		
 func _on_animation_changed():
@@ -351,20 +342,16 @@ func _on_animation_changed():
 var last_attack_time: float = Time.get_unix_time_from_system()
 
 func get_next_attack():
-	if current_attack.animation_name == "attack2":
-		return attack_config["attack1"]
-			
-	var current_time = Time.get_unix_time_from_system()
-	var time_passed = current_time - last_attack_time
-	if time_passed < 1:
-		return attack_config["attack2"]
-		
-	return attack_config["attack1"]
+	var attack_name: String = attack_config.keys().pick_random()
+	return attack_config[attack_name]
 
+func get_next_attack_time():
+	var variation_time = randf_range(0.5, 2.5)
+	return last_attack_time + variation_time
 
 func _on_frame_changed():
 	if state == State.ATTACKING:
-		if animated_sprite.frame == 2:
+		if animated_sprite.frame == current_attack.attack_frame:
 			consume_stamina(current_attack.stamina_cost)
 			last_attack_time = Time.get_unix_time_from_system()
 			if not $SwordAttackSound.playing:

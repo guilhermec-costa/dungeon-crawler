@@ -4,7 +4,6 @@ class_name BaseSkeleton
 
 @export var SWORD_COLLIDER_OFFSET = 50.0
 
-@onready var running_soundd: AudioStreamPlayer2D = $RunningSound
 @onready var sword_hit_sound: AudioStreamPlayer2D = $SwordHitSound
 
 func process_special_movement(delta):
@@ -21,6 +20,10 @@ func process_special_movement(delta):
 
 func _ready():
 	attack_hit_frame = 5
+	attacks = [
+		AttackConfig.new("attack1", 0, 5, 2, 3),
+		AttackConfig.new("attack2", 0, 5, 2, 3)
+	]
 	$SwordArea.monitoring = true
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	$AttackRange.body_entered.connect(on_enter_attack_range)
@@ -83,7 +86,8 @@ func on_enter_attack_range(body: Node2D) -> void:
 		return
 	
 	if body is Player:
-		state = State.ATTACKING
+		change_state(State.ATTACKING)
+		attack_timer = 0
 		$WalkTimer.stop()
 
 func on_exit_attack_range(body: Node2D) -> void:
@@ -95,9 +99,9 @@ func on_exit_attack_range(body: Node2D) -> void:
 			await $AnimatedSprite2D.animation_finished
 		
 		if $AttackRange.has_overlapping_bodies():
-			state = State.ATTACKING
+			change_state(State.ATTACKING)
 		else:
-			state = State.CHASING
+			change_state(State.CHASING)
 	
 func die() -> void:
 	sword_hit_sound.stop()

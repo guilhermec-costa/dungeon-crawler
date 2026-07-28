@@ -7,6 +7,9 @@ var slam_effect: PackedScene = preload("res://scenes/effects/ground_slam_effect.
 
 func _ready():
 	attack_hit_frame = 7
+	attacks = [
+		AttackConfig.new("attack", 0, 5)
+	]
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	$AttackRange.body_entered.connect(on_enter_attack_range)
 	$AttackRange.body_exited.connect(on_exit_attack_range)
