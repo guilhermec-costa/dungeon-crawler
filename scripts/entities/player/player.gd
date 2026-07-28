@@ -20,7 +20,7 @@ const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 @onready var sword_area: SwordArea = $SwordArea
 @export var config: PlayerConfig
 @export var current_gold: float = 0.0
-
+@export var initial_items: Dictionary[ItemData, int]
 @export var game_items: GameItems
 
 var current_attack: AttackConfig = AttackConfig.new("attack1", 20)
@@ -137,7 +137,10 @@ func _ready():
 	target_recovery_health = config.start_health
 	stamina = config.max_stamina
 	
-	inventory.add_item(game_items.life_potion, 3)
+	print("initial items: ", initial_items)
+	for item in initial_items.keys():
+		inventory.add_item(item, initial_items[item])
+		
 	initialized.emit()
 
 func collect_gold(goldData: ItemData, amount: float):
@@ -193,7 +196,6 @@ func in_movement_state() -> bool:
 	return state == State.RUNNING or state == State.WALKING
 	
 func _physics_process(delta: float) -> void:
-	print("state: ", State.keys()[state])
 	if not in_processable_state():
 		return
 				
@@ -391,12 +393,6 @@ func play_cutscene_animation(name: String):
 	
 	animation_player.play(name)
 	await animation_player.animation_finished
-
-func _draw():
-	draw_set_transform(Vector2.ZERO, 0.0, Vector2(0.95, 0.6))
-	var shadow_color = Color.BLACK
-	shadow_color.a = 0.15
-	draw_circle(Vector2.DOWN * 25, 10, shadow_color)
 
 func recover_health() -> void:
 	target_recovery_health = health + 20

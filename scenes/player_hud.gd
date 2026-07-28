@@ -12,10 +12,6 @@ extends CanvasLayer
 func _ready() -> void:
 	healthbar.min_value = 0
 	staminabar.min_value = 0
-	
-	player.inventory.inventory_update.connect(_on_inventory_update)
-	player.damage_taken.connect(_on_player_damage_taken)
-	player.update_stats.connect(on_player_update_stats)
 	player.initialized.connect(_on_player_initialized)
 		
 	for slot in hotbar.slots:
@@ -47,6 +43,10 @@ func update_stamina():
 	self.staminabar.value = player.stamina
 
 func _on_player_initialized():
+	player.inventory.inventory_update.connect(_on_inventory_update)
+	player.damage_taken.connect(_on_player_damage_taken)
+	player.update_stats.connect(on_player_update_stats)
+	_on_inventory_update()
 	update_stats()
 
 func on_player_update_stats() -> void:

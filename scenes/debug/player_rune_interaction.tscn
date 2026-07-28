@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://b0l1gkckvwfdb"]
+
+[ext_resource type="PackedScene" uid="uid://cwu0gaawvtd4n" path="res://scenes/player.tscn" id="1_w1j4l"]
+[ext_resource type="PackedScene" uid="uid://cywaovqr01vo6" path="res://scenes/player_hud.tscn" id="2_qtc8i"]
+[ext_resource type="Script" uid="uid://ca28ye276k74g" path="res://scripts/data/item_data.gd" id="2_r8p41"]
+[ext_resource type="Resource" uid="uid://bacnfjd4xs7yp" path="res://resources/ui/runes/grey_rune.tres" id="3_7iwl0"]
+[ext_resource type="PackedScene" uid="uid://d2rtd1o1jhbr3" path="res://scenes/rune_slot.tscn" id="3_qtc8i"]
+
+[node name="PlayerRuneInteraction" type="Node2D" unique_id=1358573078]
+
+[node name="HUD" parent="." unique_id=379781472 node_paths=PackedStringArray("player") instance=ExtResource("2_qtc8i")]
+player = NodePath("../Player")
+
+[node name="RuneSlot" parent="." unique_id=1954145144 instance=ExtResource("3_qtc8i")]
+position = Vector2(596, 332)
+runeId = 3
+
+[node name="Player" parent="." unique_id=898338159 instance=ExtResource("1_w1j4l")]
+position = Vector2(540, 331)
+initial_items = Dictionary[ExtResource("2_r8p41"), int]({
+ExtResource("3_7iwl0"): 6
+})

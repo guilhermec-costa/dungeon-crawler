@@ -181,6 +181,7 @@ stream = ExtResource("9_u3xmg")
 volume_db = -9.768
 pitch_scale = 0.89
 autoplay = true
+parameters/looping = true
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_quit_button_pressed"]

@@ -19,9 +19,14 @@
 [ext_resource type="Texture2D" uid="uid://didcdwd16o0a1" path="res://assets/light.png" id="14_lie7o"]
 [ext_resource type="PackedScene" uid="uid://bvmkrk5rwygo6" path="res://scenes/secret_room.tscn" id="16_qjiij"]
 [ext_resource type="PackedScene" uid="uid://ctoiqnxh5b08a" path="res://scenes/enemies/yellow_skeleton.tscn" id="17_cveml"]
+[ext_resource type="Script" uid="uid://ca28ye276k74g" path="res://scripts/data/item_data.gd" id="17_r0mlc"]
 [ext_resource type="PackedScene" uid="uid://bn2i4magehkux" path="res://scenes/enemies/blue_golem.tscn" id="18_ogbs8"]
+[ext_resource type="Resource" uid="uid://du4nsqkp4sg62" path="res://resources/life_potion.tres" id="18_t723o"]
 [ext_resource type="Resource" uid="uid://dafx4xnxn61at" path="res://resources/blue_golem.tres" id="19_0koia"]
+[ext_resource type="Resource" uid="uid://bacnfjd4xs7yp" path="res://resources/ui/runes/grey_rune.tres" id="19_t723o"]
+[ext_resource type="Resource" uid="uid://ldabrtmvrlry" path="res://resources/ui/runes/blue_rune.tres" id="20_147fn"]
 [ext_resource type="Script" uid="uid://cbnrahvh1mwbg" path="res://scripts/cutscenes/player_enter_phase_1.gd" id="21_me02v"]
+[ext_resource type="PackedScene" uid="uid://d2rtd1o1jhbr3" path="res://scenes/rune_slot.tscn" id="22_fgifm"]
 [ext_resource type="PackedScene" uid="uid://cmiycj7e2ku1x" path="res://scenes/UI/keyboard_intro.tscn" id="23_q3625"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_rytft"]
@@ -2433,11 +2438,11 @@ texture = ExtResource("7_3dyyi")
 12:4/0 = 0
 13:4/0 = 0
 0:5/0 = 0
-0:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2.877739, -8, 8, -8, 8, 8, -3.057598, 8)
+0:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2.9880414, -8, 8, -8, 8, -7.0626435, -3.0031323, -7.077735)
 1:5/0 = 0
-1:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.9571576, -8, -6.9777937)
 2:5/0 = 0
-2:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 1.978445, -8, 2.1583042, 8, -8, 8)
+2:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 2.0051136, -8, 2.0106368, -7.0703707, -8, -7.026181)
 3:5/0 = 0
 3:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-0.8705158, -8, 8, -8, 8, 8, -1.0881443, 8)
 4:5/0 = 0
@@ -2462,13 +2467,13 @@ texture = ExtResource("7_3dyyi")
 2:6/0 = 0
 2:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3.057598, 1.8722692, -2.9124188, 1.9655342, 8, -8, 8)
 3:6/0 = 0
-3:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-0.8705158, -8, 8, -8, 8, 8, -1.0881443, 8)
+3:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-1.0028238, -8, 8, -8, 8, -6.016944, -0.9381257, -6.016944)
 4:6/0 = 0
-4:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 1.0881462, -8, 1.3057747, 8, -8, 8)
+4:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 1.0068645, -8, 0.9860538, -6.2450075, -8, -6.2632675)
 5:6/0 = 0
-5:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-0.8705158, -8, 8, -8, 8, 8, -1.0881443, 8)
+5:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-0.9809227, -8, 8, -8, 8, -6.042074, -0.96245444, -6.042074)
 6:6/0 = 0
-6:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 1.0881462, -8, 1.3057747, 8, -8, 8)
+6:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 1.0068645, -8, 1.0028238, -5.9845943, -8, -6.0492935)
 8:6/0 = 0
 9:6/0 = 0
 10:6/0 = 0
@@ -2477,13 +2482,13 @@ texture = ExtResource("7_3dyyi")
 13:6/0 = 0
 0:7/next_alternative_id = 2
 0:7/0 = 0
-0:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2.877739, -8, 8, -8, 8, 8, -3.057598, 8)
+0:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2.981762, -8, 8, -8, 8, -6.877022, -3.09466, -6.877022)
 1:7/next_alternative_id = 2
 1:7/0 = 0
-1:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.771649, -8, -6.889077)
 2:7/next_alternative_id = 2
 2:7/0 = 0
-2:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 1.978445, -8, 2.1583042, 8, -8, 8)
+2:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 1.9892216, -8, 2.1026957, -6.8580227, -8, -6.8580227)
 5:7/0 = 0
 6:7/0 = 0
 9:7/0 = 0
@@ -3637,7 +3642,7 @@ color = Color(0.20020434, 0.07859359, 0.033259902, 1)
 blend_mode = 2
 
 [node name="PlayerStartPosition" type="Marker2D" parent="." unique_id=2011610962]
-position = Vector2(744, 152)
+position = Vector2(484, 168)
 
 [node name="DungeonAmbienceSound" type="AudioStreamPlayer2D" parent="." unique_id=686928459]
 stream = ExtResource("8_wi8qh")
@@ -3775,7 +3780,7 @@ tile_set = SubResource("TileSet_qjiij")
 
 [node name="Elements" type="TileMapLayer" parent="World/DungeonMap" unique_id=1457456420]
 texture_filter = 1
-tile_map_data = PackedByteArray("AAARABMAAAAPAAUAAAARABQAAAAPAAYAAAARABUAAAAPAAcAAAALABMAAAAPAAUAAAALABQAAAAPAAYAAAALABUAAAAPAAcAAQAIABMAAAAPAAUAAAAIABQAAAAPAAYAAAAIABUAAAAPAAcAAQAIABcAAAAPAAUAAAAIABgAAAAPAAYAAAAIABkAAAAPAAcAAQALABYAAAAPAAUAAwALABcAAAAPAAYAAwALABgAAAAPAAcAAwAYABEAAAAPAAUAAAAYABIAAAAPAAYAAAAYABMAAAAPAAcAAAAkABEAAAAPAAUAAAAkABIAAAAPAAYAAAAkABMAAAAPAAcAAAAqAA8AAAAPAAUAAAAqABAAAAAPAAYAAAAqABEAAAAPAAcAAAAqABcAAAAPAAUAAAAqABkAAAAPAAcAAAAIAA0AAAAPAAUAAAAIAA4AAAAPAAYAAAAIAA8AAAAPAAcAAAALAAwAAAAPAAUAAAALAA0AAAAPAAYAAAALAA4AAAAPAAcAAAAOACEAAAAPAAUAAAAOACIAAAAPAAYAAAAOACMAAAAPAAcAAQAmACEAAAAPAAUAAAAmACIAAAAPAAYAAAAmACMAAAAPAAcAAAAbABEAAAAMAAQAAAAbABIAAAAMAAUAAAAhABEAAAAMAAQAAAAhABIAAAAMAAUAAAALAB8AAAAPAAUAAAALACAAAAAPAAYAAAALACEAAAAPAAcAAQAdAAcAAQAAAAQAAAAdAAgAAQAAAAUAAAAeAAcAAQABAAQAAAAeAAgAAQABAAUAAAAfAAcAAQACAAQAAAAfAAgAAQACAAUAAAAbAAYAAQAFAAQAAAAgAAYAAQAFAAQAAAAhAAYAAQAGAAQAAAAbAAcAAQAFAAUAAAAbAAgAAQAFAAYAAAAcAAYAAQAGAAQAAAAcAAcAAQAGAAUAAAAcAAgAAQAGAAYAAAAgAAcAAQAFAAUAAAAgAAgAAQAFAAYAAAAhAAcAAQAGAAUAAAAhAAgAAQAGAAYAAAAjAAcAAQAJAAkAAAAdAAUAAQAFAAEAAAAdAAYAAQAFAAIAAAD2/xUAAQAIAAYAAAABABMAAAAPAAUAAAABABQAAAAPAAYAAAABABUAAAAPAAcAAAD5/xMAAAAPAAUAAAD5/xQAAAAPAAYAAAD5/xUAAAAPAAcAAAA=")
+tile_map_data = PackedByteArray("AAARABMAAAAPAAUAAAARABQAAAAPAAYAAAARABUAAAAPAAcAAAALABMAAAAPAAUAAAALABQAAAAPAAYAAAALABUAAAAPAAcAAQAIABMAAAAPAAUAAAAIABQAAAAPAAYAAAAIABUAAAAPAAcAAQAIABcAAAAPAAUAAAAIABgAAAAPAAYAAAAIABkAAAAPAAcAAQALABYAAAAPAAUAAwALABcAAAAPAAYAAwALABgAAAAPAAcAAwAYABEAAAAPAAUAAAAYABIAAAAPAAYAAAAYABMAAAAPAAcAAAAkABEAAAAPAAUAAAAkABIAAAAPAAYAAAAkABMAAAAPAAcAAAAqAA8AAAAPAAUAAAAqABAAAAAPAAYAAAAqABEAAAAPAAcAAAAqABcAAAAPAAUAAAAqABkAAAAPAAcAAAAIAA0AAAAPAAUAAAAIAA4AAAAPAAYAAAAIAA8AAAAPAAcAAAALAAwAAAAPAAUAAAALAA0AAAAPAAYAAAALAA4AAAAPAAcAAAAOACEAAAAPAAUAAAAOACIAAAAPAAYAAAAOACMAAAAPAAcAAQAmACEAAAAPAAUAAAAmACIAAAAPAAYAAAAmACMAAAAPAAcAAAAbABEAAAAMAAQAAAAbABIAAAAMAAUAAAAhABEAAAAMAAQAAAAhABIAAAAMAAUAAAALAB8AAAAPAAUAAAALACAAAAAPAAYAAAALACEAAAAPAAcAAQAdAAcAAQAAAAQAAAAdAAgAAQAAAAUAAAAeAAcAAQABAAQAAAAeAAgAAQABAAUAAAAfAAcAAQACAAQAAAAfAAgAAQACAAUAAAAbAAYAAQAFAAQAAAAgAAYAAQAFAAQAAAAhAAYAAQAGAAQAAAAbAAcAAQAFAAUAAAAbAAgAAQAFAAYAAAAcAAYAAQAGAAQAAAAcAAcAAQAGAAUAAAAcAAgAAQAGAAYAAAAgAAcAAQAFAAUAAAAgAAgAAQAFAAYAAAAhAAcAAQAGAAUAAAAhAAgAAQAGAAYAAAAjAAcAAQAJAAkAAAAdAAUAAQAFAAEAAAAdAAYAAQAFAAIAAAD2/xUAAQAIAAYAAAABABMAAAAPAAUAAAABABQAAAAPAAYAAAABABUAAAAPAAcAAAD5/xMAAAAPAAUAAAD5/xQAAAAPAAYAAAD5/xUAAAAPAAcAAAAHABUAAQAKAAEAAAAUABIAAQALAAEAAAAVABIAAQAKAAEAAAAXABIAAQAJAAYAAAASABEAAQAJAAQAAAASABIAAQAJAAUAAAASABMAAQAIAAYAAAA=")
 tile_set = SubResource("TileSet_wawk4")
 
 [node name="Roof" type="TileMapLayer" parent="World/DungeonMap" unique_id=528631468]
@@ -3855,6 +3860,20 @@ secret_room = NodePath("../../SecretRoom")
 [node name="PointLight2D" type="PointLight2D" parent="World/DungeonMap/Lights" unique_id=446733517]
 position = Vector2(231.5, 256.5)
 scale = Vector2(0.18164063, 0.18945314)
+color = Color(0.98489755, 0.4125772, 1.92523e-07, 1)
+energy = 1.97
+texture = ExtResource("14_lie7o")
+
+[node name="PointLight2D11" type="PointLight2D" parent="World/DungeonMap/Lights" unique_id=549614618]
+position = Vector2(328, 296)
+scale = Vector2(0.020507794, 0.024414016)
+color = Color(0.98489755, 0.4125772, 1.92523e-07, 1)
+energy = 1.97
+texture = ExtResource("14_lie7o")
+
+[node name="PointLight2D12" type="PointLight2D" parent="World/DungeonMap/Lights" unique_id=380313111]
+position = Vector2(336.375, 296.875)
+scale = Vector2(0.05322264, 0.027832009)
 color = Color(0.98489755, 0.4125772, 1.92523e-07, 1)
 energy = 1.97
 texture = ExtResource("14_lie7o")
@@ -3949,6 +3968,18 @@ explosiveness = 1.0
 randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_q3625")
 
+[node name="RuneSlotGrey" parent="World/DungeonMap" unique_id=460938298 instance=ExtResource("22_fgifm")]
+position = Vector2(448, 139)
+runeId = 3
+
+[node name="RuneSlotBlue" parent="World/DungeonMap" unique_id=738298018 instance=ExtResource("22_fgifm")]
+position = Vector2(528, 139)
+runeId = 5
+
+[node name="RuneSlotBlack" parent="World/DungeonMap" unique_id=956285132 instance=ExtResource("22_fgifm")]
+position = Vector2(488, 139)
+runeId = 4
+
 [node name="Entities" type="Node2D" parent="World" unique_id=260787806]
 light_mask = 2
 visibility_layer = 2
@@ -3959,6 +3990,11 @@ position = Vector2(2, 14)
 [node name="Player" parent="World/Entities" unique_id=898338159 instance=ExtResource("5_j1gp7")]
 y_sort_enabled = true
 position = Vector2(-148, 338)
+initial_items = Dictionary[ExtResource("17_r0mlc"), int]({
+ExtResource("18_t723o"): 7,
+ExtResource("19_t723o"): 1,
+ExtResource("20_147fn"): 3
+})
 
 [node name="DualWall" type="Node2D" parent="World/Entities" unique_id=1931496430 node_paths=PackedStringArray("player")]
 position = Vector2(398, 306)

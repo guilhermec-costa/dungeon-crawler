@@ -4,7 +4,10 @@ extends Resource
 enum ItemID {
 	GOLD,
 	LIFE_POTION,
-	CORRUPTED_KEY
+	CORRUPTED_KEY,
+	RUNE_GRAY,
+	RUNE_BLACK,
+	RUNE_BLUE
 }
 
 @export var id: ItemID

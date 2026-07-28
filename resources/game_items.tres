@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="GameItems" format=3 uid="uid://r6lluixrhn0m"]
 
+[ext_resource type="Resource" uid="uid://bacnfjd4xs7yp" path="res://resources/ui/runes/grey_rune.tres" id="1_e4fg0"]
 [ext_resource type="Script" uid="uid://bw8ld16fobru6" path="res://scripts/data/game_items.gd" id="2_e4fg0"]
 [ext_resource type="Resource" uid="uid://du4nsqkp4sg62" path="res://resources/life_potion.tres" id="2_x35es"]
 
 [resource]
 script = ExtResource("2_e4fg0")
 life_potion = ExtResource("2_x35es")
+grey_rune = ExtResource("1_e4fg0")
 metadata/_custom_type_script = "uid://bw8ld16fobru6"

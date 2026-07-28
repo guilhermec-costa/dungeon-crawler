@@ -7,8 +7,6 @@ extends Area2D
 var interaction_widget: PackedScene = preload("res://scenes/UI/interaction_widget.tscn")
 var current_interaction_widget: InteractionWidget
 
-
-	
 func _ready():
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)

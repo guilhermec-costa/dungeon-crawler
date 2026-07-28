@@ -44,7 +44,7 @@ func start_game():
 	await TransitionManager.fade_out()
 	game_menu.hide_menu()
 	phase1.start()
-	await TransitionManager.fade_in(4)
+	await TransitionManager.fade_in(2)
 
 
 func _on_game_menu_start_game() -> void:

@@ -3,8 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://cwu0gaawvtd4n" path="res://scenes/player.tscn" id="1_mnsup"]
 [ext_resource type="PackedScene" uid="uid://d37qmuwcvb80v" path="res://scenes/enemies/white_skeleton.tscn" id="2_wjse1"]
 [ext_resource type="Texture2D" uid="uid://tiohi8w5b6pr" path="res://assets/map/atlas_floor-16x16.png" id="3_wjse1"]
+[ext_resource type="Script" uid="uid://ca28ye276k74g" path="res://scripts/data/item_data.gd" id="4_kf50p"]
 [ext_resource type="Script" uid="uid://cvjmp4oij48pd" path="res://scripts/data/enemy_data.gd" id="4_vyyy2"]
 [ext_resource type="PackedScene" uid="uid://cywaovqr01vo6" path="res://scenes/player_hud.tscn" id="5_ntigl"]
+[ext_resource type="Resource" uid="uid://c5v0btmpvrcub" path="res://resources/corrupted_key.tres" id="5_px0g2"]
+[ext_resource type="Resource" uid="uid://bacnfjd4xs7yp" path="res://resources/ui/runes/grey_rune.tres" id="6_px0g2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vyyy2"]
 texture = ExtResource("3_wjse1")
@@ -100,6 +103,10 @@ position = Vector2(2, 0)
 
 [node name="Player" parent="Entities" unique_id=898338159 instance=ExtResource("1_mnsup")]
 position = Vector2(164, 206)
+initial_items = Dictionary[ExtResource("4_kf50p"), int]({
+ExtResource("5_px0g2"): 2,
+ExtResource("6_px0g2"): 10
+})
 
 [node name="WhiteSkeleton" parent="Entities" unique_id=582161565 node_paths=PackedStringArray("player") instance=ExtResource("2_wjse1")]
 position = Vector2(271, 163.99998)

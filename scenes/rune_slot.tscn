@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://d2rtd1o1jhbr3"]
+
+[ext_resource type="PackedScene" uid="uid://cnpwq472iiou0" path="res://scenes/interactable.tscn" id="1_kgo1h"]
+[ext_resource type="Script" uid="uid://caf6bamfhho1e" path="res://scripts/rune_slot.gd" id="1_o78m4"]
+[ext_resource type="Texture2D" uid="uid://bydpvwk4iys7e" path="res://assets/UI/space.png" id="2_sh7g6"]
+[ext_resource type="Texture2D" uid="uid://didcdwd16o0a1" path="res://assets/light.png" id="4_w3m33"]
+[ext_resource type="Texture2D" uid="uid://dgxsame24ije" path="res://assets/UI/grey.png" id="5_26jbr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fgifm"]
+size = Vector2(16, 13)
+
+[node name="RuneSlot" unique_id=1954145144 instance=ExtResource("1_kgo1h")]
+texture_filter = 1
+script = ExtResource("1_o78m4")
+runeId = 0
+
+[node name="CollisionShape2D" parent="." index="0" unique_id=316515945]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_fgifm")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="1" unique_id=451859723]
+self_modulate = Color(0.14435753, 0.20986578, 0.26421195, 1)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("2_sh7g6")
+
+[node name="PointLight2D" type="PointLight2D" parent="." index="2" unique_id=63450783]
+position = Vector2(-1.1920929e-07, 1.0000032)
+scale = Vector2(0.035156254, 0.023437504)
+color = Color(0.2933334, 0.50632656, 1, 1)
+texture = ExtResource("4_w3m33")
+
+[node name="Frame" type="TextureRect" parent="." index="3" unique_id=978036544]
+self_modulate = Color(0.26397452, 0.26112574, 0.27243364, 1)
+custom_minimum_size = Vector2(6, 6)
+custom_maximum_size = Vector2(32, 32)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_26jbr")
+expand_mode = 1
+
+[node name="Icon" type="TextureRect" parent="Frame" index="0" unique_id=458747430]
+texture_filter = 1
+custom_maximum_size = Vector2(5, 5)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.39800003
+anchor_top = 0.409
+anchor_right = 0.39800003
+anchor_bottom = 0.409
+offset_left = -19.184
+offset_top = -19.272
+offset_right = 20.816
+offset_bottom = 20.728
+grow_horizontal = 2
+grow_vertical = 2

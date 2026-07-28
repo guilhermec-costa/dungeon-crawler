@@ -35,8 +35,19 @@ func free_space(item: ItemData):
 	var current_slot = slots.get(item, null)
 	if current_slot != null:
 		slots.erase(item)
-		
+		inventory_update.emit()
+
+func find_by_item_id(id: ItemData.ItemID) -> ItemData:
+	for item in slots.keys():
+		if item.id == id:
+			return item
+
+	return null
+	
 func consume_item(item: ItemData, quantity: int) -> void:
+	if not item.consumable:
+		return
+		
 	var current_item = slots.get(item, null)
 	if not current_item:
 		return
@@ -44,6 +55,6 @@ func consume_item(item: ItemData, quantity: int) -> void:
 	slots[item] -= quantity
 	if slots[item] <= 0:
 		free_space(item)
+		return
 	
-	print("slots", slots)
 	inventory_update.emit()
