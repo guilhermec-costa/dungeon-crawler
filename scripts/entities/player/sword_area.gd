@@ -3,7 +3,6 @@ class_name SwordArea
 extends Area2D
 
 @export var config: WeaponData
-@export var attack2_damage: float = 20
 @onready var hit_sound: AudioStreamPlayer2D = $HitSound
 @onready var collider: CollisionShape2D = $CollisionShape2D
 @export var SWORD_COLLIDER_OFFSET = 35
@@ -16,7 +15,8 @@ func _ready():
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is BaseEnemy:
-		var damage = config.base_damage
+		var player = get_parent() as Player
+		var damage = player.get_current_attack_damage()
 		var damage_type = DamageTypes.Type.NORMAL
 		if randf() < config.critical_chance:
 			damage *= config.critical_multiplier

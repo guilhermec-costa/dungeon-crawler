@@ -48,7 +48,6 @@
 
 [sub_resource type="Resource" id="Resource_y4r1p"]
 script = ExtResource("3_d2wvv")
-base_damage = 15.0
 critical_chance = 0.15
 critical_multiplier = 1.3
 metadata/_custom_type_script = "uid://cbmsh8w8r31ki"
@@ -438,6 +437,7 @@ position = Vector2(2, -1)
 rotation = -6.2831855
 sprite_frames = SubResource("SpriteFrames_1bnh4")
 animation = &"stand"
+frame = 2
 script = ExtResource("37_cs1tg")
 metadata/_edit_group_ = true
 

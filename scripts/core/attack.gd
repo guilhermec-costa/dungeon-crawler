@@ -3,6 +3,7 @@ extends RefCounted
 
 var animation_name: String
 var stamina_cost: float
+var damage: float
 var attack_hit_frame: int
 var attack_end_frame: int
 var attack_interval_min: float
@@ -10,13 +11,15 @@ var attack_interval_max: float
 
 func  _init(
 	_animation_name: String, 
+	_damage: float,
 	_stamina_cost: float,
 	_attack_hit_frame: int,
 	_attack_end_frame: int,
 	_attack_interval_min = 0.3,
-	_attack_interval_max = 0.5
+	_attack_interval_max = 0.5,
 ) -> void:
 	self.animation_name = _animation_name
+	self.damage = _damage
 	self.stamina_cost = _stamina_cost
 	self.attack_hit_frame = _attack_hit_frame
 	self.attack_end_frame = _attack_end_frame

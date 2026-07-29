@@ -23,15 +23,15 @@ const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 @export var game_items: GameItems
 
 
-var attacks: Array[AttackConfig] = [
-	AttackConfig.new("attack1", 20, 3, 4),
-	AttackConfig.new("attack2", 25, 3, 4)
-]
-
 var current_attack: AttackConfig
-
 var target_recovery_health: float = 0
 var recover_life_window: bool = false
+var last_attack_time: float = Time.get_unix_time_from_system()
+
+var attacks: Array[AttackConfig] = [
+	AttackConfig.new("attack1", 20, 10, 3, 4),
+	AttackConfig.new("attack2", 25, 15, 3, 4)
+]
 
 var speed: float:
 	get: 
@@ -341,8 +341,6 @@ func _on_animation_changed():
 	if state != State.ATTACKING and not sword_area.is_disabled():
 		sword_area.set_disabled(true)
 
-var last_attack_time: float = Time.get_unix_time_from_system()
-
 func choose_random_attack():
 	return attacks.pick_random()
 
@@ -399,3 +397,6 @@ func _on_item_consume(item: ItemData, quantity: int = 1) -> void:
 	match item.id:
 		ItemData.ItemID.LIFE_POTION:
 			recover_health()
+
+func get_current_attack_damage() -> float:
+	return current_attack.damage

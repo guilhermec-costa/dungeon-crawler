@@ -427,7 +427,8 @@ config = ExtResource("2_uauuw")
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=599365077]
 position = Vector2(0, -4.863739e-05)
 sprite_frames = SubResource("SpriteFrames_7vtre")
-animation = &"take_damage"
+animation = &"attack3"
+frame = 4
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=580395902]
 position = Vector2(4.8000355, 1.5999699)

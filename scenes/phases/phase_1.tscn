@@ -2709,7 +2709,7 @@ sources/1 = SubResource("TileSetAtlasSource_q3625")
 lifetime_randomness = 0.76
 particle_flag_disable_z = true
 emission_shape_offset = Vector3(52.325, 0, 0)
-emission_shape_scale = Vector3(5.675, 0.93, 1)
+emission_shape_scale = Vector3(3.325, 3.525, 1)
 emission_shape = 3
 emission_box_extents = Vector3(26.775, 33.605, 1)
 radial_velocity_min = -2.2351742e-05
@@ -3979,13 +3979,24 @@ trail_lifetime = 2.24
 process_material = SubResource("ParticleProcessMaterial_lie7o")
 
 [node name="MapParticlesBig" type="GPUParticles2D" parent="World/DungeonMap" unique_id=124321041]
-self_modulate = Color(0.56057763, 0.540964, 0.52930534, 1)
+self_modulate = Color(0.77056485, 0.4490865, 0.3118878, 1)
 position = Vector2(-66, 348)
-amount = 56
+amount = 203
 lifetime = 8.35
 explosiveness = 1.0
 randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_q3625")
+
+[node name="BossParticlesSmall2" type="GPUParticles2D" parent="World/DungeonMap" unique_id=1353313119]
+self_modulate = Color(0.664831, 0.64215565, 0.62016714, 1)
+texture_filter = 2
+position = Vector2(908, 339)
+amount = 300
+lifetime = 12.0
+explosiveness = 1.0
+randomness = 1.0
+trail_lifetime = 2.24
+process_material = SubResource("ParticleProcessMaterial_lie7o")
 
 [node name="RuneSlotGrey" parent="World/DungeonMap" unique_id=460938298 instance=ExtResource("22_fgifm")]
 position = Vector2(448, 139)

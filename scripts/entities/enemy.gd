@@ -144,10 +144,14 @@ func _chase_player():
 	var direction = global_position.direction_to(next_pos)
 	velocity = direction * config.speed
 
-
+func deal_attack_damage():
+	pass
+	
 func _physics_process(delta: float) -> void:
 	if state == State.DEAD:
 		return
+	
+	deal_attack_damage()
 	
 	if state == State.CHASING or state == State.ATTACKING:
 		update_flip_based_on_player_position()
@@ -203,10 +207,12 @@ func process_attack(delta: float):
 
 	start_attack()
 
+func get_next_attack():
+	return attacks.pick_random()
+	
 func start_attack():
 	attack_on_progress = true
-	current_attack = attacks.pick_random()
-	print('current_attack', current_attack.animation_name)
+	current_attack = get_next_attack()
 	$AnimatedSprite2D.play(current_attack.animation_name)
 	attack_timer = randf_range(
 		current_attack.attack_interval_min,
@@ -232,8 +238,11 @@ func update_animation(animation: String):
 		$AnimatedSprite2D.play(animation)
 
 func _on_animation_finished():
-	current_attack = null
-	attack_on_progress = false
+	if attack_on_progress \
+	and current_attack \
+	and $AnimatedSprite2D.animation == current_attack.animation_name:
+		current_attack = null
+		attack_on_progress = false
 		
 func show_damage_label(damage: float, type: DamageTypes.Type):
 	var label: MessageLabel = MESSAGE_LABEL_SCENE.instantiate()

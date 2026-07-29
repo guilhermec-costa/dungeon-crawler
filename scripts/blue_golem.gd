@@ -7,7 +7,15 @@ var slam_effect: PackedScene = preload("res://scenes/effects/ground_slam_effect.
 
 func _ready():
 	attacks = [
-		AttackConfig.new("attack", 0, 5, 8, 0.3, 0.8)
+		AttackConfig.new(
+			"attack",
+			40, # damage
+			0,  # stamina
+			7,  # hit frame
+			12, # end frame
+			1.8,
+			2.8
+		)
 	]
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	super._ready()
@@ -23,10 +31,12 @@ func process_special_movement(delta):
 	and is_on_hit_frame():
 		dash_controller.try_dash(global_position,player.global_position)
 
-func apply_player_damage():
-	if hit_window_open:
-		if $AreaDamageRange.overlaps_body(player):
-			player.take_damage(config.damage_given)
+func deal_attack_damage():
+	if not current_attack:
+		return
+		
+	if hit_window_open and $AreaDamageRange.overlaps_body(player):
+			player.take_damage(current_attack.damage)
 			hit_window_open = false
 			
 func _on_frame_changed() -> void:
@@ -43,14 +53,6 @@ func _on_frame_changed() -> void:
 		if not attack_sound.playing:
 			attack_sound.play()
 
-
-func _physics_process(delta: float) -> void:
-	if state == State.DEAD:
-		return
-	
-	apply_player_damage()
-	super._physics_process(delta)
-	
 func _process(delta: float) -> void:
 	if state == State.DEAD:
 		return

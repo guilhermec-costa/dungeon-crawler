@@ -32,17 +32,14 @@ func on_flip_right() -> void:
 	$SwordArea/CollisionShape2D.position.x += SWORD_COLLIDER_OFFSET
 	$SwordArea/CollisionShape2D.rotation *= -1
 
-func apply_player_damage():
+func deal_attack_damage():
+	if not current_attack:
+		return
+		
 	if hit_window_open and $SwordArea.overlaps_body(player):
 		hit_window_open = false
-		player.take_damage(config.damage_given)
-			
-func _physics_process(delta: float) -> void:
-	if state == State.DEAD:
-		return
-	
-	apply_player_damage()
-	super._physics_process(delta)
+		print("here")
+		player.take_damage(current_attack.damage)
 	
 func take_damage(damage: float, type: DamageTypes.Type) -> void:
 	play_animation_player("hurt")
@@ -64,14 +61,19 @@ func _process(_delta: float) -> void:
 	super._process(_delta)
 	
 func _on_frame_changed() -> void:
-	if state != State.ATTACKING or not attack_on_progress:
+	if state != State.ATTACKING \
+	or not attack_on_progress \
+	or not current_attack:
 		hit_window_open = false
 		return
-		
+	
 	if is_on_hit_frame():
 		hit_window_open = true
 		if not sword_hit_sound.playing:
 			sword_hit_sound.play()
+			
+	elif $AnimatedSprite2D.frame >= current_attack.attack_end_frame:
+		hit_window_open = false
 	
 func die() -> void:
 	sword_hit_sound.stop()
