@@ -2,13 +2,12 @@ extends CharacterBody2D
 
 class_name BaseEnemy
 
+const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
+
 @export var config: EnemyData
 @export var player: Player
 @export var right_offset := Vector2.ZERO
 @export var left_offset := Vector2.ZERO
-@export var attack_hit_frame: int = 0
-@export var end_attack_frame: int = 1
-
 @onready var health_bar: HealthBar = $HealthBar
 @onready var pathfinder: NavigationAgent2D = $NavigationAgent2D
 @onready var start_chase_area: Area2D = $StartChaseArea
@@ -21,7 +20,7 @@ var spawn_origin: Vector2
 var state: State = State.IDLE
 var hit_window_open := false
 
-var attacking := false
+var attack_on_progress := false
 var attack_timer := 0.0
 var current_attack: AttackConfig
 var attacks: Array[AttackConfig]
@@ -41,7 +40,7 @@ func change_state(new_state: State) -> void:
 		return
 	
 	if state == State.ATTACKING and new_state == State.TAKING_DAMAGE:
-		if randf() < config.cancel_attack_on_damage_chance:
+		if randf() >= config.cancel_attack_on_damage_chance:
 			return
 		
 	state = new_state
@@ -76,6 +75,9 @@ func _ready():
 	start_chase_area.body_entered.connect(_on_chase_area_body_entered)
 	limit_chase_area.body_exited.connect(_on_limit_chase_area_body_exited)
 	$AnimatedSprite2D.animation_finished.connect(_on_animation_finished)
+	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
+	$AttackRange.body_entered.connect(on_enter_attack_range)
+	$AttackRange.body_exited.connect(on_exit_attack_range)
 
 	$WalkTimer.timeout.connect(_on_walk_timer_timeout)
 	$WalkTimer.wait_time = config.idle_duration
@@ -187,11 +189,11 @@ func _process(_delta: float) -> void:
 	
 	if state == State.ATTACKING:
 		process_attack(_delta)
-		
-	update_animation(get_animation_from_state())
+	else:
+		update_animation(get_animation_from_state())
 
 func process_attack(delta: float):
-	if attacking:
+	if attack_on_progress:
 		return
 
 	attack_timer -= delta
@@ -202,6 +204,7 @@ func process_attack(delta: float):
 	start_attack()
 
 func start_attack():
+	attack_on_progress = true
 	current_attack = attacks.pick_random()
 	$AnimatedSprite2D.play(current_attack.animation_name)
 	attack_timer = randf_range(
@@ -228,10 +231,9 @@ func update_animation(animation: String):
 		$AnimatedSprite2D.play(animation)
 
 func _on_animation_finished():
-	if attacking:
-		attacking = false
+	current_attack = null
+	attack_on_progress = false
 		
-const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 func show_damage_label(damage: float, type: DamageTypes.Type):
 	var label: MessageLabel = MESSAGE_LABEL_SCENE.instantiate()
 	add_child(label)
@@ -258,10 +260,20 @@ func take_damage(damage: float, type: DamageTypes.Type) -> void:
 	$HealthBar.set_health_bar_value(health)
 	show_damage_label(damage, type)
 	
+	if state != State.TAKING_DAMAGE:
+		# the attack was not cancelled
+		return
+		
+	attack_on_progress = false
+	current_attack = null
+	
 	$AnimatedSprite2D.play("take_damage")
 	await $AnimatedSprite2D.animation_finished
-	state = previous_state
-	update_animation(get_animation_from_state())
+	
+	if state == State.TAKING_DAMAGE:
+		# nothing change, can restore
+		state = previous_state
+		update_animation(get_animation_from_state())
 
 func die():
 	$HealthBar.hide_health_ui()
@@ -275,17 +287,48 @@ func die():
 
 	queue_free()
 
-
-# --- Signals ---
-
 func _on_frame_changed() -> void:
 	pass
 
+var attack_range_exit_id := 0
+
 func on_enter_attack_range(body: Node2D) -> void:
-	pass
+	if state == State.DEAD:
+		return
+	
+	if body is Player:
+		attack_range_exit_id += 1  # invalid pending corroutines
+		change_state(State.ATTACKING)
+		attack_timer = 0
+		$WalkTimer.stop()
 
 func on_exit_attack_range(body: Node2D) -> void:
-	pass
+	if state == State.DEAD:
+		return
+	
+	if not body is Player:
+		return
+	
+	attack_range_exit_id += 1
+	var my_id = attack_range_exit_id
+	
+	if state == State.ATTACKING and attack_on_progress:
+		await $AnimatedSprite2D.animation_finished
+	
+	if my_id != attack_range_exit_id:
+		return
+	
+	if state == State.DEAD:
+		return
+	
+	current_attack = null
+	attack_on_progress = false
+	
+	if $AttackRange.has_overlapping_bodies():
+		change_state(State.ATTACKING)
+		attack_timer = 0
+	else:
+		change_state(State.CHASING)
 
 func _on_chase_area_body_entered(body: Node2D) -> void:
 	if body is Player:
@@ -301,6 +344,7 @@ func _on_limit_chase_area_body_exited(body: Node2D) -> void:
 func _on_walk_timer_timeout():
 	if state == State.ATTACKING:
 		return
+		
 	if state == State.IDLE:
 		change_state(State.PATROLLING)
 		walk_direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
@@ -322,7 +366,8 @@ func drop_item():
 	)
 	
 func is_on_hit_frame():
-	return $AnimatedSprite2D.frame == attack_hit_frame
+	if current_attack:
+		return $AnimatedSprite2D.frame == current_attack.attack_hit_frame
 
 func is_on_frame(frame: int):
 	return $AnimatedSprite2D.frame == frame

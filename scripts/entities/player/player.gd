@@ -22,7 +22,14 @@ const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 @export var initial_items: Dictionary[ItemData, int]
 @export var game_items: GameItems
 
-var current_attack: AttackConfig = AttackConfig.new("attack1", 20, 3)
+
+var attacks: Array[AttackConfig] = [
+	AttackConfig.new("attack1", 20, 3, 4),
+	AttackConfig.new("attack2", 25, 3, 4)
+]
+
+var current_attack: AttackConfig
+
 var target_recovery_health: float = 0
 var recover_life_window: bool = false
 
@@ -176,7 +183,7 @@ func _input(event: InputEvent) -> void:
 		handle_keyboard_event(event)
 
 func _attack():
-	var next_attack = get_next_attack()
+	var next_attack = choose_random_attack()
 	if stamina > next_attack.stamina_cost:
 		current_attack = next_attack
 		change_state(State.ATTACKING)
@@ -329,11 +336,6 @@ func take_damage(damage: float):
 	if health <= 0:
 		die()
 		return
-
-var attack_config: Dictionary[String, AttackConfig] = {
-	"attack1": AttackConfig.new("attack1", 20, 3),
-	"attack2": AttackConfig.new("attack2", 25, 3)
-}
 		
 func _on_animation_changed():
 	if state != State.ATTACKING and not sword_area.is_disabled():
@@ -341,9 +343,8 @@ func _on_animation_changed():
 
 var last_attack_time: float = Time.get_unix_time_from_system()
 
-func get_next_attack():
-	var attack_name: String = attack_config.keys().pick_random()
-	return attack_config[attack_name]
+func choose_random_attack():
+	return attacks.pick_random()
 
 func get_next_attack_time():
 	var variation_time = randf_range(0.5, 2.5)
@@ -351,7 +352,7 @@ func get_next_attack_time():
 
 func _on_frame_changed():
 	if state == State.ATTACKING:
-		if animated_sprite.frame == current_attack.attack_frame:
+		if animated_sprite.frame == current_attack.attack_hit_frame:
 			consume_stamina(current_attack.stamina_cost)
 			last_attack_time = Time.get_unix_time_from_system()
 			if not $SwordAttackSound.playing:

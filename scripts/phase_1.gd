@@ -12,13 +12,14 @@ var blue_golem: PackedScene = preload("res://scenes/enemies/blue_golem.tscn")
 @onready var player: Player = $World/Entities/Player
 @onready var secret_room: Node2D = $World/SecretRoom
 @onready var dungeon_map: Node2D = $World/DungeonMap
+@onready var phase_1_boss: Phase1Boss = $World/DungeonMap/Phase1Boss
 
 var last_position_on_dungeon_map: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	player.current_room = dungeon_map
 	player.room_change_requested.connect(_on_player_room_change_request)
-
+	phase_1_boss.setup(player)
 	secret_room.hide()
 	
 func start():

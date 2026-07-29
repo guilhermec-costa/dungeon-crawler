@@ -88,5 +88,3 @@ position = Vector2(164, 206)
 position = Vector2(301.00003, 187)
 SWORD_COLLIDER_OFFSET = 70.0
 player = NodePath("../Player")
-attack_hit_frame = 0
-end_attack_frame = 1

@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://d37qmuwcvb80v" path="res://scenes/enemies/white_skeleton.tscn" id="14_5iruf"]
 [ext_resource type="Texture2D" uid="uid://didcdwd16o0a1" path="res://assets/light.png" id="14_lie7o"]
 [ext_resource type="PackedScene" uid="uid://bvmkrk5rwygo6" path="res://scenes/secret_room.tscn" id="16_qjiij"]
+[ext_resource type="PackedScene" uid="uid://dm5gc2ic8akpt" path="res://scenes/enemies/phase_1_boss.tscn" id="16_t723o"]
 [ext_resource type="PackedScene" uid="uid://ctoiqnxh5b08a" path="res://scenes/enemies/yellow_skeleton.tscn" id="17_cveml"]
 [ext_resource type="Script" uid="uid://ca28ye276k74g" path="res://scripts/data/item_data.gd" id="17_r0mlc"]
 [ext_resource type="PackedScene" uid="uid://bn2i4magehkux" path="res://scenes/enemies/blue_golem.tscn" id="18_ogbs8"]
@@ -3944,6 +3945,13 @@ color = Color(0.8771647, 0.36618292, 7.70092e-07, 1)
 energy = 1.97
 texture = ExtResource("14_lie7o")
 
+[node name="BossRoomLight" type="PointLight2D" parent="World/DungeonMap/Lights" unique_id=1457416066]
+position = Vector2(942.75, 350.5)
+scale = Vector2(0.31152344, 0.5058594)
+color = Color(0.19811818, 0.041563086, 0.2530022, 1)
+energy = 1.97
+texture = ExtResource("14_lie7o")
+
 [node name="PointLight2D10" type="PointLight2D" parent="World/DungeonMap/Lights" unique_id=1220306377]
 position = Vector2(421, 618.75)
 scale = Vector2(1.1577148, 0.13183594)
@@ -3952,8 +3960,22 @@ energy = 1.97
 texture = ExtResource("14_lie7o")
 
 [node name="BossArenaLight" type="PointLight2D" parent="World/DungeonMap/Lights" unique_id=1944247822]
-position = Vector2(944.5, 347.50003)
-scale = Vector2(0.48632818, 0.7207032)
+position = Vector2(944.5, 205)
+scale = Vector2(0.48632818, 0.16406244)
+color = Color(0.8771647, 0.36618292, 7.70092e-07, 1)
+energy = 1.97
+texture = ExtResource("14_lie7o")
+
+[node name="BossArenaLight2" type="PointLight2D" parent="World/DungeonMap/Lights" unique_id=938651347]
+position = Vector2(964.00006, 489)
+scale = Vector2(0.48632818, 0.21679686)
+color = Color(0.8771647, 0.36618292, 7.70092e-07, 1)
+energy = 1.97
+texture = ExtResource("14_lie7o")
+
+[node name="BossArenaLight3" type="PointLight2D" parent="World/DungeonMap/Lights" unique_id=1088805247]
+position = Vector2(1040, 342)
+scale = Vector2(0.039062724, 0.5351563)
 color = Color(0.8771647, 0.36618292, 7.70092e-07, 1)
 energy = 1.97
 texture = ExtResource("14_lie7o")
@@ -3989,6 +4011,9 @@ runeId = 5
 [node name="RuneSlotBlack" parent="World/DungeonMap" unique_id=956285132 instance=ExtResource("22_fgifm")]
 position = Vector2(488, 139)
 runeId = 4
+
+[node name="Phase1Boss" parent="World/DungeonMap" unique_id=851340117 instance=ExtResource("16_t723o")]
+position = Vector2(297, 56)
 
 [node name="Entities" type="Node2D" parent="World" unique_id=260787806]
 light_mask = 2

@@ -6,9 +6,8 @@ extends BaseEnemy
 var slam_effect: PackedScene = preload("res://scenes/effects/ground_slam_effect.tscn")
 
 func _ready():
-	attack_hit_frame = 7
 	attacks = [
-		AttackConfig.new("attack", 0, 5)
+		AttackConfig.new("attack", 0, 5, 8, 0.3, 0.8)
 	]
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	$AttackRange.body_entered.connect(on_enter_attack_range)
@@ -72,16 +71,3 @@ func on_enter_attack_range(body: Node2D) -> void:
 func die():
 	drop_item()
 	super.die()
-	
-func on_exit_attack_range(body: Node2D) -> void:
-	if state == State.DEAD:
-		return
-		
-	if body is Player:
-		if state == State.ATTACKING:
-			await $AnimatedSprite2D.animation_finished
-		
-		if $AttackRange.has_overlapping_bodies():
-			state = State.ATTACKING
-		else:
-			state = State.CHASING

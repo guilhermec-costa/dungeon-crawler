@@ -12,6 +12,7 @@ func process_special_movement(delta):
 		return
 
 	if state == State.ATTACKING \
+	and attack_on_progress \
 	and dash_controller.can_dash() \
 	and not $AttackRange.overlaps_body(player) \
 	and is_on_hit_frame():
@@ -19,15 +20,7 @@ func process_special_movement(delta):
 
 
 func _ready():
-	attack_hit_frame = 5
-	attacks = [
-		AttackConfig.new("attack1", 0, 5, 2, 3),
-		AttackConfig.new("attack2", 0, 5, 2, 3)
-	]
 	$SwordArea.monitoring = true
-	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
-	$AttackRange.body_entered.connect(on_enter_attack_range)
-	$AttackRange.body_exited.connect(on_exit_attack_range)
 	super._ready()
 
 
@@ -40,10 +33,9 @@ func on_flip_right() -> void:
 	$SwordArea/CollisionShape2D.rotation *= -1
 
 func apply_player_damage():
-	if hit_window_open:
-		if $SwordArea.overlaps_body(player):
-			hit_window_open = false
-			player.take_damage(config.damage_given)
+	if hit_window_open and $SwordArea.overlaps_body(player):
+		hit_window_open = false
+		player.take_damage(config.damage_given)
 			
 func _physics_process(delta: float) -> void:
 	if state == State.DEAD:
@@ -72,36 +64,14 @@ func _process(_delta: float) -> void:
 	super._process(_delta)
 	
 func _on_frame_changed() -> void:
-	if state != State.ATTACKING:
+	if state != State.ATTACKING or not attack_on_progress:
 		hit_window_open = false
 		return
 		
-	if state == State.ATTACKING and is_on_frame(attack_hit_frame):
+	if is_on_hit_frame():
 		hit_window_open = true
 		if not sword_hit_sound.playing:
 			sword_hit_sound.play()
-
-func on_enter_attack_range(body: Node2D) -> void:
-	if state == State.DEAD:
-		return
-	
-	if body is Player:
-		change_state(State.ATTACKING)
-		attack_timer = 0
-		$WalkTimer.stop()
-
-func on_exit_attack_range(body: Node2D) -> void:
-	if state == State.DEAD:
-		return
-		
-	if body is Player:
-		if state == State.ATTACKING:
-			await $AnimatedSprite2D.animation_finished
-		
-		if $AttackRange.has_overlapping_bodies():
-			change_state(State.ATTACKING)
-		else:
-			change_state(State.CHASING)
 	
 func die() -> void:
 	sword_hit_sound.stop()

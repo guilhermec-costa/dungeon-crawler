@@ -4,12 +4,12 @@
 
 [resource]
 script = ExtResource("1_kif8q")
-walk_duration = 2.5
-idle_duration = 1.5
+walk_duration = 1.5
+idle_duration = 4.0
 speed = 30.0
 speed_on_random_walk = 25.0
 patrol_radius = 50.0
-max_health = 45.0
+max_health = 200.0
 damage_given = 15.0
 gold_drop_amount_on_death = 8.0
 dash_force = 90.0

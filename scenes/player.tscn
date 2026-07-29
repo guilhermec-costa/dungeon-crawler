@@ -274,7 +274,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wnwbv"]
-size = Vector2(15.384621, 31.174023)
+size = Vector2(13.684212, 29.473686)
 
 [sub_resource type="AudioStreamMP3" id="AudioStreamMP3_fjrip"]
 resource_local_to_scene = true
@@ -406,7 +406,7 @@ size = Vector2(15.7894745, 2.6315804)
 modulate = Color(0.47768176, 0.5452191, 0.50288934, 1)
 light_mask = 2
 visibility_layer = 2
-position = Vector2(38, 32)
+position = Vector2(5, 14.000001)
 scale = Vector2(0.95, 0.95)
 collision_layer = 2
 collision_mask = 65
@@ -442,7 +442,7 @@ script = ExtResource("37_cs1tg")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1288535891]
-position = Vector2(1.5384521, -0.20246506)
+position = Vector2(1.0526319, 2.1052618)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_wnwbv")
 
@@ -493,12 +493,12 @@ current = true
 libraries/ = SubResource("AnimationLibrary_j2b1d")
 
 [node name="FootCollider" type="Area2D" parent="." unique_id=1913155514]
-position = Vector2(2.1052632, 7.3684216)
+position = Vector2(2.1052632, 14.736841)
 collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FootCollider" unique_id=593096215]
-position = Vector2(-0.5263138, 8.684212)
+position = Vector2(2.026558e-06, 9.536743e-07)
 shape = SubResource("RectangleShape2D_7bkgt")
 debug_color = Color(0.9163825, 0.20684665, 0.50994754, 0.41960785)
 
