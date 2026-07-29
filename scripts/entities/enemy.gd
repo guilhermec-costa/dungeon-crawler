@@ -206,6 +206,7 @@ func process_attack(delta: float):
 func start_attack():
 	attack_on_progress = true
 	current_attack = attacks.pick_random()
+	print('current_attack', current_attack.animation_name)
 	$AnimatedSprite2D.play(current_attack.animation_name)
 	attack_timer = randf_range(
 		current_attack.attack_interval_min,

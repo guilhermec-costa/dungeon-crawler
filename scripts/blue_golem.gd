@@ -10,8 +10,6 @@ func _ready():
 		AttackConfig.new("attack", 0, 5, 8, 0.3, 0.8)
 	]
 	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
-	$AttackRange.body_entered.connect(on_enter_attack_range)
-	$AttackRange.body_exited.connect(on_exit_attack_range)
 	super._ready()
 
 
@@ -58,14 +56,6 @@ func _process(delta: float) -> void:
 		return
 	
 	super._process(delta)
-	
-func on_enter_attack_range(body: Node2D) -> void:
-	if state == State.DEAD:
-		return
-		
-	if body is Player:
-		state = State.ATTACKING
-		$WalkTimer.stop()
 
 
 func die():
