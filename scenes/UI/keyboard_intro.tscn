@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dm802khev6f1i" path="res://assets/keyboard/D.png" id="4_1sqrr"]
 [ext_resource type="PackedScene" uid="uid://d3ht7qds5sdr8" path="res://scenes/UI/tutorial_key.tscn" id="6_1sqrr"]
 [ext_resource type="Texture2D" uid="uid://cb81xos6b5gea" path="res://assets/keyboard/SPACE.png" id="7_uprne"]
+[ext_resource type="Texture2D" uid="uid://dyd26onw6n1vd" path="res://assets/keyboard/master.png" id="10_7jq88"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7bkgt"]
 font = ExtResource("2_oqi26")
@@ -17,6 +18,10 @@ font_color = Color(0.9384497, 0.9384497, 0.9384497, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_gmap5"]
 font = ExtResource("2_oqi26")
 font_color = Color(0.8819366, 0.8819366, 0.88193655, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2wjqm"]
+atlas = ExtResource("10_7jq88")
+region = Rect2(558.91003, 172.41809, 44.640747, 16.796722)
 
 [node name="KeyboardIntro" type="CanvasLayer" unique_id=699495161]
 layer = 6
@@ -61,7 +66,7 @@ scale = Vector2(1.6698498, 1.78)
 texture = ExtResource("7_uprne")
 
 [node name="Interaction" type="Node2D" parent="Commands" unique_id=1887895333]
-position = Vector2(343, 33)
+position = Vector2(385, 52)
 
 [node name="Label" type="Label" parent="Commands/Interaction" unique_id=2033596726]
 offset_left = 317.0
@@ -76,3 +81,20 @@ vertical_alignment = 1
 [node name="FKey" parent="Commands/Interaction" unique_id=2144220647 instance=ExtResource("6_1sqrr")]
 position = Vector2(357, 150)
 texture = ExtResource("1_bju4u")
+
+[node name="Run" type="Node2D" parent="Commands" unique_id=374613766]
+position = Vector2(-17, 19)
+
+[node name="TutorialKey" parent="Commands/Run" unique_id=1511534898 instance=ExtResource("6_1sqrr")]
+position = Vector2(675.99994, 183)
+texture = SubResource("AtlasTexture_2wjqm")
+
+[node name="Label" type="Label" parent="Commands/Run" unique_id=124617185]
+offset_left = 644.0
+offset_top = 143.0
+offset_right = 720.0
+offset_bottom = 166.0
+text = "RUN "
+label_settings = SubResource("LabelSettings_gmap5")
+horizontal_alignment = 1
+vertical_alignment = 1

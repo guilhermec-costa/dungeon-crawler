@@ -6,7 +6,7 @@
 script = ExtResource("1_kif8q")
 walk_duration = 1.5
 idle_duration = 4.0
-speed = 30.0
+speed = 20.0
 speed_on_random_walk = 25.0
 patrol_radius = 50.0
 max_health = 200.0
@@ -17,5 +17,5 @@ dash_duration = 0.12
 dash_chance = 0.3
 dash_cooldown = 3.0
 drop_amount_on_death = 30
-shadow_offset = Vector2(0, 20)
+shadow_offset = Vector2(0, 41.98)
 metadata/_custom_type_script = "uid://cvjmp4oij48pd"

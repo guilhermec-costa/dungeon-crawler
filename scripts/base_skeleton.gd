@@ -38,7 +38,6 @@ func deal_attack_damage():
 		
 	if hit_window_open and $SwordArea.overlaps_body(player):
 		hit_window_open = false
-		print("here")
 		player.take_damage(current_attack.damage)
 	
 func take_damage(damage: float, type: DamageTypes.Type) -> void:
@@ -69,8 +68,13 @@ func _on_frame_changed() -> void:
 	
 	if is_on_hit_frame():
 		hit_window_open = true
-		if not sword_hit_sound.playing:
-			sword_hit_sound.play()
+		
+		if current_attack.audio_stream:
+			sword_hit_sound.stream = current_attack.audio_stream
+			sword_hit_sound.volume_db = current_attack.audio_volume_db
+			sword_hit_sound.pitch_scale = current_attack.audio_pitch
+			
+		sword_hit_sound.play()
 			
 	elif $AnimatedSprite2D.frame >= current_attack.attack_end_frame:
 		hit_window_open = false

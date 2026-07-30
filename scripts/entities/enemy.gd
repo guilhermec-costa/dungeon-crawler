@@ -372,7 +372,7 @@ func drop_item():
 		config.drop_amount_on_death,
 		global_position,
 		get_parent(),
-		player.z_index
+		player.z_index + 1
 	)
 	
 func is_on_hit_frame():

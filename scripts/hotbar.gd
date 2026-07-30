@@ -5,7 +5,8 @@ extends HBoxContainer
 	$InventorySlotUI,
 	$InventorySlotUI2,
 	$InventorySlotUI3,
-	$InventorySlotUI4
+	$InventorySlotUI4,
+	$InventorySlotUI5
 ]
 
 func _ready() -> void:

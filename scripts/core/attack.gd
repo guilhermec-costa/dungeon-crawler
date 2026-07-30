@@ -8,6 +8,9 @@ var attack_hit_frame: int
 var attack_end_frame: int
 var attack_interval_min: float
 var attack_interval_max: float
+var audio_stream: AudioStream
+var audio_volume_db: float = 1.0
+var audio_pitch: float = 1.0
 
 func  _init(
 	_animation_name: String, 
@@ -25,3 +28,9 @@ func  _init(
 	self.attack_end_frame = _attack_end_frame
 	self.attack_interval_min = _attack_interval_min
 	self.attack_interval_max = _attack_interval_max
+
+func set_audio_config(stream: AudioStream, volume_db: float, pitch: float):
+	audio_stream = stream
+	audio_volume_db = volume_db
+	audio_pitch = pitch
+	return self

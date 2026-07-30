@@ -1,6 +1,8 @@
 class_name RuneSlot
 extends Interactable
 
+signal placed_rune
+
 @onready var frame_icon: TextureRect = $Frame/Icon
 @export var runeId: ItemData.ItemID
 
@@ -23,3 +25,4 @@ func interact(player: Player):
 		$PlaceSound.play()
 		player.inventory.free_space(rune)
 		remove_interaction_widget()
+		placed_rune.emit()

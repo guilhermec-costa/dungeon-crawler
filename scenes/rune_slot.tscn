@@ -11,6 +11,7 @@
 size = Vector2(16, 13)
 
 [node name="RuneSlot" unique_id=1954145144 instance=ExtResource("1_kgo1h")]
+z_index = 1
 texture_filter = 1
 script = ExtResource("1_o78m4")
 runeId = 0

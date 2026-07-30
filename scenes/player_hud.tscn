@@ -186,3 +186,6 @@ layout_mode = 2
 
 [node name="InventorySlotUI4" parent="Hotbar" unique_id=126298247 groups=["inventory_slot"] instance=ExtResource("9_8y7rk")]
 layout_mode = 2
+
+[node name="InventorySlotUI5" parent="Hotbar" unique_id=147996336 groups=["inventory_slot"] instance=ExtResource("9_8y7rk")]
+layout_mode = 2

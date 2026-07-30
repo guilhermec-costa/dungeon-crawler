@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://ba1aac2ridua7" path="res://assets/enemies/skeleton_knight/HURT.png" id="4_lpx6q"]
 [ext_resource type="Texture2D" uid="uid://bh4jguhdmn70e" path="res://assets/enemies/skeleton_knight/FWD_SWING.png" id="4_nj4jc"]
 [ext_resource type="Texture2D" uid="uid://cp5axlwyijgea" path="res://assets/enemies/skeleton_knight/SIDE_SWING.png" id="6_5pe0n"]
+[ext_resource type="AudioStream" uid="uid://bwj2tu34sunu1" path="res://assets/audio/greatsword.mp3" id="11_ywydu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f5uje"]
 atlas = ExtResource("3_uauuw")
@@ -427,8 +428,7 @@ config = ExtResource("2_uauuw")
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=599365077]
 position = Vector2(0, -4.863739e-05)
 sprite_frames = SubResource("SpriteFrames_7vtre")
-animation = &"attack3"
-frame = 4
+animation = &"die"
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=580395902]
 position = Vector2(4.8000355, 1.5999699)
@@ -447,6 +447,7 @@ position = Vector2(9.599998, -3.2000475)
 shape = SubResource("CircleShape2D_nj4jc")
 
 [node name="HealthBar" parent="." index="5" unique_id=1537375787]
+visible = false
 offset_left = -6.3999763
 offset_top = -28.800049
 offset_right = 19.077745
@@ -457,3 +458,6 @@ position = Vector2(6.3999977, -4.863739e-05)
 
 [node name="LimitChaseArea" parent="." index="9" unique_id=813308136]
 position = Vector2(4.800001, 1.5999513)
+
+[node name="SwordHitSound" parent="." index="11" unique_id=1757392559]
+stream = ExtResource("11_ywydu")

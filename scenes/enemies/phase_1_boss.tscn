@@ -2,9 +2,35 @@
 
 [ext_resource type="Script" uid="uid://doaxu1x1ontd2" path="res://scenes/enemies/phase_1_boss.gd" id="1_aqpwm"]
 [ext_resource type="PackedScene" uid="uid://blg2a1h73n7us" path="res://scenes/enemies/skeleton_knight.tscn" id="2_dyxe2"]
+[ext_resource type="Texture2D" uid="uid://c0ifasa3o3386" path="res://assets/UI/stats/empty_bar.png" id="3_2wjqm"]
+[ext_resource type="Texture2D" uid="uid://uqfp123tplnh" path="res://assets/UI/stats/health_bar.png" id="3_ji6tb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ji6tb"]
+atlas = ExtResource("3_2wjqm")
+region = Rect2(0, 0, 98, 16.5596)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dyxe2"]
+atlas = ExtResource("3_ji6tb")
+region = Rect2(0, 0, 98.37893, 16.792973)
 
 [node name="Phase1Boss" type="Node2D" unique_id=851340117]
 script = ExtResource("1_aqpwm")
 
 [node name="SkeletonKnight" parent="." unique_id=582161565 instance=ExtResource("2_dyxe2")]
-scale = Vector2(1.17, 1.17)
+scale = Vector2(0.975, 0.975)
+
+[node name="BossHUD" type="CanvasLayer" parent="." unique_id=2077883785]
+layer = 3
+visible = false
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="BossHUD" unique_id=1621404408]
+texture_filter = 1
+offset_left = 579.0
+offset_top = 90.0
+offset_right = 688.195
+offset_bottom = 109.0
+scale = Vector2(1.66, 1.66)
+value = 100.0
+nine_patch_stretch = true
+texture_under = SubResource("AtlasTexture_ji6tb")
+texture_progress = SubResource("AtlasTexture_dyxe2")

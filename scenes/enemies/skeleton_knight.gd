@@ -8,18 +8,37 @@ var combo_aggressive: AttackCombo
 var combo_special: AttackCombo
 
 
+const ATTACK_SOUND = preload("res://assets/audio/greatsword.mp3")
+
+var random_move_timer := 0.0
+var movement_offset := Vector2.ZERO
+
+func process_special_movement(delta: float) -> void:
+	if state != State.CHASING:
+		return
+
+	random_move_timer -= delta
+	
+	if random_move_timer <= 0.0:
+		random_move_timer = randf_range(0.2, 0.5)
+		movement_offset = Vector2.from_angle(randf() * TAU) * randf_range(0.3, 0.8)
+
+	var direction = global_position.direction_to(player.global_position)
+	velocity = (direction + movement_offset).normalized() * config.speed_on_random_walk * 2.0
+	
 func _ready():
 	attacks = [
-		AttackConfig.new("attack1", 10, 0, 4, 8, 0.8, 1.2),
-		AttackConfig.new("attack2", 15, 0, 2, 4, 1.2, 2.0),
+		AttackConfig.new("attack1", 10, 0, 4, 8, 0.8, 1.2)
+			.set_audio_config(ATTACK_SOUND, -6.0, 1.30),
+		AttackConfig.new("attack2", 15, 0, 2, 4, 1.2, 2.0)
+			.set_audio_config(ATTACK_SOUND, -2.5, 1.00),
 		AttackConfig.new("attack3", 35, 0, 3, 4, 1.5, 2.5)
+			.set_audio_config(ATTACK_SOUND, 2.0, 0.70)
 	]
 
 	setup_combos()
 
 	super._ready()
-
-
 
 func setup_combos():
 	combo_basic = AttackCombo.new(

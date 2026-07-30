@@ -12,7 +12,7 @@ var blue_golem: PackedScene = preload("res://scenes/enemies/blue_golem.tscn")
 @onready var player: Player = $World/Entities/Player
 @onready var secret_room: Node2D = $World/SecretRoom
 @onready var dungeon_map: Node2D = $World/DungeonMap
-@onready var phase_1_boss: Phase1Boss = $World/DungeonMap/Phase1Boss
+@onready var phase_1_boss: Phase1Boss = $World/Entities/Phase1Boss
 
 var last_position_on_dungeon_map: Vector2 = Vector2.ZERO
 

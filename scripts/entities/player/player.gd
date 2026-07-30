@@ -50,7 +50,7 @@ var stamina_cost := {
 	"roll": 30.0
 }
 
-var inventory := Inventory.new(4)
+var inventory := Inventory.new(5)
 var current_interactable: Interactable
 
 var stamina_recovery_timer := 0.0
