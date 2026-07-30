@@ -4,6 +4,7 @@ extends AnimatedSprite2D
 const PLAYER_ATTACK_VERTICAL_OFFSET = 3
 
 var sword_area: SwordArea
+var movement_direction := Vector2.RIGHT
 
 func setup(_sword_area: SwordArea):
 	sword_area = _sword_area
@@ -17,6 +18,9 @@ func is_facing_right():
 	return not flip_h
 	
 func update_flip(direction: Vector2) -> void:
+	if direction != Vector2.ZERO:
+		movement_direction = direction
+
 	if direction.x > 0:
 		if is_facing_left():
 			sword_area.set_facing_right()
@@ -27,8 +31,19 @@ func update_flip(direction: Vector2) -> void:
 		flip_h = true
 			
 func update_animation(new_animation: String) -> void:
-	if animation != new_animation:
-		play(new_animation)
+	var target_animation := get_directional_animation(new_animation)
+	if animation != target_animation:
+		play(target_animation)
+
+func get_directional_animation(base_animation: String) -> String:
+	if base_animation != "run" and base_animation != "walk":
+		return base_animation
+
+	if abs(movement_direction.y) > abs(movement_direction.x):
+		var vertical_direction := "down" if movement_direction.y > 0 else "up"
+		return "%s_%s" % [base_animation, vertical_direction]
+
+	return base_animation
 
 func _on_animation_changed():
 	offset.y = 0
