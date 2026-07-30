@@ -8,6 +8,11 @@ const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 @export var player: Player
 @export var right_offset := Vector2.ZERO
 @export var left_offset := Vector2.ZERO
+@export_group("Drop Override")
+@export var override_drop := false
+@export var drop_id_override: ItemData.ItemID = ItemData.ItemID.GOLD
+@export var drop_amount_override := 1
+@export_group("")
 @onready var health_bar: HealthBar = $HealthBar
 @onready var pathfinder: NavigationAgent2D = $NavigationAgent2D
 @onready var start_chase_area: Area2D = $StartChaseArea
@@ -382,9 +387,15 @@ func _on_walk_timer_timeout():
 		$WalkTimer.start()
 
 func drop_item():
+	var item_id := (
+		drop_id_override if override_drop else config.drop_id_on_death
+	)
+	var amount := (
+		drop_amount_override if override_drop else config.drop_amount_on_death
+	)
 	DropManager.spawn(
-		config.drop_id_on_death,
-		config.drop_amount_on_death,
+		item_id,
+		amount,
 		global_position,
 		get_parent(),
 		player.z_index + 1

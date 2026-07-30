@@ -11,8 +11,8 @@ region = Rect2(63.61731, 0.42410278, 61.191185, 91.773895)
 [resource]
 script = ExtResource("3_6la80")
 id = 4
-display_name = "Black Rune"
+display_name = "Dark Rune"
 icon = SubResource("AtlasTexture_fgifm")
-description = "Grey Rune"
+description = "Dark Rune"
 collect_sound = ExtResource("1_61ya2")
 metadata/_custom_type_script = "uid://ca28ye276k74g"

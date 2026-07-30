@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" uid="uid://cbnxv05t6s3yc" path="res://scenes/drops/base_drop.tscn" id="1_base"]
+[ext_resource type="Texture2D" uid="uid://r3b012083lye" path="res://assets/runes/vector-rune-black.svg" id="2_texture"]
+[ext_resource type="Resource" uid="uid://ckh0k3u5i53qg" path="res://resources/ui/runes/black_rune.tres" id="3_item"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_black_rune"]
+atlas = ExtResource("2_texture")
+region = Rect2(63.61731, 0.42410278, 61.191185, 91.773895)
+
+[node name="BlackRuneDrop" instance=ExtResource("1_base")]
+item = ExtResource("3_item")
+
+[node name="Sprite2D" parent="." index="0"]
+scale = Vector2(0.105, 0.105)
+texture = SubResource("AtlasTexture_black_rune")
+
+[node name="PointLight2D" parent="." index="1"]
+color = Color(0.380392, 0.466667, 0.462745, 1)

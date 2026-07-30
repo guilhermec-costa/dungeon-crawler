@@ -16,6 +16,8 @@ extends Node2D
 
 var battle_started := false
 
+const INTRO_WALK_DURATION := 4.0
+
 func setup(p: Player) -> void:
 	player = p
 	skeleton_knight.player = p
@@ -48,10 +50,35 @@ func get_focus_position() -> Vector2:
 	return skeleton_knight.global_position
 
 func play_revival() -> void:
-	animated_sprite.speed_scale = 0.8
+	animated_sprite.speed_scale = 0.55
 	animated_sprite.play_backwards(&"die")
 	await animated_sprite.animation_finished
 	animated_sprite.speed_scale = 1.0
+	animated_sprite.play(&"idle")
+
+func play_intro_walk(target_position: Vector2) -> void:
+	var walk_direction := skeleton_knight.global_position.direction_to(
+		target_position
+	)
+	if walk_direction.x < 0.0:
+		skeleton_knight.flip_to_left()
+	elif walk_direction.x > 0.0:
+		skeleton_knight.flip_to_right()
+
+	animated_sprite.play(&"walk")
+	var walk_tween := create_tween()
+	walk_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	walk_tween.tween_property(
+		skeleton_knight,
+		"global_position",
+		target_position,
+		INTRO_WALK_DURATION
+	)
+	await walk_tween.finished
+
+	skeleton_knight.global_position = target_position
+	skeleton_knight.spawn_origin = target_position
+	skeleton_knight.velocity = Vector2.ZERO
 	animated_sprite.play(&"idle")
 
 func start_battle() -> void:

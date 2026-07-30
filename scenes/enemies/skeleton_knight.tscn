@@ -429,6 +429,7 @@ config = ExtResource("2_uauuw")
 position = Vector2(0, -4.863739e-05)
 sprite_frames = SubResource("SpriteFrames_7vtre")
 animation = &"die"
+frame = 7
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=580395902]
 position = Vector2(4.8000355, 1.5999699)

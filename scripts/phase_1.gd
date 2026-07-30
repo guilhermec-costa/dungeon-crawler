@@ -14,6 +14,7 @@ var blue_golem: PackedScene = preload("res://scenes/enemies/blue_golem.tscn")
 @onready var dungeon_map: Node2D = $World/DungeonMap
 @onready var phase_1_boss: Phase1Boss = $World/Entities/Phase1Boss
 @onready var boss_cutscene_trigger: Area2D = $World/DungeonMap/BossCutsceneTrigger
+@onready var boss_battle_position: Marker2D = $World/DungeonMap/BossBattlePosition
 @onready var player_camera: Camera2D = $World/Entities/Player/Camera2D
 
 var last_position_on_dungeon_map: Vector2 = Vector2.ZERO
@@ -80,6 +81,25 @@ func play_boss_intro() -> void:
 	await get_tree().create_timer(0.35).timeout
 
 	await phase_1_boss.play_revival()
+	await get_tree().create_timer(0.3).timeout
+
+	var battle_position := boss_battle_position.global_position
+	var battle_camera_position := (
+		player.to_local(battle_position) - player_camera.offset
+	)
+	var camera_follow_tween := create_tween()
+	camera_follow_tween.set_trans(Tween.TRANS_SINE).set_ease(
+		Tween.EASE_IN_OUT
+	)
+	camera_follow_tween.tween_property(
+		player_camera,
+		"position",
+		battle_camera_position,
+		Phase1Boss.INTRO_WALK_DURATION
+	)
+	await phase_1_boss.play_intro_walk(battle_position)
+	player_camera.position = battle_camera_position
+	boss_position = phase_1_boss.get_focus_position()
 	await get_tree().create_timer(0.45).timeout
 
 	var return_tween := create_tween().set_parallel()

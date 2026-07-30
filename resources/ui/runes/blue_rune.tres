@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://ldabrtmvrlry"]
 
+[ext_resource type="AudioStream" uid="uid://wh403y4pj0hv" path="res://assets/audio/collect_rune.wav" id="1_collect"]
 [ext_resource type="Texture2D" uid="uid://d2fwwkulvlnov" path="res://assets/runes/vector-rune-blue.svg" id="1_hjems"]
 [ext_resource type="Script" uid="uid://ca28ye276k74g" path="res://scripts/data/item_data.gd" id="2_xffph"]
 
@@ -13,4 +14,5 @@ id = 5
 display_name = "Blue Rune"
 icon = SubResource("AtlasTexture_xffph")
 description = "Blue Rune"
+collect_sound = ExtResource("1_collect")
 metadata/_custom_type_script = "uid://ca28ye276k74g"

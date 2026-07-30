@@ -14,3 +14,6 @@ item = ExtResource("2_5dmgh")
 [node name="Sprite2D" parent="." index="0" unique_id=1550990129]
 scale = Vector2(0.105, 0.105)
 texture = SubResource("AtlasTexture_n2ik2")
+
+[node name="PointLight2D" parent="." index="1" unique_id=965946710]
+color = Color(0.85098, 0.85098, 0.85098, 1)

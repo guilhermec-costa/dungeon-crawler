@@ -12,7 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://bcma22lekkmtx" path="res://assets/audio/golem_impact_sound.mp3" id="9_c3aco"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hboqw"]
-size = Vector2(39.5, 38.5)
+size = Vector2(31, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0jp65"]
 atlas = ExtResource("2_bx7dv")
@@ -366,7 +366,7 @@ border_width_bottom = 1
 border_color = Color(0.8227686, 0, 0.18088621, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pcy3n"]
-size = Vector2(9.504019, 10.937466)
+size = Vector2(15.255253, 16.641743)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cl8wn"]
 radius = 89.44457
@@ -384,13 +384,12 @@ script = ExtResource("1_ubhja")
 config = ExtResource("2_agjj3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1078712412]
-position = Vector2(0.25, 13.25)
+position = Vector2(-0.5, 14)
 shape = SubResource("RectangleShape2D_hboqw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1881604786]
 sprite_frames = SubResource("SpriteFrames_uyhjn")
-animation = &"attack"
-frame = 8
+animation = &"idle"
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1457934423]
 position = Vector2(0, 13)
@@ -421,8 +420,8 @@ scale = Vector2(0.89, 0.89)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" unique_id=1553426565]
-position = Vector2(-4.5, -2)
-scale = Vector2(5.1557136, 4.388585)
+position = Vector2(-4.4943824, 0.5617981)
+scale = Vector2(5.155712, 4.388585)
 shape = SubResource("RectangleShape2D_pcy3n")
 debug_color = Color(18.892157, 0, 0, 0.25490198)
 

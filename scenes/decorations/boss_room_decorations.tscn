@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/decorations/hanging_brazier_decoration.tscn" id="1_brazier"]
+[ext_resource type="PackedScene" path="res://scenes/decorations/candle_cluster_decoration.tscn" id="2_candles"]
+[ext_resource type="PackedScene" path="res://scenes/decorations/rubble_decoration.tscn" id="3_rubble"]
+[ext_resource type="PackedScene" path="res://scenes/decorations/sarcophagus_decoration.tscn" id="4_sarcophagus"]
+[ext_resource type="PackedScene" uid="uid://8dnuvy8klbkr" path="res://scenes/decorations/skeleton_dead_decoration.tscn" id="5_skeleton_dead"]
+[ext_resource type="PackedScene" uid="uid://b1ia4x0n46uti" path="res://scenes/decorations/skeleton_bone_decoration.tscn" id="6_bone"]
+[ext_resource type="PackedScene" uid="uid://bi7ndh1iuu5qi" path="res://scenes/decorations/skull.tscn" id="7_skull"]
+
+[node name="BossRoomDecorations" type="Node2D"]
+y_sort_enabled = true
+
+[node name="BossSarcophagus" parent="." instance=ExtResource("4_sarcophagus")]
+position = Vector2(0, -54)
+scale = Vector2(0.9, 0.9)
+
+[node name="UpperLeftBrazier" parent="." instance=ExtResource("1_brazier")]
+position = Vector2(-32, -70)
+
+[node name="UpperRightBrazier" parent="." instance=ExtResource("1_brazier")]
+position = Vector2(48, -70)
+
+[node name="LowerLeftCandles" parent="." instance=ExtResource("2_candles")]
+position = Vector2(-32, 65)
+
+[node name="LowerRightCandles" parent="." instance=ExtResource("2_candles")]
+position = Vector2(48, 65)
+flip_h = true
+
+[node name="AltarCandlesLeft" parent="." instance=ExtResource("2_candles")]
+position = Vector2(-31, -42)
+scale = Vector2(0.85, 0.85)
+
+[node name="AltarCandlesRight" parent="." instance=ExtResource("2_candles")]
+position = Vector2(31, -42)
+scale = Vector2(0.85, 0.85)
+flip_h = true
+
+[node name="UpperLeftRubble" parent="." instance=ExtResource("3_rubble")]
+position = Vector2(-60, -35)
+rotation = -0.52
+
+[node name="LowerRightRubble" parent="." instance=ExtResource("3_rubble")]
+position = Vector2(62, 77)
+rotation = 0.61
+
+[node name="FallenKnight" parent="." instance=ExtResource("5_skeleton_dead")]
+position = Vector2(55, 36)
+rotation = -0.48
+scale = Vector2(0.68, 0.68)
+
+[node name="ScatteredBone" parent="." instance=ExtResource("6_bone")]
+position = Vector2(-56, 48)
+rotation = 1.05
+scale = Vector2(0.13, 0.13)
+
+[node name="LooseSkull" parent="." instance=ExtResource("7_skull")]
+position = Vector2(61, -2)
+rotation = 0.72

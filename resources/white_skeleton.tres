@@ -16,6 +16,5 @@ dash_force = 75.0
 dash_duration = 0.12
 dash_chance = 0.15
 dash_cooldown = 4.0
-drop_id_on_death = 3
-drop_amount_on_death = 1
+drop_amount_on_death = 8
 metadata/_custom_type_script = "uid://cvjmp4oij48pd"
