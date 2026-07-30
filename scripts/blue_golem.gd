@@ -17,7 +17,6 @@ func _ready():
 			2.8
 		)
 	]
-	$AnimatedSprite2D.frame_changed.connect(_on_frame_changed)
 	super._ready()
 
 
@@ -32,19 +31,25 @@ func process_special_movement(delta):
 		dash_controller.try_dash(global_position,player.global_position)
 
 func deal_attack_damage():
-	if not current_attack:
+	if state != State.ATTACKING \
+	or not attack_on_progress \
+	or not current_attack \
+	or $AnimatedSprite2D.animation != current_attack.animation_name:
 		return
 		
 	if hit_window_open and $AreaDamageRange.overlaps_body(player):
-			player.take_damage(current_attack.damage)
-			hit_window_open = false
+		player.take_damage(current_attack.damage)
+		hit_window_open = false
 			
 func _on_frame_changed() -> void:
-	if state != State.ATTACKING:
+	if state != State.ATTACKING \
+	or not attack_on_progress \
+	or not current_attack \
+	or $AnimatedSprite2D.animation != current_attack.animation_name:
 		hit_window_open = false
 		return
 		
-	if state == State.ATTACKING and is_on_hit_frame():
+	if is_on_hit_frame():
 		hit_window_open = true
 		var effect: SlamEffect = slam_effect.instantiate()
 		effect.position = Vector2(0, 20)

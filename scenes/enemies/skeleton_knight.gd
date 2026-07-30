@@ -14,25 +14,25 @@ var random_move_timer := 0.0
 var movement_offset := Vector2.ZERO
 
 func process_special_movement(delta: float) -> void:
-	if state != State.CHASING:
-		return
+	if state == State.CHASING:
+		random_move_timer -= delta
 
-	random_move_timer -= delta
-	
-	if random_move_timer <= 0.0:
-		random_move_timer = randf_range(0.2, 0.5)
-		movement_offset = Vector2.from_angle(randf() * TAU) * randf_range(0.3, 0.8)
+		if random_move_timer <= 0.0:
+			random_move_timer = randf_range(0.2, 0.5)
+			movement_offset = Vector2.from_angle(randf() * TAU) * randf_range(0.3, 0.8)
 
-	var direction = global_position.direction_to(player.global_position)
-	velocity = (direction + movement_offset).normalized() * config.speed_on_random_walk * 2.0
+		var direction = global_position.direction_to(player.global_position)
+		velocity = (direction + movement_offset).normalized() * config.speed
+
+	super.process_special_movement(delta)
 	
 func _ready():
 	attacks = [
-		AttackConfig.new("attack1", 10, 0, 4, 8, 0.8, 1.2)
+		AttackConfig.new("attack1", 10, 0, 4, 6, 1.2, 1.6)
 			.set_audio_config(ATTACK_SOUND, -6.0, 1.30),
-		AttackConfig.new("attack2", 15, 0, 2, 4, 1.2, 2.0)
+		AttackConfig.new("attack2", 15, 0, 2, 4, 1.4, 1.9)
 			.set_audio_config(ATTACK_SOUND, -2.5, 1.00),
-		AttackConfig.new("attack3", 35, 0, 3, 4, 1.5, 2.5)
+		AttackConfig.new("attack3", 35, 0, 3, 4, 1.8, 2.4)
 			.set_audio_config(ATTACK_SOUND, 2.0, 0.70)
 	]
 
@@ -77,17 +77,12 @@ func setup_combos():
 
 
 func get_next_attack() -> AttackConfig:
+	return current_combo.attacks[combo_attack_index]
 
-	var attack = current_combo.attacks[combo_attack_index]
-
+func on_attack_completed(_attack: AttackConfig) -> void:
 	combo_attack_index += 1
-
-
 	if combo_attack_index >= current_combo.attacks.size():
 		finish_combo()
-
-
-	return attack
 
 func finish_combo():
 	combo_attack_index = 0

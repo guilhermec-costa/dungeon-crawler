@@ -3653,7 +3653,7 @@ _data = {
 [sub_resource type="LabelSettings" id="LabelSettings_6c58o"]
 font = ExtResource("6_7fxg3")
 font_size = 52
-font_color = Color(0.96296567, 0.2504312, 0.24358335, 1)
+font_color = Color(0.54760784, 0.5710693, 0.52383834, 1)
 outline_size = 1
 
 [node name="Phase1" type="Node" unique_id=699602322]
@@ -3679,7 +3679,7 @@ blend_mode = 2
 shadow_enabled = true
 
 [node name="PlayerStartPosition" type="Marker2D" parent="." unique_id=2011610962]
-position = Vector2(658, 156)
+position = Vector2(811, 356)
 
 [node name="DungeonAmbienceSound" type="AudioStreamPlayer2D" parent="." unique_id=686928459]
 stream = ExtResource("8_wi8qh")

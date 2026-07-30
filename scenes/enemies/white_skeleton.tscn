@@ -381,7 +381,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7e1v2")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"walk",
 "speed": 12.0
 }]
@@ -399,7 +399,7 @@ config = ExtResource("3_ukd3e")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=599365077]
 sprite_frames = SubResource("SpriteFrames_au15w")
-animation = &"attack2"
+animation = &"walk"
 
 [node name="AttackRange" parent="." index="3" unique_id=1278185032]
 position = Vector2(-11.464968, 0)

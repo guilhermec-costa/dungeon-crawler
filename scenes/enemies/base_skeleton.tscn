@@ -168,7 +168,5 @@ max_distance = 500.0
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=751089699]
 libraries/ = SubResource("AnimationLibrary_bnfvn")
 
-[connection signal="body_entered" from="AttackRange" to="." method="on_attack_range_body_entered"]
-[connection signal="body_exited" from="AttackRange" to="." method="_on_attack_range_body_exited"]
 [connection signal="navigation_finished" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_navigation_finished"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_velocity_computed"]

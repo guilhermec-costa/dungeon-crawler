@@ -38,11 +38,19 @@ enum State {
 func change_state(new_state: State) -> void:
 	if state == State.DEAD:
 		return
+
+	if state == new_state:
+		if state != State.ATTACKING and attack_on_progress:
+			cancel_attack()
+		return
 	
 	if state == State.ATTACKING and new_state == State.TAKING_DAMAGE:
 		if randf() >= config.cancel_attack_on_damage_chance:
 			return
-		
+
+	if new_state != State.ATTACKING and attack_on_progress:
+		cancel_attack()
+
 	state = new_state
 
 	
@@ -200,8 +208,8 @@ func process_attack(delta: float):
 	if attack_on_progress:
 		return
 
+	update_animation("idle")
 	attack_timer -= delta
-
 	if attack_timer > 0:
 		return
 
@@ -213,11 +221,35 @@ func get_next_attack():
 func start_attack():
 	attack_on_progress = true
 	current_attack = get_next_attack()
+	hit_window_open = false
 	$AnimatedSprite2D.play(current_attack.animation_name)
 	attack_timer = randf_range(
 		current_attack.attack_interval_min,
 		current_attack.attack_interval_max
 	)
+
+func cancel_attack() -> void:
+	var cancelled_attack := current_attack
+	clear_attack()
+	if cancelled_attack:
+		on_attack_cancelled(cancelled_attack)
+
+func complete_attack() -> void:
+	var completed_attack := current_attack
+	clear_attack()
+	if completed_attack:
+		on_attack_completed(completed_attack)
+
+func clear_attack() -> void:
+	hit_window_open = false
+	attack_on_progress = false
+	current_attack = null
+
+func on_attack_cancelled(_attack: AttackConfig) -> void:
+	pass
+
+func on_attack_completed(_attack: AttackConfig) -> void:
+	pass
 	
 func get_animation_from_state() -> String:
 	match state:
@@ -241,8 +273,10 @@ func _on_animation_finished():
 	if attack_on_progress \
 	and current_attack \
 	and $AnimatedSprite2D.animation == current_attack.animation_name:
-		current_attack = null
-		attack_on_progress = false
+		complete_attack()
+		if state == State.ATTACKING:
+			if not is_player_in_attack_range():
+				change_state(State.CHASING)
 		
 func show_damage_label(damage: float, type: DamageTypes.Type):
 	var label: MessageLabel = MESSAGE_LABEL_SCENE.instantiate()
@@ -273,16 +307,17 @@ func take_damage(damage: float, type: DamageTypes.Type) -> void:
 	if state != State.TAKING_DAMAGE:
 		# the attack was not cancelled
 		return
-		
-	attack_on_progress = false
-	current_attack = null
-	
+
+	cancel_attack()
 	$AnimatedSprite2D.play("take_damage")
 	await $AnimatedSprite2D.animation_finished
 	
 	if state == State.TAKING_DAMAGE:
-		# nothing change, can restore
-		state = previous_state
+		if previous_state == State.ATTACKING:
+			state = State.ATTACKING if is_player_in_attack_range() else State.CHASING
+			attack_timer = 0
+		else:
+			state = previous_state
 		update_animation(get_animation_from_state())
 
 func die():
@@ -300,48 +335,28 @@ func die():
 func _on_frame_changed() -> void:
 	pass
 
-var attack_range_exit_id := 0
-
 func on_enter_attack_range(body: Node2D) -> void:
 	if state == State.DEAD:
 		return
 	
 	if body is Player:
-		attack_range_exit_id += 1  # invalid pending corroutines
 		change_state(State.ATTACKING)
-		attack_timer = 0
+		if not attack_on_progress:
+			attack_timer = 0
 		$WalkTimer.stop()
 
 func on_exit_attack_range(body: Node2D) -> void:
 	if state == State.DEAD:
 		return
 	
-	if not body is Player:
-		return
-	
-	attack_range_exit_id += 1
-	var my_id = attack_range_exit_id
-	
-	if state == State.ATTACKING and attack_on_progress:
-		await $AnimatedSprite2D.animation_finished
-	
-	if my_id != attack_range_exit_id:
-		return
-	
-	if state == State.DEAD:
-		return
-	
-	current_attack = null
-	attack_on_progress = false
-	
-	if $AttackRange.has_overlapping_bodies():
-		change_state(State.ATTACKING)
-		attack_timer = 0
-	else:
+	if body is Player:
 		change_state(State.CHASING)
 
+func is_player_in_attack_range() -> bool:
+	return is_instance_valid(player) and $AttackRange.overlaps_body(player)
+
 func _on_chase_area_body_entered(body: Node2D) -> void:
-	if body is Player:
+	if body is Player and state != State.ATTACKING:
 		change_state(State.CHASING)
 		$WalkTimer.stop()
 

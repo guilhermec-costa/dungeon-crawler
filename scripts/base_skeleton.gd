@@ -33,7 +33,10 @@ func on_flip_right() -> void:
 	$SwordArea/CollisionShape2D.rotation *= -1
 
 func deal_attack_damage():
-	if not current_attack:
+	if state != State.ATTACKING \
+	or not attack_on_progress \
+	or not current_attack \
+	or $AnimatedSprite2D.animation != current_attack.animation_name:
 		return
 		
 	if hit_window_open and $SwordArea.overlaps_body(player):
@@ -62,7 +65,8 @@ func _process(_delta: float) -> void:
 func _on_frame_changed() -> void:
 	if state != State.ATTACKING \
 	or not attack_on_progress \
-	or not current_attack:
+	or not current_attack \
+	or $AnimatedSprite2D.animation != current_attack.animation_name:
 		hit_window_open = false
 		return
 	
