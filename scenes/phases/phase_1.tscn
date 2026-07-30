@@ -32,6 +32,14 @@
 [ext_resource type="PackedScene" uid="uid://d2rtd1o1jhbr3" path="res://scenes/rune_slot.tscn" id="22_fgifm"]
 [ext_resource type="PackedScene" uid="uid://cmiycj7e2ku1x" path="res://scenes/UI/keyboard_intro.tscn" id="23_q3625"]
 [ext_resource type="PackedScene" uid="uid://i8m7mcvtxl1t" path="res://scenes/enemies/orange_golem.tscn" id="23_t723o"]
+[ext_resource type="PackedScene" uid="uid://c76kxk20mfhem" path="res://scenes/decorations/skeleton_body_decoration.tscn" id="24_body_decoration"]
+[ext_resource type="PackedScene" uid="uid://b1ia4x0n46uti" path="res://scenes/decorations/skeleton_bone_decoration.tscn" id="25_bone_decoration"]
+[ext_resource type="PackedScene" uid="uid://bi7ndh1iuu5qi" path="res://scenes/decorations/skull.tscn" id="26_skull_decoration"]
+[ext_resource type="PackedScene" path="res://scenes/decorations/candle_cluster_decoration.tscn" id="27_candles"]
+[ext_resource type="PackedScene" path="res://scenes/decorations/rubble_decoration.tscn" id="28_rubble"]
+[ext_resource type="PackedScene" path="res://scenes/decorations/hanging_brazier_decoration.tscn" id="29_brazier"]
+[ext_resource type="PackedScene" path="res://scenes/decorations/crate_stack_decoration.tscn" id="30_crates"]
+[ext_resource type="PackedScene" path="res://scenes/decorations/sarcophagus_decoration.tscn" id="31_sarcophagus"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_rytft"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -3679,7 +3687,7 @@ blend_mode = 2
 shadow_enabled = true
 
 [node name="PlayerStartPosition" type="Marker2D" parent="." unique_id=2011610962]
-position = Vector2(811, 356)
+position = Vector2(-101, 351)
 
 [node name="DungeonAmbienceSound" type="AudioStreamPlayer2D" parent="." unique_id=686928459]
 stream = ExtResource("8_wi8qh")
@@ -3728,8 +3736,196 @@ position = Vector2(493.99997, 345)
 scale = Vector2(0.86, 0.86)
 
 [node name="SkeletonDeadDecoration3" parent="World/DungeonMap/Decorations" unique_id=498983597 instance=ExtResource("6_5xy5e")]
-position = Vector2(493.99997, 345)
+position = Vector2(640, 380)
 scale = Vector2(0.86, 0.86)
+
+[node name="SkeletonDeadDecorationWest" parent="World/DungeonMap/Decorations" unique_id=1463620105 instance=ExtResource("6_5xy5e")]
+position = Vector2(-78, 365)
+rotation = -0.42
+scale = Vector2(0.78, 0.78)
+
+[node name="SkeletonDeadDecorationUpper" parent="World/DungeonMap/Decorations" unique_id=1438183586 instance=ExtResource("6_5xy5e")]
+position = Vector2(275, 187)
+rotation = 2.46
+scale = Vector2(0.72, 0.72)
+
+[node name="SkeletonDeadDecorationLower" parent="World/DungeonMap/Decorations" unique_id=1782012949 instance=ExtResource("6_5xy5e")]
+position = Vector2(232, 548)
+rotation = -1.18
+scale = Vector2(0.8, 0.8)
+
+[node name="SkeletonDeadDecorationCentral" parent="World/DungeonMap/Decorations" unique_id=1929297835 instance=ExtResource("6_5xy5e")]
+position = Vector2(590, 410)
+rotation = 0.31
+scale = Vector2(0.74, 0.74)
+
+[node name="SkeletonBodyWest" parent="World/DungeonMap/Decorations" unique_id=1380937380 instance=ExtResource("24_body_decoration")]
+position = Vector2(4, 355)
+rotation = 0.48
+scale = Vector2(0.14, 0.14)
+
+[node name="SkeletonBodyCentral" parent="World/DungeonMap/Decorations" unique_id=777741203 instance=ExtResource("24_body_decoration")]
+position = Vector2(350, 330)
+rotation = -0.73
+scale = Vector2(0.14, 0.14)
+
+[node name="SkeletonBodyLower" parent="World/DungeonMap/Decorations" unique_id=2139491679 instance=ExtResource("24_body_decoration")]
+position = Vector2(440, 572)
+rotation = 1.92
+scale = Vector2(0.14, 0.14)
+
+[node name="SkeletonBodyUpper" parent="World/DungeonMap/Decorations" unique_id=98458754 instance=ExtResource("24_body_decoration")]
+position = Vector2(535, 185)
+rotation = 2.78
+scale = Vector2(0.14, 0.14)
+
+[node name="SkeletonBoneWest" parent="World/DungeonMap/Decorations" unique_id=2078115313 instance=ExtResource("25_bone_decoration")]
+position = Vector2(85, 355)
+rotation = -0.25
+scale = Vector2(0.16, 0.16)
+
+[node name="SkeletonBoneCentralWest" parent="World/DungeonMap/Decorations" unique_id=285897210 instance=ExtResource("25_bone_decoration")]
+position = Vector2(325, 388)
+rotation = 1.13
+scale = Vector2(0.16, 0.16)
+
+[node name="SkeletonBoneCentralEast" parent="World/DungeonMap/Decorations" unique_id=600759408 instance=ExtResource("25_bone_decoration")]
+position = Vector2(580, 345)
+rotation = -1.47
+scale = Vector2(0.16, 0.16)
+
+[node name="SkeletonBoneLowerWest" parent="World/DungeonMap/Decorations" unique_id=921990087 instance=ExtResource("25_bone_decoration")]
+position = Vector2(180, 525)
+rotation = 0.84
+scale = Vector2(0.16, 0.16)
+
+[node name="SkeletonBoneLowerCenter" parent="World/DungeonMap/Decorations" unique_id=521223801 instance=ExtResource("25_bone_decoration")]
+position = Vector2(370, 545)
+rotation = -0.62
+scale = Vector2(0.16, 0.16)
+
+[node name="SkeletonBoneLowerEast" parent="World/DungeonMap/Decorations" unique_id=1282424042 instance=ExtResource("25_bone_decoration")]
+position = Vector2(650, 530)
+rotation = 2.14
+scale = Vector2(0.16, 0.16)
+
+[node name="SkullWestPassage" parent="World/DungeonMap/Decorations" unique_id=1682646697 instance=ExtResource("26_skull_decoration")]
+position = Vector2(140, 392)
+rotation = -0.38
+
+[node name="SkullUpperHall" parent="World/DungeonMap/Decorations" unique_id=1046227697 instance=ExtResource("26_skull_decoration")]
+position = Vector2(305, 175)
+rotation = 0.52
+
+[node name="SkullCentralSouth" parent="World/DungeonMap/Decorations" unique_id=2097403272 instance=ExtResource("26_skull_decoration")]
+position = Vector2(455, 455)
+rotation = -0.81
+
+[node name="SkullLowerHall" parent="World/DungeonMap/Decorations" unique_id=256752798 instance=ExtResource("26_skull_decoration")]
+position = Vector2(560, 520)
+rotation = 1.35
+
+[node name="SkullCentralEast" parent="World/DungeonMap/Decorations" unique_id=918632312 instance=ExtResource("26_skull_decoration")]
+position = Vector2(675, 330)
+rotation = -1.12
+
+[node name="CandlesWestRoom" parent="World/DungeonMap/Decorations" unique_id=1285965635 instance=ExtResource("27_candles")]
+position = Vector2(-105, 355)
+
+[node name="CandlesWestPassage" parent="World/DungeonMap/Decorations" unique_id=1201668463 instance=ExtResource("27_candles")]
+position = Vector2(95, 365)
+scale = Vector2(0.9, 0.9)
+
+[node name="CandlesUpperWest" parent="World/DungeonMap/Decorations" unique_id=693189301 instance=ExtResource("27_candles")]
+position = Vector2(190, 195)
+
+[node name="CandlesUpperCenter" parent="World/DungeonMap/Decorations" unique_id=1464174565 instance=ExtResource("27_candles")]
+position = Vector2(365, 185)
+scale = Vector2(0.9, 0.9)
+
+[node name="CandlesUpperEast" parent="World/DungeonMap/Decorations" unique_id=1040158392 instance=ExtResource("27_candles")]
+position = Vector2(610, 190)
+
+[node name="CandlesCentralNorth" parent="World/DungeonMap/Decorations" unique_id=410098648 instance=ExtResource("27_candles")]
+position = Vector2(320, 315)
+
+[node name="CandlesCentralSouth" parent="World/DungeonMap/Decorations" unique_id=133578306 instance=ExtResource("27_candles")]
+position = Vector2(470, 395)
+scale = Vector2(0.9, 0.9)
+
+[node name="CandlesCentralEast" parent="World/DungeonMap/Decorations" unique_id=256545841 instance=ExtResource("27_candles")]
+position = Vector2(615, 455)
+
+[node name="CandlesLowerWest" parent="World/DungeonMap/Decorations" unique_id=1560943850 instance=ExtResource("27_candles")]
+position = Vector2(250, 520)
+scale = Vector2(0.9, 0.9)
+
+[node name="CandlesLowerEast" parent="World/DungeonMap/Decorations" unique_id=1349285445 instance=ExtResource("27_candles")]
+position = Vector2(470, 550)
+
+[node name="RubbleWestRoom" parent="World/DungeonMap/Decorations" unique_id=914547270 instance=ExtResource("28_rubble")]
+position = Vector2(-20, 370)
+rotation = -0.32
+
+[node name="RubbleWestPassage" parent="World/DungeonMap/Decorations" unique_id=615472252 instance=ExtResource("28_rubble")]
+position = Vector2(120, 350)
+rotation = 0.48
+
+[node name="RubbleUpperWest" parent="World/DungeonMap/Decorations" unique_id=372291847 instance=ExtResource("28_rubble")]
+position = Vector2(220, 185)
+rotation = -0.73
+
+[node name="RubbleUpperCenter" parent="World/DungeonMap/Decorations" unique_id=1698709620 instance=ExtResource("28_rubble")]
+position = Vector2(390, 205)
+rotation = 0.29
+
+[node name="RubbleCentralEast" parent="World/DungeonMap/Decorations" unique_id=2098224380 instance=ExtResource("28_rubble")]
+position = Vector2(565, 330)
+rotation = -0.51
+
+[node name="RubbleCentralSouth" parent="World/DungeonMap/Decorations" unique_id=725096580 instance=ExtResource("28_rubble")]
+position = Vector2(330, 420)
+rotation = 0.82
+
+[node name="RubbleLowerWest" parent="World/DungeonMap/Decorations" unique_id=1670998913 instance=ExtResource("28_rubble")]
+position = Vector2(200, 555)
+rotation = -0.24
+
+[node name="RubbleLowerEast" parent="World/DungeonMap/Decorations" unique_id=1543642009 instance=ExtResource("28_rubble")]
+position = Vector2(620, 545)
+rotation = 0.61
+
+[node name="BrazierUpperWest" parent="World/DungeonMap/Decorations" unique_id=681670078 instance=ExtResource("29_brazier")]
+position = Vector2(150, 160)
+
+[node name="BrazierUpperCenter" parent="World/DungeonMap/Decorations" unique_id=1002056200 instance=ExtResource("29_brazier")]
+position = Vector2(400, 155)
+
+[node name="BrazierUpperEast" parent="World/DungeonMap/Decorations" unique_id=1855762071 instance=ExtResource("29_brazier")]
+position = Vector2(650, 155)
+
+[node name="BrazierLowerHall" parent="World/DungeonMap/Decorations" unique_id=379068019 instance=ExtResource("29_brazier")]
+position = Vector2(400, 500)
+
+[node name="CratesWest" parent="World/DungeonMap/Decorations" unique_id=654757365 instance=ExtResource("30_crates")]
+position = Vector2(110, 200)
+scale = Vector2(0.8, 0.8)
+
+[node name="CratesCentralEast" parent="World/DungeonMap/Decorations" unique_id=406133475 instance=ExtResource("30_crates")]
+position = Vector2(620, 435)
+scale = Vector2(0.8, 0.8)
+
+[node name="CratesLowerEast" parent="World/DungeonMap/Decorations" unique_id=1380087656 instance=ExtResource("30_crates")]
+position = Vector2(650, 535)
+scale = Vector2(0.8, 0.8)
+
+[node name="SarcophagusUpperWest" parent="World/DungeonMap/Decorations" unique_id=1100938103 instance=ExtResource("31_sarcophagus")]
+position = Vector2(105, 180)
+scale = Vector2(0.8, 0.8)
+
+[node name="SarcophagusBossRoom" parent="World/DungeonMap/Decorations" unique_id=1601799972 instance=ExtResource("31_sarcophagus")]
+position = Vector2(930, 300)
+scale = Vector2(0.85, 0.85)
 
 [node name="Torchs" type="Node2D" parent="World/DungeonMap/Decorations" unique_id=1531949220]
 visible = false
@@ -4074,7 +4270,6 @@ tile_set = SubResource("TileSet_qjiij")
 texture_filter = 1
 tile_map_data = PackedByteArray("AAARABMAAAAPAAUAAwARABQAAAAPAAYAAwARABUAAAAPAAcAAwAIABMAAAAPAAUAAwAIABQAAAAPAAYAAwAIABUAAAAPAAcAAwAIABcAAAAPAAUABgAIABgAAAAPAAYABgAIABkAAAAPAAcABwAkABEAAAAPAAUAAwAkABIAAAAPAAYAAwAkABMAAAAPAAcAAwAqAA8AAAAPAAUAAwAqABAAAAAPAAYAAwAqABEAAAAPAAcAAwAqABcAAAAPAAUAAwAqABkAAAAPAAcAAwAIAA0AAAAPAAUAAwAIAA4AAAAPAAYAAwAIAA8AAAAPAAcAAwALAAwAAAAPAAUAAAALAA0AAAAPAAYAAAALAA4AAAAPAAcAAAAmACEAAAAPAAUAAwAmACIAAAAPAAYAAwAmACMAAAAPAAcAAwAbABEAAAAMAAQAAAAbABIAAAAMAAUAAAAhABEAAAAMAAQAAAAhABIAAAAMAAUAAAALAB8AAAAPAAcAAwAdAAcAAQAAAAQAAAAdAAgAAQAAAAUAAAAeAAcAAQABAAQAAAAeAAgAAQABAAUAAAAfAAcAAQACAAQAAAAfAAgAAQACAAUAAAAbAAYAAQAFAAQAAAAgAAYAAQAFAAQAAAAhAAYAAQAGAAQAAAAbAAcAAQAFAAUAAAAbAAgAAQAFAAYAAAAcAAYAAQAGAAQAAAAcAAcAAQAGAAUAAAAcAAgAAQAGAAYAAAAgAAcAAQAFAAUAAAAgAAgAAQAFAAYAAAAhAAcAAQAGAAUAAAAhAAgAAQAGAAYAAAAjAAcAAQAJAAkAAAAdAAUAAQAFAAEAAAAdAAYAAQAFAAIAAAD2/xUAAQAIAAYAAAABABMAAAAPAAUAAwABABQAAAAPAAYAAwABABUAAAAPAAcAAwD5/xMAAAAPAAUAAwD5/xQAAAAPAAYAAwD5/xUAAAAPAAcAAwAHABUAAQAKAAEAAAAUABIAAQALAAEAAAAVABIAAQAKAAEAAAAXABIAAQAJAAYAAAASABEAAQAJAAQAAAASABIAAQAJAAUAAAASABMAAQAIAAYAAAA5ABgAAAAPAAUAAAA5ABkAAAAPAAYAAAA5ABoAAAAPAAcAAAA+ABgAAAAPAAUAAAA+ABkAAAAPAAYAAAA+ABoAAAAPAAcAAAA5ABEAAAAPAAUAAAA5ABIAAAAPAAYAAAA5ABMAAAAPAAcAAAA+ABEAAAAPAAUAAAA+ABIAAAAPAAYAAAA+ABMAAAAPAAcAAAALABMAAAAPAAUAAwALABQAAAAPAAYAAwALABUAAAAPAAUAAwAYABEAAAAPAAUAAwAYABIAAAAPAAYAAwAYABMAAAAPAAcAAwAqABgAAAAPAAYAAwARACEAAAAPAAUAAwARACIAAAAPAAYAAwARACMAAAAPAAcAAwAYACEAAAAPAAUAAwAYACIAAAAPAAYAAwAYACMAAAAPAAcAAwAfACEAAAAPAAUAAwAfACIAAAAPAAYAAwAfACMAAAAPAAcAAwALAB0AAAAPAAUAAwALAB4AAAAPAAYAAwARAB0AAAAPAAUAAwARAB4AAAAPAAYAAwARAB8AAAAPAAcAAwAFAAcAAAAPAAUAAwAFAAgAAAAPAAYAAwAFAAkAAAAPAAcAAwAQAAcAAAAPAAUAAwAQAAgAAAAPAAYAAwAQAAkAAAAPAAcAAwAYAAcAAAAPAAcAAwAYAAgAAAAPAAYAAwAYAAkAAAAPAAcAAwAYAAUAAAAPAAUAAwAYAAYAAAAPAAYAAwAkAAUAAAAPAAUAAwAkAAYAAAAPAAYAAwAkAAcAAAAPAAcAAwAkAAoAAAAPAAUAAwAkAAsAAAAPAAYAAwAkAAwAAAAPAAcAAwAtAAcAAAAPAAUAAwAtAAgAAAAPAAYAAwAtAAkAAAAPAAcAAwAqAAcAAAAPAAUAAwAqAAgAAAAPAAYAAwAqAAkAAAAPAAcAAwAtAA8AAAAPAAUAAwAtABAAAAAPAAYAAwAtABEAAAAPAAcAAwAtABQAAAAPAAUAAwAtABUAAAAPAAYAAwAtABYAAAAPAAcAAwA2ABQAAAAPAAUAAwA2ABUAAAAPAAYAAwA2ABYAAAAPAAcAAwA2ABcAAAAPAAUAAwA2ABgAAAAPAAYAAwA2ABkAAAAPAAcAAwAmAB4AAAAPAAUAAwAmAB8AAAAPAAYAAwAmACAAAAAPAAcAAwABABYAAAAPAAUABgABABcAAAAPAAYABgABABgAAAAPAAcABwD5/xYAAAAPAAUABgD5/xcAAAAPAAYABgD5/xgAAAAPAAcABwALABYAAAAPAAUABgALABcAAAAPAAYABgALABgAAAAPAAcABwARABYAAAAPAAUABgARABcAAAAPAAYABgARABgAAAAPAAcABwAYABQAAAAPAAUAAwAYABUAAAAPAAYAAwAYABYAAAAPAAcAAwAYABsAAAAPAAUABgAYABwAAAAPAAYABgAYAB0AAAAPAAcABwARABoAAAAPAAUABgARABsAAAAPAAYABgARABwAAAAPAAcABwAfABoAAAAPAAUAAwAfABsAAAAPAAYAAwAfABwAAAAPAAcAAwA=")
 tile_set = SubResource("TileSet_wawk4")
-collision_visibility_mode = 1
 
 [node name="Roof" type="TileMapLayer" parent="World/DungeonMap/Dungeon" unique_id=528631468]
 light_mask = 0
@@ -4243,36 +4438,56 @@ position = Vector2(32, -9)
 shape = SubResource("RectangleShape2D_n4bst")
 debug_color = Color(0.61262083, 0.43725637, 0.8155487, 0.41960785)
 
-[node name="WhiteSkeleton" parent="World/Entities" unique_id=582161565 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
-position = Vector2(102, 332.00003)
+[node name="WhiteSkeletonEntrance" parent="World/Entities" unique_id=582161565 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
+position = Vector2(650, 350)
 player = NodePath("../Player")
 
-[node name="WhiteSkeleton5" parent="World/Entities" unique_id=1873088204 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
-position = Vector2(192, 148.00003)
+[node name="WhiteSkeletonLowerHall" parent="World/Entities" unique_id=1873088204 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
+position = Vector2(300, 535)
 player = NodePath("../Player")
 
-[node name="WhiteSkeleton4" parent="World/Entities" unique_id=889230092 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
-position = Vector2(116.00001, 144)
+[node name="WhiteSkeletonUpperHall" parent="World/Entities" unique_id=889230092 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
+position = Vector2(620, 145)
 player = NodePath("../Player")
 
-[node name="YellowSkeleton" parent="World/Entities" unique_id=65233277 node_paths=PackedStringArray("player") instance=ExtResource("17_cveml")]
-position = Vector2(161.00003, 234)
+[node name="YellowSkeletonCentral" parent="World/Entities" unique_id=65233277 node_paths=PackedStringArray("player") instance=ExtResource("17_cveml")]
+position = Vector2(505, 350)
 player = NodePath("../Player")
 
-[node name="BlueGolem" parent="World/Entities" unique_id=1334460780 node_paths=PackedStringArray("player") instance=ExtResource("18_ogbs8")]
-position = Vector2(374, 361)
+[node name="BlueGolemLowerHall" parent="World/Entities" unique_id=1334460780 node_paths=PackedStringArray("player") instance=ExtResource("18_ogbs8")]
+position = Vector2(520, 535)
 player = NodePath("../Player")
 
-[node name="WhiteSkeleton2" parent="World/Entities" unique_id=1214283877 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
-position = Vector2(455, 359)
+[node name="WhiteSkeletonCentralSouth" parent="World/Entities" unique_id=1214283877 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
+position = Vector2(430, 425)
 player = NodePath("../Player")
 
-[node name="WhiteSkeleton3" parent="World/Entities" unique_id=348190965 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
-position = Vector2(462, 426)
+[node name="YellowSkeletonWestPassage" parent="World/Entities" unique_id=348190965 node_paths=PackedStringArray("player") instance=ExtResource("17_cveml")]
+position = Vector2(150, 430)
 player = NodePath("../Player")
 
-[node name="OrangeGolem" parent="World/Entities" unique_id=1121246697 node_paths=PackedStringArray("player") instance=ExtResource("23_t723o")]
-position = Vector2(488, 143)
+[node name="OrangeGolemUpperGuardian" parent="World/Entities" unique_id=1121246697 node_paths=PackedStringArray("player") instance=ExtResource("23_t723o")]
+position = Vector2(442, 149)
+player = NodePath("../Player")
+
+[node name="WhiteSkeletonWestRoom" parent="World/Entities" unique_id=1917640933 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
+position = Vector2(-40, 360)
+player = NodePath("../Player")
+
+[node name="WhiteSkeletonLowerWest" parent="World/Entities" unique_id=1293855216 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
+position = Vector2(175, 540)
+player = NodePath("../Player")
+
+[node name="YellowSkeletonUpperWest" parent="World/Entities" unique_id=526857587 node_paths=PackedStringArray("player") instance=ExtResource("17_cveml")]
+position = Vector2(225, 175)
+player = NodePath("../Player")
+
+[node name="YellowSkeletonLowerCenter" parent="World/Entities" unique_id=417060673 node_paths=PackedStringArray("player") instance=ExtResource("17_cveml")]
+position = Vector2(410, 535)
+player = NodePath("../Player")
+
+[node name="BlueGolemCentralWest" parent="World/Entities" unique_id=236421320 node_paths=PackedStringArray("player") instance=ExtResource("18_ogbs8")]
+position = Vector2(335, 350)
 player = NodePath("../Player")
 
 [node name="Phase1Boss" parent="World/Entities" unique_id=851340117 instance=ExtResource("16_t723o")]

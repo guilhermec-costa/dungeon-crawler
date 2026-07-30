@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bj1gmaaaf1gek" path="res://assets/enemies/golems/orange/Golem_1_idle.png" id="4_dnunw"]
 [ext_resource type="Texture2D" uid="uid://7ooiofuyba0x" path="res://assets/enemies/golems/orange/Golem_1_hurt.png" id="5_dnunw"]
 [ext_resource type="Texture2D" uid="uid://0ofsj3gbtoxg" path="res://assets/enemies/golems/orange/Golem_1_walk.png" id="6_dnunw"]
+[ext_resource type="Resource" path="res://resources/orange_golem.tres" id="7_orange_config"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vua6t"]
 atlas = ExtResource("2_dnunw")
@@ -351,6 +352,7 @@ animations = [{
 }]
 
 [node name="OrangeGolem" unique_id=1334460780 instance=ExtResource("1_aarww")]
+config = ExtResource("7_orange_config")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=1881604786]
 sprite_frames = SubResource("SpriteFrames_3x54l")

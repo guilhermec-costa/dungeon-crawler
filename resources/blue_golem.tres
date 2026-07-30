@@ -5,13 +5,18 @@
 [resource]
 script = ExtResource("1_ha837")
 walk_duration = 2.5
-idle_duration = 1.5
-speed = 28.0
-speed_on_random_walk = 18.0
-patrol_radius = 96.0
-max_health = 220.0
+idle_duration = 2.0
+speed = 22.0
+speed_on_random_walk = 14.0
+patrol_radius = 64.0
+max_health = 170.0
 resistence = 0.15
-damage_given = 30.0
-gold_drop_amount_on_death = 50.0
-drop_amount_on_death = 30
+damage_given = 20.0
+gold_drop_amount_on_death = 22.0
+cancel_attack_on_damage_chance = 0.25
+dash_force = 80.0
+dash_duration = 0.14
+dash_chance = 0.2
+dash_cooldown = 4.0
+drop_amount_on_death = 22
 metadata/_custom_type_script = "uid://cvjmp4oij48pd"

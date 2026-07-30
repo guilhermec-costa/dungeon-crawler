@@ -12,3 +12,6 @@ extends Resource
 @export var life_recovery_rate: float = 35
 @export var stamina_recovery_delay: float = 0.75
 @export var base_speed: float = 25
+@export var attack_1_damage: float = 20
+@export var attack_2_damage: float = 25
+@export var life_potion_recovery_amount: float = 20

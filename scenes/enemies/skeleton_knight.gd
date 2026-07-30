@@ -28,11 +28,11 @@ func process_special_movement(delta: float) -> void:
 	
 func _ready():
 	attacks = [
-		AttackConfig.new("attack1", 10, 0, 4, 6, 1.2, 1.6)
+		AttackConfig.new("attack1", config.damage_given * 0.75, 0, 4, 6, 1.2, 1.6)
 			.set_audio_config(ATTACK_SOUND, -6.0, 1.30),
-		AttackConfig.new("attack2", 15, 0, 2, 4, 1.4, 1.9)
+		AttackConfig.new("attack2", config.damage_given, 0, 2, 4, 1.4, 1.9)
 			.set_audio_config(ATTACK_SOUND, -2.5, 1.00),
-		AttackConfig.new("attack3", 35, 0, 3, 4, 1.8, 2.4)
+		AttackConfig.new("attack3", config.damage_given * 2.0, 0, 3, 4, 1.8, 2.4)
 			.set_audio_config(ATTACK_SOUND, 2.0, 0.70)
 	]
 

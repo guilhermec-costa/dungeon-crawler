@@ -4,8 +4,13 @@
 
 [resource]
 script = ExtResource("1_ha3w6")
-sprinting_multiplier = 2.5
-max_health = 2000.0
-start_health = 2000.0
-max_stamina = 300.0
+sprinting_multiplier = 1.75
+max_health = 125.0
+start_health = 125.0
+max_stamina = 100.0
+sprint_stamina_cost_per_second = 18.0
+stamina_recovery_rate = 24.0
+life_recovery_rate = 50.0
+stamina_recovery_delay = 0.8
+base_speed = 32.0
 metadata/_custom_type_script = "uid://db8ycljhdmlmt"

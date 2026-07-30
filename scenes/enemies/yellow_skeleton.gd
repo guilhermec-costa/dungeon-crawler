@@ -2,8 +2,8 @@ extends BaseSkeleton
 
 func _ready():
 	attacks = [
-		AttackConfig.new("attack1", 20, 0, 4, 7, 0.7, 1.1),
-		AttackConfig.new("attack2", 30, 0, 4, 6, 1.0, 1.5)
+		AttackConfig.new("attack1", config.damage_given, 0, 4, 7, 0.9, 1.3),
+		AttackConfig.new("attack2", config.damage_given * 1.5, 0, 4, 6, 1.2, 1.7)
 	]
 
 	super._ready()

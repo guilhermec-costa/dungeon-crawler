@@ -9,7 +9,7 @@ func _ready():
 	attacks = [
 		AttackConfig.new(
 			"attack",
-			40, # damage
+			config.damage_given,
 			0,  # stamina
 			7,  # hit frame
 			12, # end frame

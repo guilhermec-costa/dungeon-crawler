@@ -28,10 +28,7 @@ var target_recovery_health: float = 0
 var recover_life_window: bool = false
 var last_attack_time: float = Time.get_unix_time_from_system()
 
-var attacks: Array[AttackConfig] = [
-	AttackConfig.new("attack1", 20, 10, 3, 4),
-	AttackConfig.new("attack2", 25, 15, 3, 4)
-]
+var attacks: Array[AttackConfig]
 
 var speed: float:
 	get: 
@@ -137,6 +134,10 @@ func die():
 
 func _ready():
 	$Camera2D.zoom = Vector2(6.2, 6.2)
+	attacks = [
+		AttackConfig.new("attack1", config.attack_1_damage, 10, 3, 4),
+		AttackConfig.new("attack2", config.attack_2_damage, 15, 3, 4)
+	]
 	animated_sprite.frame_changed.connect(_on_frame_changed)
 	animated_sprite.animation_changed.connect(_on_animation_changed)
 	animated_sprite.setup(sword_area)
@@ -386,8 +387,12 @@ func play_cutscene_animation(name: String):
 	await animation_player.animation_finished
 
 func recover_health() -> void:
-	target_recovery_health = health + 20
-	var label = "+%d" % 20
+	target_recovery_health = min(
+		health + config.life_potion_recovery_amount,
+		config.max_health
+	)
+	var recovered_health := target_recovery_health - health
+	var label = "+%d" % int(round(recovered_health))
 	recover_life_window = true
 	drink_potion_life.play()
 	animate_message_label(label, FloatingTextConfigs.LIFE_RECOVERED)
