@@ -10,7 +10,7 @@ const secret_room: PackedScene = preload("res://scenes/secret_room.tscn")
 var current_phase: Node
 	
 func _ready():
-	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), true)
+	#AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), true)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	pause_menu.process_mode = Node.PROCESS_MODE_ALWAYS
 	game_menu.process_mode = Node.PROCESS_MODE_ALWAYS

@@ -1235,6 +1235,9 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(93, 138, 396, 142, 397,
 parsed_geometry_type = 0
 agent_radius = 12.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_boss_cutscene"]
+size = Vector2(72, 160)
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lie7o"]
 lifetime_randomness = 0.76
 particle_flag_disable_z = true
@@ -3687,7 +3690,7 @@ blend_mode = 2
 shadow_enabled = true
 
 [node name="PlayerStartPosition" type="Marker2D" parent="." unique_id=2011610962]
-position = Vector2(-101, 351)
+position = Vector2(741, 369)
 
 [node name="DungeonAmbienceSound" type="AudioStreamPlayer2D" parent="." unique_id=686928459]
 stream = ExtResource("8_wi8qh")
@@ -4190,6 +4193,17 @@ runeId = 5
 [node name="RuneSlotBlack" parent="World/DungeonMap" unique_id=956285132 instance=ExtResource("22_fgifm")]
 position = Vector2(488, 139)
 runeId = 4
+
+[node name="BossCutsceneTrigger" type="Area2D" parent="World/DungeonMap" unique_id=522631082]
+position = Vector2(877, 357)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/DungeonMap/BossCutsceneTrigger" unique_id=692447842]
+position = Vector2(18, 3)
+shape = SubResource("RectangleShape2D_boss_cutscene")
+debug_color = Color(0.458824, 0.188235, 0.768627, 0.25)
 
 [node name="Particles" type="Node2D" parent="World/DungeonMap" unique_id=684790587]
 z_index = 1
