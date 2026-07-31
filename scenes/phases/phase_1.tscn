@@ -3716,7 +3716,7 @@ blend_mode = 2
 shadow_enabled = true
 
 [node name="PlayerStartPosition" type="Marker2D" parent="." unique_id=2011610962]
-position = Vector2(793, 353)
+position = Vector2(-126, 354)
 
 [node name="DungeonAmbienceSound" type="AudioStreamPlayer2D" parent="." unique_id=686928459]
 stream = ExtResource("8_wi8qh")
@@ -4226,6 +4226,9 @@ debug_color = Color(0.458824, 0.188235, 0.768627, 0.25)
 [node name="BossBattlePosition" type="Marker2D" parent="World/DungeonMap" unique_id=1943265997]
 position = Vector2(1080, 350)
 
+[node name="BossRespawnPosition" type="Marker2D" parent="World/DungeonMap" unique_id=646069138]
+position = Vector2(824, 357)
+
 [node name="Particles" type="Node2D" parent="World/DungeonMap" unique_id=684790587]
 z_index = 1
 
@@ -4555,7 +4558,7 @@ energy = 1.5
 texture = ExtResource("14_lie7o")
 
 [node name="WhiteSkeletonWestRoom" parent="World/Entities" unique_id=1917640933 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
-position = Vector2(-40, 360)
+position = Vector2(161, 275.00003)
 player = NodePath("../Player")
 override_drop = true
 drop_id_override = 3

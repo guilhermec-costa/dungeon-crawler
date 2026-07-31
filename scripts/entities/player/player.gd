@@ -127,6 +127,29 @@ func stop_movement_sounds() -> void:
 	walk_sound.stop()
 
 
+func respawn(respawn_position: Vector2) -> void:
+	animation_player.stop()
+	stop_movement_sounds()
+	sword_area.set_disabled(true)
+
+	global_position = respawn_position
+	velocity = Vector2.ZERO
+	is_sprinting = false
+	stamina_recovery_timer = 0.0
+	recover_life_window = false
+	current_attack = null
+	current_interactable = null
+
+	health = config.start_health
+	target_recovery_health = health
+	stamina = config.max_stamina
+
+	animated_sprite.modulate = Color.WHITE
+	animated_sprite.update_animation("idle")
+	state = State.IDLE
+	set_process_input(true)
+
+
 func die():
 	change_state(State.DEAD)
 	animated_sprite.play("death")

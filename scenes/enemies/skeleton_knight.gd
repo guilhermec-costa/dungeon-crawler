@@ -98,3 +98,31 @@ func finish_combo():
 			return
 
 	current_combo = combo_basic
+
+
+func reset_boss_combat_state() -> void:
+	clear_attack()
+	attack_timer = 0.0
+	hit_window_open = false
+	velocity = Vector2.ZERO
+	walk_direction = Vector2.ZERO
+
+	random_move_timer = 0.0
+	movement_offset = Vector2.ZERO
+	combo_attack_index = 0
+	current_combo = combo_basic
+
+	if dash_controller:
+		dash_controller.duration_timer = 0.0
+		dash_controller.cooldown_timer = 0.0
+		dash_controller.dash_velocity = Vector2.ZERO
+
+	health = config.max_health
+	health_bar.set_health_bar_value(health)
+	health_bar.hide_health_ui()
+	state = State.IDLE
+
+	$AnimationPlayer.stop()
+	$AnimatedSprite2D.modulate = Color.WHITE
+	$RunningSound.stop()
+	sword_hit_sound.stop()

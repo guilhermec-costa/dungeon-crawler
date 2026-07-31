@@ -13,10 +13,13 @@ extends Node2D
 @onready var limit_chase_area: Area2D = $SkeletonKnight/LimitChaseArea
 @onready var sword_area: Area2D = $SkeletonKnight/SwordArea
 @onready var walk_timer: Timer = $SkeletonKnight/WalkTimer
+@onready var running_sound: AudioStreamPlayer2D = $SkeletonKnight/RunningSound
 
 var battle_started := false
 var intro_skipped := false
 var intro_walk_tween: Tween
+var intro_start_position := Vector2.ZERO
+var intro_generation := 0
 
 const INTRO_WALK_DURATION := 4.0
 
@@ -24,12 +27,12 @@ const INTRO_WALK_DURATION := 4.0
 func setup(p: Player) -> void:
 	player = p
 	skeleton_knight.player = p
-	prepare_for_intro()
+	intro_start_position = skeleton_knight.global_position
+	reset_for_intro()
 
 
 func prepare_for_intro() -> void:
 	battle_started = false
-	intro_skipped = false
 	boss_hud.visible = false
 	skeleton_knight.velocity = Vector2.ZERO
 	skeleton_knight.state = BaseEnemy.State.IDLE
@@ -57,10 +60,11 @@ func get_focus_position() -> Vector2:
 
 
 func play_revival() -> void:
+	var generation := intro_generation
 	animated_sprite.speed_scale = 0.55
 	animated_sprite.play_backwards(&"die")
 	await animated_sprite.animation_finished
-	if intro_skipped:
+	if intro_skipped or generation != intro_generation:
 		return
 
 	animated_sprite.speed_scale = 1.0
@@ -68,6 +72,7 @@ func play_revival() -> void:
 
 
 func play_intro_walk(target_position: Vector2) -> void:
+	var generation := intro_generation
 	var walk_direction := skeleton_knight.global_position.direction_to(
 		target_position
 	)
@@ -86,7 +91,7 @@ func play_intro_walk(target_position: Vector2) -> void:
 		INTRO_WALK_DURATION
 	)
 	await intro_walk_tween.finished
-	if intro_skipped:
+	if intro_skipped or generation != intro_generation:
 		return
 
 	skeleton_knight.global_position = target_position
@@ -98,6 +103,7 @@ func play_intro_walk(target_position: Vector2) -> void:
 
 func cancel_intro() -> void:
 	intro_skipped = true
+	intro_generation += 1
 	if intro_walk_tween and intro_walk_tween.is_valid():
 		intro_walk_tween.kill()
 	intro_walk_tween = null
@@ -105,6 +111,37 @@ func cancel_intro() -> void:
 	animated_sprite.stop()
 	animated_sprite.speed_scale = 1.0
 	skeleton_knight.velocity = Vector2.ZERO
+
+
+func stop_battle() -> void:
+	battle_started = false
+	boss_hud.visible = false
+	skeleton_knight.set_process(false)
+	skeleton_knight.set_physics_process(false)
+	skeleton_knight.clear_attack()
+	skeleton_knight.velocity = Vector2.ZERO
+	walk_timer.stop()
+	running_sound.stop()
+	skeleton_knight.sword_hit_sound.stop()
+	sword_area.monitoring = false
+	attack_range.monitoring = false
+	start_chase_area.monitoring = false
+	limit_chase_area.monitoring = false
+	body_collision.disabled = true
+
+
+func reset_for_intro() -> void:
+	intro_generation += 1
+	intro_skipped = false
+	if intro_walk_tween and intro_walk_tween.is_valid():
+		intro_walk_tween.kill()
+	intro_walk_tween = null
+
+	stop_battle()
+	skeleton_knight.global_position = intro_start_position
+	skeleton_knight.spawn_origin = intro_start_position
+	skeleton_knight.reset_boss_combat_state()
+	prepare_for_intro()
 
 
 func place_at_battle_position(target_position: Vector2) -> void:

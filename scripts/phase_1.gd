@@ -18,6 +18,7 @@ var blue_golem: PackedScene = preload("res://scenes/enemies/blue_golem.tscn")
 @onready var phase_1_boss: Phase1Boss = $World/Entities/Phase1Boss
 @onready var boss_cutscene_trigger: Area2D = $World/DungeonMap/BossCutsceneTrigger
 @onready var boss_battle_position: Marker2D = $World/DungeonMap/BossBattlePosition
+@onready var boss_respawn_position: Marker2D = $World/DungeonMap/BossRespawnPosition
 @onready var player_camera: Camera2D = $World/Entities/Player/Camera2D
 
 var last_position_on_dungeon_map: Vector2 = Vector2.ZERO
@@ -28,6 +29,7 @@ var boss_intro_tween: Tween
 var boss_intro_camera_position := Vector2.ZERO
 var boss_intro_camera_zoom := Vector2.ONE
 var boss_intro_player_target := Vector2.ZERO
+var boss_intro_generation := 0
 
 
 func _ready() -> void:
@@ -75,6 +77,8 @@ func _on_boss_cutscene_trigger_body_entered(body: Node2D) -> void:
 
 
 func play_boss_intro() -> void:
+	boss_intro_generation += 1
+	var intro_generation := boss_intro_generation
 	boss_intro_playing = true
 	boss_intro_skipped = false
 	boss_intro_camera_position = player_camera.position
@@ -110,19 +114,19 @@ func play_boss_intro() -> void:
 		1.75
 	)
 	await boss_intro_tween.finished
-	if boss_intro_skipped:
+	if is_boss_intro_cancelled(intro_generation):
 		return
 
 	await get_tree().create_timer(0.35).timeout
-	if boss_intro_skipped:
+	if is_boss_intro_cancelled(intro_generation):
 		return
 
 	await phase_1_boss.play_revival()
-	if boss_intro_skipped:
+	if is_boss_intro_cancelled(intro_generation):
 		return
 
 	await get_tree().create_timer(0.3).timeout
-	if boss_intro_skipped:
+	if is_boss_intro_cancelled(intro_generation):
 		return
 
 	var battle_position := boss_battle_position.global_position
@@ -140,12 +144,12 @@ func play_boss_intro() -> void:
 		Phase1Boss.INTRO_WALK_DURATION
 	)
 	await phase_1_boss.play_intro_walk(battle_position)
-	if boss_intro_skipped:
+	if is_boss_intro_cancelled(intro_generation):
 		return
 
 	player_camera.position = battle_camera_position
 	await get_tree().create_timer(0.45).timeout
-	if boss_intro_skipped:
+	if is_boss_intro_cancelled(intro_generation):
 		return
 
 	boss_intro_tween = create_tween().set_parallel()
@@ -163,7 +167,7 @@ func play_boss_intro() -> void:
 		1.0
 	)
 	await boss_intro_tween.finished
-	if boss_intro_skipped:
+	if is_boss_intro_cancelled(intro_generation):
 		return
 
 	player_camera.position = boss_intro_camera_position
@@ -182,10 +186,14 @@ func play_boss_intro() -> void:
 		0.8
 	)
 	await boss_intro_tween.finished
-	if boss_intro_skipped:
+	if is_boss_intro_cancelled(intro_generation):
 		return
 
 	finish_boss_intro()
+
+
+func is_boss_intro_cancelled(generation: int) -> bool:
+	return boss_intro_skipped or generation != boss_intro_generation
 
 
 func skip_boss_intro() -> void:
@@ -225,3 +233,28 @@ func finish_boss_intro() -> void:
 
 	player.change_state(Player.State.IDLE)
 	phase_1_boss.start_battle()
+
+
+func is_boss_battle_active() -> bool:
+	return phase_1_boss.battle_started
+
+
+func respawn_after_boss_death() -> void:
+	phase_1_boss.stop_battle()
+	player.stop_movement_sounds()
+
+	await TransitionManager.fade_out(0.35)
+
+	boss_intro_generation += 1
+	boss_intro_started = false
+	boss_intro_playing = false
+	boss_intro_skipped = false
+	boss_intro_tween = null
+
+	phase_1_boss.reset_for_intro()
+	player_camera.position = boss_intro_camera_position
+	player_camera.zoom = boss_intro_camera_zoom
+	player.respawn(boss_respawn_position.global_position)
+	boss_cutscene_trigger.set_deferred("monitoring", true)
+
+	await TransitionManager.fade_in(0.65)
