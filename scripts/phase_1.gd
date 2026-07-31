@@ -19,6 +19,13 @@ var blue_golem: PackedScene = preload("res://scenes/enemies/blue_golem.tscn")
 
 var last_position_on_dungeon_map: Vector2 = Vector2.ZERO
 var boss_intro_started := false
+var boss_intro_playing := false
+var boss_intro_skipped := false
+var boss_intro_tween: Tween
+var boss_intro_camera_position := Vector2.ZERO
+var boss_intro_camera_zoom := Vector2.ONE
+var boss_intro_player_target := Vector2.ZERO
+
 
 func _ready() -> void:
 	player.current_room = dungeon_map
@@ -26,7 +33,14 @@ func _ready() -> void:
 	phase_1_boss.setup(player)
 	boss_cutscene_trigger.body_entered.connect(_on_boss_cutscene_trigger_body_entered)
 	secret_room.hide()
-	
+
+
+func _input(event: InputEvent) -> void:
+	if boss_intro_playing and event.is_action_pressed("ui_cancel"):
+		get_viewport().set_input_as_handled()
+		skip_boss_intro()
+
+
 func start():
 	if OS.has_feature("cutscene_enabled"):
 		player.change_state(Player.State.CUTSCENE)
@@ -34,6 +48,7 @@ func start():
 	
 	player.change_state(Player.State.IDLE)
 	player.start($PlayerStartPosition.global_position)
+
 
 func _on_player_room_change_request(room: Node2D, spawn_position: Vector2):
 	await TransitionManager.fade_out()
@@ -46,6 +61,7 @@ func _on_player_room_change_request(room: Node2D, spawn_position: Vector2):
 	player.current_room.show()
 	await TransitionManager.fade_in()
 
+
 func _on_boss_cutscene_trigger_body_entered(body: Node2D) -> void:
 	if body != player or boss_intro_started:
 		return
@@ -54,89 +70,142 @@ func _on_boss_cutscene_trigger_body_entered(body: Node2D) -> void:
 	boss_cutscene_trigger.set_deferred("monitoring", false)
 	await play_boss_intro()
 
+
 func play_boss_intro() -> void:
+	boss_intro_playing = true
+	boss_intro_skipped = false
+	boss_intro_camera_position = player_camera.position
+	boss_intro_camera_zoom = player_camera.zoom
+
+	var step_direction := (
+		1.0
+		if boss_battle_position.global_position.x >= player.global_position.x
+		else -1.0
+	)
+	boss_intro_player_target = (
+		player.global_position + Vector2(step_direction, 0.0) * 32.0
+	)
+
 	player.change_state(Player.State.CUTSCENE)
 	player.velocity = Vector2.ZERO
 
-	var camera_start_position := player_camera.position
-	var camera_start_zoom := player_camera.zoom
 	var boss_position := phase_1_boss.get_focus_position()
 	var boss_camera_position := player.to_local(boss_position) - player_camera.offset
 
-	var focus_tween := create_tween().set_parallel()
-	focus_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	focus_tween.tween_property(
+	boss_intro_tween = create_tween().set_parallel()
+	boss_intro_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	boss_intro_tween.tween_property(
 		player_camera,
 		"position",
 		boss_camera_position,
 		1.75
 	)
-	focus_tween.tween_property(
+	boss_intro_tween.tween_property(
 		player_camera,
 		"zoom",
-		camera_start_zoom * 1.12,
+		boss_intro_camera_zoom * 1.12,
 		1.75
 	)
-	await focus_tween.finished
+	await boss_intro_tween.finished
+	if boss_intro_skipped:
+		return
+
 	await get_tree().create_timer(0.35).timeout
+	if boss_intro_skipped:
+		return
 
 	await phase_1_boss.play_revival()
+	if boss_intro_skipped:
+		return
+
 	await get_tree().create_timer(0.3).timeout
+	if boss_intro_skipped:
+		return
 
 	var battle_position := boss_battle_position.global_position
 	var battle_camera_position := (
 		player.to_local(battle_position) - player_camera.offset
 	)
-	var camera_follow_tween := create_tween()
-	camera_follow_tween.set_trans(Tween.TRANS_SINE).set_ease(
+	boss_intro_tween = create_tween()
+	boss_intro_tween.set_trans(Tween.TRANS_SINE).set_ease(
 		Tween.EASE_IN_OUT
 	)
-	camera_follow_tween.tween_property(
+	boss_intro_tween.tween_property(
 		player_camera,
 		"position",
 		battle_camera_position,
 		Phase1Boss.INTRO_WALK_DURATION
 	)
 	await phase_1_boss.play_intro_walk(battle_position)
-	player_camera.position = battle_camera_position
-	boss_position = phase_1_boss.get_focus_position()
-	await get_tree().create_timer(0.45).timeout
+	if boss_intro_skipped:
+		return
 
-	var return_tween := create_tween().set_parallel()
-	return_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	return_tween.tween_property(
+	player_camera.position = battle_camera_position
+	await get_tree().create_timer(0.45).timeout
+	if boss_intro_skipped:
+		return
+
+	boss_intro_tween = create_tween().set_parallel()
+	boss_intro_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	boss_intro_tween.tween_property(
 		player_camera,
 		"position",
-		camera_start_position,
+		boss_intro_camera_position,
 		1.0
 	)
-	return_tween.tween_property(
+	boss_intro_tween.tween_property(
 		player_camera,
 		"zoom",
-		camera_start_zoom,
+		boss_intro_camera_zoom,
 		1.0
 	)
-	await return_tween.finished
-	player_camera.position = camera_start_position
-	player_camera.zoom = camera_start_zoom
+	await boss_intro_tween.finished
+	if boss_intro_skipped:
+		return
 
-	var step_direction := (
-		1.0 if boss_position.x >= player.global_position.x else -1.0
-	)
+	player_camera.position = boss_intro_camera_position
+	player_camera.zoom = boss_intro_camera_zoom
+
 	var walk_direction := Vector2(step_direction, 0.0)
 	player.animated_sprite.update_flip(walk_direction)
 	player.animated_sprite.update_animation("walk")
 
-	var player_step_tween := create_tween()
-	player_step_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	player_step_tween.tween_property(
+	boss_intro_tween = create_tween()
+	boss_intro_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	boss_intro_tween.tween_property(
 		player,
 		"global_position",
-		player.global_position + walk_direction * 32.0,
+		boss_intro_player_target,
 		0.8
 	)
-	await player_step_tween.finished
+	await boss_intro_tween.finished
+	if boss_intro_skipped:
+		return
 
+	finish_boss_intro()
+
+
+func skip_boss_intro() -> void:
+	if not boss_intro_playing:
+		return
+
+	boss_intro_skipped = true
+	if boss_intro_tween and boss_intro_tween.is_valid():
+		boss_intro_tween.kill()
+
+	phase_1_boss.skip_intro(boss_battle_position.global_position)
+	player.global_position = boss_intro_player_target
+	finish_boss_intro()
+
+
+func finish_boss_intro() -> void:
+	if not boss_intro_playing:
+		return
+
+	boss_intro_playing = false
+	boss_intro_tween = null
+	player_camera.position = boss_intro_camera_position
+	player_camera.zoom = boss_intro_camera_zoom
 	player.velocity = Vector2.ZERO
 	player.animated_sprite.update_animation("idle")
 	player.change_state(Player.State.IDLE)

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bl8kgw346yth4"]
+
+[ext_resource type="PackedScene" uid="uid://crgnsdy5urqou" path="res://scenes/map_elements/dual_pillar.tscn" id="1_udaqc"]
+[ext_resource type="PackedScene" uid="uid://cwu0gaawvtd4n" path="res://scenes/player.tscn" id="2_7viqv"]
+
+[node name="DualPillarPlayer" type="Node2D" unique_id=769272590]
+
+[node name="DualPillar" parent="." unique_id=579592915 node_paths=PackedStringArray("player") instance=ExtResource("1_udaqc")]
+position = Vector2(151, 174)
+player = NodePath("../Player")
+
+[node name="Player" parent="." unique_id=898338159 instance=ExtResource("2_7viqv")]
+position = Vector2(148, 169)

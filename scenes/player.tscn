@@ -547,7 +547,7 @@ size = Vector2(15.7894745, 2.6315804)
 modulate = Color(0.47768176, 0.5452191, 0.50288934, 1)
 light_mask = 2
 visibility_layer = 2
-position = Vector2(5, 14.000001)
+position = Vector2(0, 9.536743e-07)
 scale = Vector2(0.95, 0.95)
 collision_layer = 2
 collision_mask = 65
@@ -579,6 +579,7 @@ position = Vector2(2, -1)
 rotation = -6.2831855
 sprite_frames = SubResource("SpriteFrames_1bnh4")
 animation = &"stand"
+frame = 2
 script = ExtResource("37_cs1tg")
 metadata/_edit_group_ = true
 

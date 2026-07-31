@@ -15,16 +15,21 @@ extends Node2D
 @onready var walk_timer: Timer = $SkeletonKnight/WalkTimer
 
 var battle_started := false
+var intro_skipped := false
+var intro_walk_tween: Tween
 
 const INTRO_WALK_DURATION := 4.0
+
 
 func setup(p: Player) -> void:
 	player = p
 	skeleton_knight.player = p
 	prepare_for_intro()
 
+
 func prepare_for_intro() -> void:
 	battle_started = false
+	intro_skipped = false
 	boss_hud.visible = false
 	skeleton_knight.velocity = Vector2.ZERO
 	skeleton_knight.state = BaseEnemy.State.IDLE
@@ -46,15 +51,21 @@ func prepare_for_intro() -> void:
 	boss_health_bar.max_value = skeleton_knight.config.max_health
 	boss_health_bar.value = skeleton_knight.health
 
+
 func get_focus_position() -> Vector2:
 	return skeleton_knight.global_position
+
 
 func play_revival() -> void:
 	animated_sprite.speed_scale = 0.55
 	animated_sprite.play_backwards(&"die")
 	await animated_sprite.animation_finished
+	if intro_skipped:
+		return
+
 	animated_sprite.speed_scale = 1.0
 	animated_sprite.play(&"idle")
+
 
 func play_intro_walk(target_position: Vector2) -> void:
 	var walk_direction := skeleton_knight.global_position.direction_to(
@@ -66,22 +77,43 @@ func play_intro_walk(target_position: Vector2) -> void:
 		skeleton_knight.flip_to_right()
 
 	animated_sprite.play(&"walk")
-	var walk_tween := create_tween()
-	walk_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	walk_tween.tween_property(
+	intro_walk_tween = create_tween()
+	intro_walk_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	intro_walk_tween.tween_property(
 		skeleton_knight,
 		"global_position",
 		target_position,
 		INTRO_WALK_DURATION
 	)
-	await walk_tween.finished
+	await intro_walk_tween.finished
+	if intro_skipped:
+		return
 
 	skeleton_knight.global_position = target_position
 	skeleton_knight.spawn_origin = target_position
 	skeleton_knight.velocity = Vector2.ZERO
 	animated_sprite.play(&"idle")
+	intro_walk_tween = null
+
+
+func skip_intro(target_position: Vector2) -> void:
+	intro_skipped = true
+	if intro_walk_tween and intro_walk_tween.is_valid():
+		intro_walk_tween.kill()
+	intro_walk_tween = null
+
+	animated_sprite.stop()
+	animated_sprite.speed_scale = 1.0
+	skeleton_knight.global_position = target_position
+	skeleton_knight.spawn_origin = target_position
+	skeleton_knight.velocity = Vector2.ZERO
+	animated_sprite.play(&"idle")
+
 
 func start_battle() -> void:
+	if battle_started:
+		return
+
 	body_collision.disabled = false
 	attack_range.monitoring = true
 	start_chase_area.monitoring = true
@@ -98,6 +130,7 @@ func start_battle() -> void:
 	boss_health_bar.modulate.a = 0.0
 	boss_hud.visible = true
 	create_tween().tween_property(boss_health_bar, "modulate:a", 1.0, 0.4)
+
 
 func _process(_delta: float) -> void:
 	if not battle_started:
