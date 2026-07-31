@@ -12,7 +12,6 @@ patrol_radius = 64.0
 max_health = 170.0
 resistence = 0.15
 damage_given = 20.0
-gold_drop_amount_on_death = 22.0
 cancel_attack_on_damage_chance = 0.25
 dash_force = 80.0
 dash_duration = 0.14

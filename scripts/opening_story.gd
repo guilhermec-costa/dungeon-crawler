@@ -8,7 +8,7 @@ const STORY_PAGES := [
 	"Beneath the ruins of Loreon, a knight heard three bells ringing under the earth.",
 	"The first called the dead. The second called the brave. The third only rang when someone forgot to lock the dungeon door.",
 	"With a slightly rusty sword and a map scribbled by a hurried necromancer, you descend to discover who woke the skeletons — and why they seem so angry.",
-	"Find the runes. Survive the guardian. And if you find a button marked ‘do not press’, perhaps do not press it.",
+	"Find the runes. Place them in the tombs. Then try to escape.",
 	"The dungeon is waiting."
 ]
 

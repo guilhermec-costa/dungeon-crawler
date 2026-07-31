@@ -1,7 +1,7 @@
 extends Node
 
 @onready var rune_puzzle_collider_block: CollisionShape2D = $"../World/DungeonMap/Dungeon/SecretPassageWall/CollisionShape2D"
-@onready var puzzle_resolved_message: Label = $PuzzleResolvedMessage
+@onready var puzzle_resolved_message: Control = $PuzzleResolvedMessage
 @onready var secret_passage_room: Node2D = $"../World/DungeonMap/Dungeon/SecretPassageRoom"
 
 @onready var runes: Array[RuneSlot] = [
@@ -23,10 +23,18 @@ func _on_placed_rune() -> void:
 	var all_runes_placed = runes.all(func(rune: RuneSlot) : return rune.rune_placed)
 	if all_runes_placed:
 		rune_puzzle_collider_block.queue_free()
-		var tween = create_tween()
-		puzzle_resolved_message.modulate.a = 1.0
+		puzzle_resolved_message.pivot_offset = puzzle_resolved_message.size * 0.5
+		puzzle_resolved_message.modulate.a = 0.0
+		puzzle_resolved_message.scale = Vector2(0.9, 0.9)
 		puzzle_resolved_message.visible = true
 		secret_passage_room.visible = true
+		var tween = create_tween().set_parallel()
+		tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tween.tween_property(puzzle_resolved_message, "modulate:a", 1.0, 0.22)
+		tween.tween_property(puzzle_resolved_message, "scale", Vector2.ONE, 0.22)
+		await tween.finished
+		await get_tree().create_timer(4.0).timeout
+		tween = create_tween()
 		tween.tween_property(puzzle_resolved_message, "modulate:a", 0, 10)
 		await tween.finished
 		puzzle_resolved_message.queue_free()

@@ -1,68 +1,62 @@
 [gd_scene format=3 uid="uid://d2rtd1o1jhbr3"]
 
-[ext_resource type="PackedScene" uid="uid://cnpwq472iiou0" path="res://scenes/interactable.tscn" id="1_kgo1h"]
-[ext_resource type="Script" uid="uid://caf6bamfhho1e" path="res://scripts/rune_slot.gd" id="1_o78m4"]
-[ext_resource type="Texture2D" uid="uid://bydpvwk4iys7e" path="res://assets/UI/space.png" id="2_sh7g6"]
-[ext_resource type="Texture2D" uid="uid://didcdwd16o0a1" path="res://assets/light.png" id="4_w3m33"]
-[ext_resource type="Texture2D" uid="uid://dgxsame24ije" path="res://assets/UI/grey.png" id="5_26jbr"]
-[ext_resource type="AudioStream" uid="uid://dc47siiijeihh" path="res://assets/audio/item_placement.wav" id="6_xqb0i"]
+[ext_resource type="PackedScene" uid="uid://cnpwq472iiou0" path="res://scenes/interactable.tscn" id="1_interactable"]
+[ext_resource type="Script" uid="uid://caf6bamfhho1e" path="res://scripts/rune_slot.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://dgxsame24ije" path="res://assets/UI/grey.png" id="3_frame"]
+[ext_resource type="Texture2D" uid="uid://bydpvwk4iys7e" path="res://assets/UI/space.png" id="4_socket"]
+[ext_resource type="Texture2D" uid="uid://didcdwd16o0a1" path="res://assets/light.png" id="5_light"]
+[ext_resource type="Texture2D" uid="uid://dl12s46s080mm" path="res://assets/inpact_ring.png" id="6_ring"]
+[ext_resource type="AudioStream" uid="uid://dc47siiijeihh" path="res://assets/audio/item_placement.wav" id="7_sound"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fgifm"]
-size = Vector2(16, 13)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rune_slot"]
+size = Vector2(24, 18)
 
-[node name="RuneSlot" unique_id=1954145144 instance=ExtResource("1_kgo1h")]
+[node name="RuneSlot" unique_id=93272619 instance=ExtResource("1_interactable")]
 z_index = 1
 texture_filter = 1
-script = ExtResource("1_o78m4")
+scale = Vector2(0.33, 0.33)
+script = ExtResource("2_script")
 runeId = 0
+interaction_position = Vector2(0, -23)
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=316515945]
-position = Vector2(0, 1.5)
-shape = SubResource("RectangleShape2D_fgifm")
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_rune_slot")
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="1" unique_id=451859723]
-self_modulate = Color(0.14435753, 0.20986578, 0.26421195, 1)
-scale = Vector2(0.16, 0.16)
-texture = ExtResource("2_sh7g6")
+[node name="SocketShadow" type="Sprite2D" parent="." index="1" unique_id=1554308343]
+modulate = Color(0.045, 0.035, 0.055, 0.86)
+position = Vector2(1, 5)
+scale = Vector2(0.67, 0.36)
+texture = ExtResource("3_frame")
 
-[node name="PointLight2D" type="PointLight2D" parent="." index="2" unique_id=63450783]
-position = Vector2(-1.1920929e-07, 1.0000032)
-scale = Vector2(0.035156254, 0.023437504)
-color = Color(0.6299303, 0.46802324, 0.3895689, 1)
-texture = ExtResource("4_w3m33")
+[node name="Frame" type="Node2D" parent="." index="2" unique_id=348656222]
 
-[node name="Frame" type="TextureRect" parent="." index="3" unique_id=978036544]
-self_modulate = Color(0.26397452, 0.26112574, 0.27243364, 1)
-custom_minimum_size = Vector2(6, 6)
-custom_maximum_size = Vector2(32, 32)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -4.0
-offset_top = -4.0
-offset_right = 4.0
-offset_bottom = 4.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_26jbr")
-expand_mode = 1
+[node name="Base" type="Sprite2D" parent="Frame" index="0" unique_id=672705420]
+modulate = Color(0.2, 0.19, 0.23, 1)
+scale = Vector2(0.64, 0.64)
+texture = ExtResource("3_frame")
 
-[node name="Icon" type="TextureRect" parent="Frame" index="0" unique_id=458747430]
-self_modulate = Color(0.3515629, 0.3515629, 0.35156286, 1)
-texture_filter = 1
-custom_maximum_size = Vector2(5, 5)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.39800003
-anchor_top = 0.409
-anchor_right = 0.39800003
-anchor_bottom = 0.409
-offset_left = -19.184
-offset_top = -19.272
-offset_right = 20.816
-offset_bottom = 20.728
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Socket" type="Sprite2D" parent="Frame" index="1" unique_id=424636191]
+modulate = Color(0.1, 0.12, 0.16, 1)
+scale = Vector2(0.51, 0.51)
+texture = ExtResource("4_socket")
 
-[node name="PlaceSound" type="AudioStreamPlayer2D" parent="." index="4" unique_id=470116093]
-stream = ExtResource("6_xqb0i")
+[node name="RuneRing" type="Sprite2D" parent="Frame" index="2" unique_id=130122275]
+modulate = Color(0.55, 0.67, 0.9, 0.38)
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("6_ring")
+
+[node name="Icon" type="Sprite2D" parent="Frame" index="3" unique_id=772393602]
+visible = false
+position = Vector2(0, -1)
+scale = Vector2(0.19, 0.19)
+
+[node name="RuneGlow" type="PointLight2D" parent="." index="3" unique_id=1625777361]
+position = Vector2(0, -1)
+scale = Vector2(0.075, 0.055)
+color = Color(0.5, 0.67, 0.95, 1)
+energy = 0.42
+texture = ExtResource("5_light")
+
+[node name="PlaceSound" type="AudioStreamPlayer2D" parent="." index="4" unique_id=1792186362]
+stream = ExtResource("7_sound")

@@ -10,7 +10,7 @@ const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 @export var left_offset := Vector2.ZERO
 @export_group("Drop Override")
 @export var override_drop := false
-@export var drop_id_override: ItemData.ItemID = ItemData.ItemID.GOLD
+@export var drop_id_override: ItemData.ItemID = ItemData.ItemID.RUNE_GRAY
 @export var drop_amount_override := 1
 @export_group("")
 @onready var health_bar: HealthBar = $HealthBar
@@ -393,6 +393,8 @@ func drop_item():
 	var amount := (
 		drop_amount_override if override_drop else config.drop_amount_on_death
 	)
+	if item_id == ItemData.ItemID.GOLD:
+		return
 	DropManager.spawn(
 		item_id,
 		amount,

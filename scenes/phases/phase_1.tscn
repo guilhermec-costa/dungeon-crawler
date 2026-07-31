@@ -3687,11 +3687,26 @@ _data = {
 &"player_standup": SubResource("Animation_gmg7k")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_puzzle_resolved"]
+bg_color = Color(0.045, 0.03, 0.055, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.56, 0.32, 0.2, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color(0, 0, 0, 0.7)
+shadow_size = 6
+
 [sub_resource type="LabelSettings" id="LabelSettings_6c58o"]
 font = ExtResource("6_7fxg3")
-font_size = 52
-font_color = Color(0.54760784, 0.5710693, 0.52383834, 1)
-outline_size = 1
+font_size = 21
+font_color = Color(0.91, 0.79, 0.56, 1)
+outline_size = 3
+outline_color = Color(0.09, 0.045, 0.03, 1)
 
 [node name="Phase1" type="Node" unique_id=699602322]
 script = ExtResource("1_5xy5e")
@@ -4202,14 +4217,17 @@ texture = ExtResource("14_lie7o")
 [node name="RuneSlotGrey" parent="World/DungeonMap" unique_id=460938298 instance=ExtResource("22_fgifm")]
 position = Vector2(448, 139)
 runeId = 3
+interaction_position = Vector2(0, 0)
 
 [node name="RuneSlotBlue" parent="World/DungeonMap" unique_id=738298018 instance=ExtResource("22_fgifm")]
 position = Vector2(528, 139)
 runeId = 5
+interaction_position = Vector2(0, 0)
 
 [node name="RuneSlotBlack" parent="World/DungeonMap" unique_id=956285132 instance=ExtResource("22_fgifm")]
 position = Vector2(488, 139)
 runeId = 4
+interaction_position = Vector2(0, 0)
 
 [node name="BossCutsceneTrigger" type="Area2D" parent="World/DungeonMap" unique_id=522631082]
 z_index = 1
@@ -4511,6 +4529,10 @@ debug_color = Color(0.61262083, 0.43725637, 0.8155487, 0.41960785)
 position = Vector2(650, 350)
 player = NodePath("../Player")
 
+[node name="WhiteSkeletonEntrance2" parent="World/Entities" unique_id=1814790316 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
+position = Vector2(159, 279.00003)
+player = NodePath("../Player")
+
 [node name="WhiteSkeletonLowerHall" parent="World/Entities" unique_id=1873088204 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
 position = Vector2(300, 535)
 player = NodePath("../Player")
@@ -4520,7 +4542,7 @@ position = Vector2(620, 145)
 player = NodePath("../Player")
 
 [node name="YellowSkeletonCentral" parent="World/Entities" unique_id=65233277 node_paths=PackedStringArray("player") instance=ExtResource("17_cveml")]
-position = Vector2(505, 350)
+position = Vector2(545, 327)
 player = NodePath("../Player")
 override_drop = true
 drop_id_override = 5
@@ -4532,8 +4554,8 @@ color = Color(0.658824, 0.807843, 0.815686, 1)
 energy = 1.25
 texture = ExtResource("14_lie7o")
 
-[node name="BlueGolemLowerHall" parent="World/Entities" unique_id=1334460780 node_paths=PackedStringArray("player") instance=ExtResource("18_ogbs8")]
-position = Vector2(520, 535)
+[node name="BlueGolemLowerChamber" parent="World/Entities" unique_id=1334460780 node_paths=PackedStringArray("player") instance=ExtResource("18_ogbs8")]
+position = Vector2(639, 435)
 player = NodePath("../Player")
 
 [node name="WhiteSkeletonCentralSouth" parent="World/Entities" unique_id=1214283877 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
@@ -4545,7 +4567,7 @@ position = Vector2(150, 430)
 player = NodePath("../Player")
 
 [node name="OrangeGolemUpperGuardian" parent="World/Entities" unique_id=1121246697 node_paths=PackedStringArray("player") instance=ExtResource("23_t723o")]
-position = Vector2(442, 149)
+position = Vector2(505, 140)
 player = NodePath("../Player")
 override_drop = true
 drop_id_override = 4
@@ -4558,10 +4580,9 @@ energy = 1.5
 texture = ExtResource("14_lie7o")
 
 [node name="WhiteSkeletonWestRoom" parent="World/Entities" unique_id=1917640933 node_paths=PackedStringArray("player") instance=ExtResource("14_5iruf")]
-position = Vector2(161, 275.00003)
+position = Vector2(644.00006, 554)
 player = NodePath("../Player")
 override_drop = true
-drop_id_override = 3
 
 [node name="RuneCarrierLight" type="PointLight2D" parent="World/Entities/WhiteSkeletonWestRoom" unique_id=23920104]
 position = Vector2(0, -3)
@@ -4578,12 +4599,16 @@ player = NodePath("../Player")
 position = Vector2(225, 175)
 player = NodePath("../Player")
 
+[node name="YellowSkeletonUpperWest2" parent="World/Entities" unique_id=1740458731 node_paths=PackedStringArray("player") instance=ExtResource("17_cveml")]
+position = Vector2(125.000015, 160)
+player = NodePath("../Player")
+
 [node name="YellowSkeletonLowerCenter" parent="World/Entities" unique_id=417060673 node_paths=PackedStringArray("player") instance=ExtResource("17_cveml")]
 position = Vector2(410, 535)
 player = NodePath("../Player")
 
 [node name="BlueGolemCentralWest" parent="World/Entities" unique_id=236421320 node_paths=PackedStringArray("player") instance=ExtResource("18_ogbs8")]
-position = Vector2(335, 350)
+position = Vector2(377, 363)
 player = NodePath("../Player")
 
 [node name="Phase1Boss" parent="World/Entities" unique_id=851340117 instance=ExtResource("16_t723o")]
@@ -4613,15 +4638,37 @@ visible = false
 [node name="RunePuzzle" type="CanvasLayer" parent="." unique_id=1011702605]
 script = ExtResource("5_147fn")
 
-[node name="PuzzleResolvedMessage" type="Label" parent="RunePuzzle" unique_id=1497014604]
+[node name="PuzzleResolvedMessage" type="Panel" parent="RunePuzzle" unique_id=1497014604]
 visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -382.5
-offset_top = 87.0
-offset_right = 382.5
-offset_bottom = 125.0
+offset_left = -270.0
+offset_top = 70.0
+offset_right = 270.0
+offset_bottom = 150.0
 grow_horizontal = 2
-text = "A hidden passage has been revealed somewhere..."
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_puzzle_resolved")
+
+[node name="Title" type="Label" parent="RunePuzzle/PuzzleResolvedMessage" unique_id=39814358]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 12.0
+offset_bottom = 33.0
+grow_horizontal = 2
+text = "◆  PASSAGE UNSEALED  ◆"
 label_settings = SubResource("LabelSettings_6c58o")
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="RunePuzzle/PuzzleResolvedMessage" unique_id=1797036159]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 42.0
+offset_bottom = 67.0
+grow_horizontal = 2
+text = "A HIDDEN PATH HAS OPENED."
+label_settings = SubResource("LabelSettings_6c58o")
+horizontal_alignment = 1
