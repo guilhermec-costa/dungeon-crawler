@@ -357,7 +357,7 @@ func take_damage(damage: float):
 		
 	if state == State.ROLLING:
 		if randf()  < config.dodge_chance:
-			animate_message_label("DODGE!", FloatingTextConfigs.DODGE_MESSAGE)
+			animate_message_label(tr("DODGE!"), FloatingTextConfigs.DODGE_MESSAGE)
 			return
 		
 	health -= damage
@@ -394,7 +394,7 @@ func _on_frame_changed():
 			sword_area.set_disabled(true)
 
 func show_no_stamina_message():
-	animate_message_label("NO STAMINA!", FloatingTextConfigs.WARNING_MESSAGE)
+	animate_message_label(tr("NO STAMINA!"), FloatingTextConfigs.WARNING_MESSAGE)
 
 func animate_message_label(text: String, config: FloatingTextConfig):
 	var label: MessageLabel = MESSAGE_LABEL_SCENE.instantiate()

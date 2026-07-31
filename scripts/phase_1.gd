@@ -259,7 +259,7 @@ func finish_boss_intro() -> void:
 
 
 func _on_boss_access_gate_touched() -> void:
-	show_gate_message("THE CORRIDOR IS SEALED.\nTHE CORRUPTED KEY LIES BEYOND THE RUNE TRIAL.")
+	show_gate_message(tr("THE CORRIDOR IS SEALED.\nTHE CORRUPTED KEY LIES BEYOND THE RUNE TRIAL."))
 
 
 func _unlock_boss_access_gate() -> void:

@@ -72,28 +72,28 @@ func show_next_page() -> void:
 		finish_story()
 		return
 
-	story_text.text = STORY_PAGES[current_page]
+	story_text.text = tr(STORY_PAGES[current_page])
 	story_text.visible_ratio = 0.0
 	progress.text = "◆".repeat(current_page + 1) + "◇".repeat(
 		STORY_PAGES.size() - current_page - 1
 	)
-	advance_hint.text = "CLICK OR ENTER TO REVEAL"
+	advance_hint.text = tr("CLICK OR ENTER TO REVEAL")
 
 	type_tween = create_tween()
 	type_tween.tween_property(
 		story_text,
 		"visible_ratio",
 		1.0,
-		clampf(STORY_PAGES[current_page].length() * 0.018, 0.45, 2.0)
+		clampf(story_text.text.length() * 0.018, 0.45, 2.0)
 	)
 	type_tween.finished.connect(update_advance_hint)
 
 
 func update_advance_hint() -> void:
 	if current_page == STORY_PAGES.size() - 1:
-		advance_hint.text = "CLICK OR ENTER TO BEGIN  •  ESC TO SKIP"
+		advance_hint.text = tr("CLICK OR ENTER TO BEGIN  •  ESC TO SKIP")
 	else:
-		advance_hint.text = "CLICK OR ENTER TO CONTINUE  •  ESC TO SKIP"
+		advance_hint.text = tr("CLICK OR ENTER TO CONTINUE  •  ESC TO SKIP")
 
 
 func finish_story() -> void:

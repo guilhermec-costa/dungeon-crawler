@@ -164,6 +164,29 @@ label_settings = SubResource("LabelSettings_button")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="LanguageButton" type="TextureButton" parent="." unique_id=183854458]
+texture_filter = 1
+offset_left = 112.0
+offset_top = 650.0
+offset_right = 418.0
+offset_bottom = 692.0
+texture_normal = ExtResource("5_button_normal")
+texture_pressed = ExtResource("6_button_pressed")
+texture_hover = ExtResource("4_button_hover")
+ignore_texture_size = true
+
+[node name="Label" type="Label" parent="LanguageButton" unique_id=492342310]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "LANGUAGE: ENGLISH"
+label_settings = SubResource("LabelSettings_meta")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="ControlsHint" type="Label" parent="." unique_id=1698066386]
 offset_left = 116.0
 offset_top = 594.0
@@ -239,3 +262,4 @@ parameters/looping = true
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="LanguageButton" to="." method="_on_language_button_pressed"]

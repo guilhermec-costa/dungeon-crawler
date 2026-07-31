@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://bi0lm34j1mfjr" path="res://assets/enemies/skeleton_knight/IDLE.png" id="8_fhx5b"]
 [ext_resource type="Texture2D" uid="uid://ba1aac2ridua7" path="res://assets/enemies/skeleton_knight/HURT.png" id="9_s58n2"]
 [ext_resource type="Texture2D" uid="uid://y2syjf4m3rg7" path="res://assets/enemies/skeleton_knight/WALK.png" id="10_7bopa"]
-[ext_resource type="AudioStream" path="res://assets/audio/boss_dying.mp3" id="11_tek6a"]
+[ext_resource type="AudioStream" uid="uid://cc6p8jurduqyu" path="res://assets/audio/boss_dying.mp3" id="11_tek6a"]
 [ext_resource type="PackedScene" uid="uid://dkmmjac80p3pr" path="res://scenes/health_bar.tscn" id="12_bbfeo"]
 [ext_resource type="AudioStream" uid="uid://bwj2tu34sunu1" path="res://assets/audio/greatsword.mp3" id="13_54p5m"]
 

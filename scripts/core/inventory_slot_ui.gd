@@ -20,7 +20,7 @@ func set_item(_item: ItemData, quantity: int):
 	icon.texture = _item.icon
 	icon.visible = true
 	icon.scale = Vector2.ONE
-	tooltip_text = _item.description
+	tooltip_text = tr(_item.description)
 	amount.text = str(quantity)
 	self.item = _item
 	

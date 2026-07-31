@@ -1,0 +1,118 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pt_BR\n"
+
+msgid "A GAME BY GUILHERME CHINA"
+msgstr "UM JOGO DE GUILHERME CHINA"
+
+msgid "BEGIN JOURNEY"
+msgstr "INICIAR JORNADA"
+
+msgid "CHOOSE YOUR FATE"
+msgstr "ESCOLHA SEU DESTINO"
+
+msgid "CLICK OR ENTER TO BEGIN  •  ESC TO SKIP"
+msgstr "CLIQUE OU ENTER PARA COMEÇAR  •  ESC PARA PULAR"
+
+msgid "CLICK OR ENTER TO CONTINUE  •  ESC TO SKIP"
+msgstr "CLIQUE OU ENTER PARA CONTINUAR  •  ESC PARA PULAR"
+
+msgid "CLICK OR ENTER TO REVEAL"
+msgstr "CLIQUE OU ENTER PARA REVELAR"
+
+msgid "DODGE!"
+msgstr "ESQUIVOU!"
+
+msgid "ENTER TO BEGIN  •  ARROWS TO NAVIGATE"
+msgstr "ENTER PARA INICIAR  •  SETAS PARA NAVEGAR"
+
+msgid "ENTER TO RETURN"
+msgstr "ENTER PARA VOLTAR"
+
+msgid "LANGUAGE"
+msgstr "IDIOMA"
+
+msgid "LOREON FORGOT THE DEAD.\nTHE DEAD DID NOT FORGET LOREON."
+msgstr "LOREON ESQUECEU OS MORTOS.\nOS MORTOS NÃO ESQUECERAM LOREON."
+
+msgid "NO STAMINA!"
+msgstr "SEM VIGOR!"
+
+msgid "PAUSED"
+msgstr "PAUSADO"
+
+msgid "PRESS ESC TO RETURN"
+msgstr "PRESSIONE ESC PARA VOLTAR"
+
+msgid "PROLOGUE  •  THE ASHES OF LOREON"
+msgstr "PRÓLOGO  •  AS CINZAS DE LOREON"
+
+msgid "QUIT"
+msgstr "SAIR"
+
+msgid "RESUME"
+msgstr "CONTINUAR"
+
+msgid "RETURN TO TITLE"
+msgstr "VOLTAR AO TÍTULO"
+
+msgid "THE ASHES OF LOREON"
+msgstr "AS CINZAS DE LOREON"
+
+msgid "THE CORRIDOR IS SEALED.\nTHE CORRUPTED KEY LIES BEYOND THE RUNE TRIAL."
+msgstr "O CORREDOR ESTÁ SELADO.\nA CHAVE CORROMPIDA ESTÁ ALÉM DO DESAFIO DAS RUNAS."
+
+msgid "THE DUNGEON WAITS."
+msgstr "A MASMORRA AGUARDA."
+
+msgid "THE LAST KNIGHT OF LOREON"
+msgstr "O ÚLTIMO CAVALEIRO DE LOREON"
+
+msgid "THE RUNES ARE SILENT. THE GUARDIAN HAS FALLEN.\n\nFOR NOW, LOREON LETS YOU LEAVE."
+msgstr "AS RUNAS SE CALARAM. O GUARDIÃO CAIU.\n\nPOR ENQUANTO, LOREON DEIXA VOCÊ PARTIR."
+
+msgid "VICTORY"
+msgstr "VITÓRIA"
+
+msgid "WALK INTO THE LIGHT"
+msgstr "CAMINHE ATÉ A LUZ"
+
+msgid "◆  PASSAGE UNSEALED  ◆"
+msgstr "◆  PASSAGEM DESSACRADA  ◆"
+
+msgid "A HIDDEN PATH HAS OPENED."
+msgstr "UM CAMINHO OCULTO SE ABRIU."
+
+msgid "MOVEMENT"
+msgstr "MOVIMENTO"
+
+msgid "INTERACT"
+msgstr "INTERAGIR"
+
+msgid "RUN "
+msgstr "CORRER "
+
+msgid "PRELUDE // v0.1"
+msgstr "PRÉLUDIO // v0.1"
+
+msgid "Life Potion"
+msgstr "Poção de Vida"
+
+msgid "The final key..."
+msgstr "A chave final..."
+
+msgid "Beneath the ruins of Loreon, a knight heard three bells ringing under the earth."
+msgstr "Sob as ruínas de Loreon, um cavaleiro ouviu três sinos ecoando sob a terra."
+
+msgid "The first called the dead. The second called the brave. The third only rang when someone forgot to lock the dungeon door."
+msgstr "O primeiro chamou os mortos. O segundo chamou os bravos. O terceiro só tocou quando alguém esqueceu de trancar a porta da masmorra."
+
+msgid "With a slightly rusty sword and a map scribbled by a hurried necromancer, you descend to discover who woke the skeletons — and why they seem so angry."
+msgstr "Com uma espada levemente enferrujada e um mapa rabiscado por um necromante apressado, você desce para descobrir quem acordou os esqueletos — e por que eles parecem tão irritados."
+
+msgid "Find the runes. Place them in the tombs to open the hidden path. Beyond it waits the Corrupted Key — the only way into the boss corridor."
+msgstr "Encontre as runas. Coloque-as nos túmulos para abrir o caminho oculto. Além dele está a Chave Corrompida — a única forma de entrar no corredor do chefe."
+
+msgid "The dungeon is waiting."
+msgstr "A masmorra está à espera."
