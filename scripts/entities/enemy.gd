@@ -195,7 +195,14 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 	
 	process_special_movement(delta)
+	if pathfinder.avoidance_enabled:
+		pathfinder.velocity = velocity
 	move_and_slide()
+
+
+func _on_velocity_computed(safe_velocity: Vector2) -> void:
+	if pathfinder.avoidance_enabled:
+		velocity = safe_velocity
 
 func process_special_movement(delta: float) -> void:
 	pass

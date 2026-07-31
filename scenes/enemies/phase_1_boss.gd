@@ -14,6 +14,7 @@ extends Node2D
 @onready var sword_area: Area2D = $SkeletonKnight/SwordArea
 @onready var walk_timer: Timer = $SkeletonKnight/WalkTimer
 @onready var running_sound: AudioStreamPlayer2D = $SkeletonKnight/RunningSound
+@onready var boss_music: AudioStreamPlayer = $BossMusic
 
 var battle_started := false
 var intro_skipped := false
@@ -115,6 +116,9 @@ func cancel_intro() -> void:
 
 func stop_battle() -> void:
 	battle_started = false
+	if boss_music.playing:
+		boss_music.stop()
+	_set_dungeon_ambience_paused(false)
 	boss_hud.visible = false
 	skeleton_knight.set_process(false)
 	skeleton_knight.set_physics_process(false)
@@ -173,6 +177,8 @@ func start_battle() -> void:
 	skeleton_knight.change_state(BaseEnemy.State.CHASING)
 
 	battle_started = true
+	_set_dungeon_ambience_paused(true)
+	boss_music.play()
 	boss_health_bar.modulate.a = 0.0
 	boss_hud.visible = true
 	create_tween().tween_property(boss_health_bar, "modulate:a", 1.0, 0.4)
@@ -184,5 +190,10 @@ func _process(_delta: float) -> void:
 
 	boss_health_bar.value = skeleton_knight.health
 	if skeleton_knight.state == BaseEnemy.State.DEAD:
-		battle_started = false
-		boss_hud.visible = false
+		stop_battle()
+
+
+func _set_dungeon_ambience_paused(paused: bool) -> void:
+	for ambience in get_tree().get_nodes_in_group(&"phase_ambience"):
+		if ambience is AudioStreamPlayer2D:
+			ambience.stream_paused = paused

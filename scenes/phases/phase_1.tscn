@@ -3715,6 +3715,7 @@ script = ExtResource("1_5xy5e")
 player = NodePath("../World/Entities/Player")
 
 [node name="PhaseLight" type="DirectionalLight2D" parent="." unique_id=815560919]
+visible = false
 light_mask = 0
 position = Vector2(-17, 36)
 rotation = -3.1415927
@@ -3725,13 +3726,14 @@ range_item_cull_mask = 3
 shadow_enabled = true
 
 [node name="Atmosphere" type="DirectionalLight2D" parent="." unique_id=17210541]
+visible = false
 position = Vector2(322, 260)
 color = Color(0.20020434, 0.07859359, 0.033259902, 1)
 blend_mode = 2
 shadow_enabled = true
 
 [node name="PlayerStartPosition" type="Marker2D" parent="." unique_id=2011610962]
-position = Vector2(-126, 353)
+position = Vector2(837, 358)
 
 [node name="DungeonAmbienceSound" type="AudioStreamPlayer2D" parent="." unique_id=686928459]
 stream = ExtResource("8_wi8qh")
