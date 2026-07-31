@@ -22,7 +22,7 @@ var intro_walk_tween: Tween
 var intro_start_position := Vector2.ZERO
 var intro_generation := 0
 
-const INTRO_WALK_DURATION := 4.0
+const INTRO_WALK_DURATION := 5.75
 
 
 func setup(p: Player) -> void:
@@ -83,6 +83,8 @@ func play_intro_walk(target_position: Vector2) -> void:
 		skeleton_knight.flip_to_right()
 
 	animated_sprite.play(&"walk")
+	if not running_sound.playing:
+		running_sound.play()
 	intro_walk_tween = create_tween()
 	intro_walk_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	intro_walk_tween.tween_property(
@@ -93,12 +95,14 @@ func play_intro_walk(target_position: Vector2) -> void:
 	)
 	await intro_walk_tween.finished
 	if intro_skipped or generation != intro_generation:
+		running_sound.stop()
 		return
 
 	skeleton_knight.global_position = target_position
 	skeleton_knight.spawn_origin = target_position
 	skeleton_knight.velocity = Vector2.ZERO
 	animated_sprite.play(&"idle")
+	running_sound.stop()
 	intro_walk_tween = null
 
 
@@ -112,6 +116,7 @@ func cancel_intro() -> void:
 	animated_sprite.stop()
 	animated_sprite.speed_scale = 1.0
 	skeleton_knight.velocity = Vector2.ZERO
+	running_sound.stop()
 
 
 func stop_battle() -> void:

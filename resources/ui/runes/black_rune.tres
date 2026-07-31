@@ -15,4 +15,5 @@ display_name = "Dark Rune"
 icon = SubResource("AtlasTexture_fgifm")
 description = "Dark Rune"
 collect_sound = ExtResource("1_61ya2")
+collect_volume_db = -12.0
 metadata/_custom_type_script = "uid://ca28ye276k74g"

@@ -15,4 +15,5 @@ display_name = "Blue Rune"
 icon = SubResource("AtlasTexture_xffph")
 description = "Blue Rune"
 collect_sound = ExtResource("1_collect")
+collect_volume_db = -12.0
 metadata/_custom_type_script = "uid://ca28ye276k74g"

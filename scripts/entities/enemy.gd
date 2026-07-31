@@ -24,6 +24,9 @@ var walk_direction := Vector2.ZERO
 var spawn_origin: Vector2
 var state: State = State.IDLE
 var hit_window_open := false
+var chase_variation_timer := 0.0
+var chase_strafe_weight := 0.0
+var chase_speed_multiplier := 1.0
 
 var attack_on_progress := false
 var attack_timer := 0.0
@@ -155,7 +158,22 @@ func _chase_player():
 
 	var next_pos = pathfinder.get_next_path_position()
 	var direction = global_position.direction_to(next_pos)
-	velocity = direction * config.speed
+	var strafe_direction := direction.rotated(PI * 0.5)
+	velocity = (
+		direction + strafe_direction * chase_strafe_weight
+	).normalized() * config.speed * chase_speed_multiplier
+
+
+func _update_chase_variation(delta: float) -> void:
+	chase_variation_timer -= delta
+	if chase_variation_timer > 0.0:
+		return
+
+	chase_variation_timer = randf_range(0.45, 0.95)
+	chase_strafe_weight = randf_range(0.12, 0.36)
+	if randf() < 0.5:
+		chase_strafe_weight *= -1.0
+	chase_speed_multiplier = 1.22 if randf() < 0.3 else 1.0
 
 func deal_attack_damage():
 	pass
@@ -175,6 +193,7 @@ func _physics_process(delta: float) -> void:
 		change_state(State.PATROLLING)
 		
 	if player and state == State.CHASING:
+		_update_chase_variation(delta)
 		_chase_player()
 	elif state == State.RETURNING_SPAWN_ORIGIN:
 		pathfinder.target_position = spawn_origin

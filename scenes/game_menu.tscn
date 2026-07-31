@@ -203,18 +203,29 @@ lifetime = 5.5
 process_material = SubResource("ParticleProcessMaterial_menu")
 
 [node name="Author" type="Label" parent="." unique_id=1835080108]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
 offset_left = 32.0
-offset_top = 725.0
+offset_top = -52.0
 offset_right = 410.0
-offset_bottom = 756.0
+offset_bottom = -26.0
+grow_vertical = 0
 text = "A GAME BY GUILHERME CHINA"
 label_settings = SubResource("LabelSettings_meta")
 
 [node name="Build" type="Label" parent="." unique_id=2103622483]
-offset_left = 1122.0
-offset_top = 725.0
-offset_right = 1332.0
-offset_bottom = 756.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -244.0
+offset_top = -52.0
+offset_right = -32.0
+offset_bottom = -26.0
+grow_horizontal = 0
+grow_vertical = 0
 text = "PRELUDE // v0.1"
 label_settings = SubResource("LabelSettings_meta")
 horizontal_alignment = 2

@@ -12,9 +12,37 @@ const ATTACK_SOUND = preload("res://assets/audio/greatsword.mp3")
 
 var random_move_timer := 0.0
 var movement_offset := Vector2.ZERO
+var combat_maneuver_timer := 0.0
+var orbit_direction := 1.0
+
+const MANEUVER_CHANCE := 0.5
+const MANEUVER_DURATION_MIN := 0.65
+const MANEUVER_DURATION_MAX := 0.95
+const MANEUVER_SPEED_MULTIPLIER := 1.55
 
 func process_special_movement(delta: float) -> void:
 	if state == State.CHASING:
+		if dash_controller.process(delta):
+			velocity = dash_controller.dash_velocity
+			return
+
+		if combat_maneuver_timer > 0.0:
+			combat_maneuver_timer -= delta
+			var toward_player := global_position.direction_to(player.global_position)
+			var orbit_vector := toward_player.rotated(
+				PI * 0.5 * orbit_direction
+			)
+			velocity = (
+				orbit_vector * 0.92 - toward_player * 0.38
+			).normalized() * config.speed * MANEUVER_SPEED_MULTIPLIER
+
+			if combat_maneuver_timer <= 0.0:
+				$AnimatedSprite2D.speed_scale = 1.0
+				if is_player_in_attack_range():
+					change_state(State.ATTACKING)
+					attack_timer = 0.25
+			return
+
 		random_move_timer -= delta
 
 		if random_move_timer <= 0.0:
@@ -23,6 +51,8 @@ func process_special_movement(delta: float) -> void:
 
 		var direction = global_position.direction_to(player.global_position)
 		velocity = (direction + movement_offset).normalized() * config.speed
+
+		return
 
 	super.process_special_movement(delta)
 	
@@ -81,8 +111,24 @@ func get_next_attack() -> AttackConfig:
 
 func on_attack_completed(_attack: AttackConfig) -> void:
 	combo_attack_index += 1
+	_try_combat_maneuver()
 	if combo_attack_index >= current_combo.attacks.size():
 		finish_combo()
+
+
+func _try_combat_maneuver() -> void:
+	if state != State.ATTACKING or not is_player_in_attack_range():
+		return
+	if randf() > MANEUVER_CHANCE:
+		return
+
+	combat_maneuver_timer = randf_range(
+		MANEUVER_DURATION_MIN,
+		MANEUVER_DURATION_MAX
+	)
+	orbit_direction = -1.0 if randf() < 0.5 else 1.0
+	$AnimatedSprite2D.speed_scale = 1.4
+	change_state(State.CHASING)
 
 func finish_combo():
 	combo_attack_index = 0
@@ -109,6 +155,8 @@ func reset_boss_combat_state() -> void:
 
 	random_move_timer = 0.0
 	movement_offset = Vector2.ZERO
+	combat_maneuver_timer = 0.0
+	$AnimatedSprite2D.speed_scale = 1.0
 	combo_attack_index = 0
 	current_combo = combo_basic
 

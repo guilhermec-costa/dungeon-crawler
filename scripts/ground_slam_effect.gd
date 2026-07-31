@@ -9,6 +9,7 @@ func _ready():
 	
 func play():
 	sprite.visible = true
+	dust_particles.emitting = true
 	dust_particles.restart()
 	
 	sprite.modulate.a = 0.6

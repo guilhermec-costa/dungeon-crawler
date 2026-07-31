@@ -44,7 +44,7 @@ var is_sprinting: bool = false:
 		is_sprinting = value
 		
 var stamina_cost := {
-	"roll": 30.0
+	"roll": 24.0
 }
 
 var inventory := Inventory.new(5)
@@ -162,8 +162,8 @@ func die():
 func _ready():
 	$Camera2D.zoom = Vector2(6.2, 6.2)
 	attacks = [
-		AttackConfig.new("attack1", config.attack_1_damage, 10, 3, 4),
-		AttackConfig.new("attack2", config.attack_2_damage, 15, 3, 4)
+		AttackConfig.new("attack1", config.attack_1_damage, 8, 3, 4),
+		AttackConfig.new("attack2", config.attack_2_damage, 12, 3, 4)
 	]
 	animated_sprite.frame_changed.connect(_on_frame_changed)
 	animated_sprite.animation_changed.connect(_on_animation_changed)
@@ -181,7 +181,10 @@ func collect_item(item: ItemData, amount: float) -> void:
 	inventory.add_item(item, amount)
 	var label: MessageLabel = MESSAGE_LABEL_SCENE.instantiate()
 	if item.collect_sound:
-		AudioManager.play_sfx(item.collect_sound)
+		AudioManager.play_sfx(
+			item.collect_sound,
+			AudioManager.AudioPlayerConfig.new(item.collect_volume_db, 1.0)
+		)
 	
 func handle_mouse_event(event: InputEventMouseButton) -> void:
 	if event.is_pressed():
@@ -212,7 +215,7 @@ func _input(event: InputEvent) -> void:
 
 func _attack():
 	var next_attack = choose_random_attack()
-	if stamina > next_attack.stamina_cost:
+	if stamina >= next_attack.stamina_cost:
 		current_attack = next_attack
 		change_state(State.ATTACKING)
 	else:
