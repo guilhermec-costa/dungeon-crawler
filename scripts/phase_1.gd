@@ -47,10 +47,8 @@ func _input(event: InputEvent) -> void:
 
 
 func start():
-	if OS.has_feature("cutscene_enabled"):
-		player.change_state(Player.State.CUTSCENE)
-		await phase1_animation_player.play()
-	
+	player.change_state(Player.State.CUTSCENE)
+	await phase1_animation_player.play()
 	player.change_state(Player.State.IDLE)
 	player.start($PlayerStartPosition.global_position)
 

@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://bewu5eqkuf1xu"]
+
+[ext_resource type="Script" uid="uid://dx8isomwsdqd0" path="res://scripts/opening_story.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://ds0suu43acxwc" path="res://assets/menu_screen.png" id="2_background"]
+[ext_resource type="FontFile" uid="uid://dte1v3ghcwv75" path="res://assets/fonts/m5x7.ttf" id="3_font"]
+[ext_resource type="Texture2D" uid="uid://drviscsmtjjde" path="res://assets/loreon_knight/sword_1/stand_up_1.png" id="4_knight"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("3_font")
+font_size = 52
+font_color = Color(0.831373, 0.615686, 0.458824, 1)
+outline_size = 4
+outline_color = Color(0.0666667, 0.054902, 0.0705882, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_story"]
+font = ExtResource("3_font")
+font_size = 30
+font_color = Color(0.941176, 0.886275, 0.709804, 1)
+outline_size = 2
+outline_color = Color(0.0509804, 0.0470588, 0.0627451, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_small"]
+font = ExtResource("3_font")
+font_size = 18
+font_color = Color(0.756863, 0.611765, 0.478431, 1)
+outline_size = 1
+outline_color = Color(0.0509804, 0.0470588, 0.0627451, 1)
+
+[node name="OpeningStory" type="CanvasLayer" unique_id=122308528]
+layer = 5
+script = ExtResource("1_script")
+
+[node name="Backdrop" type="TextureRect" parent="." unique_id=1816871882]
+modulate = Color(0.207843, 0.172549, 0.192157, 1)
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Shade" type="ColorRect" parent="." unique_id=815021344]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0352941, 0.027451, 0.0431373, 0.9)
+
+[node name="Chapter" type="Label" parent="." unique_id=2067955352]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 70.0
+offset_bottom = 94.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.631373, 0.443137, 0.360784, 1)
+theme_override_colors/font_outline_color = Color(0.0509804, 0.0470588, 0.0627451, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 18
+text = "PROLOGUE  •  THE ASHES OF LOREON"
+horizontal_alignment = 1
+
+[node name="Title" type="Label" parent="." unique_id=850592863]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 102.0
+offset_bottom = 164.0
+grow_horizontal = 2
+text = "ASHBOUND"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+
+[node name="StoryText" type="Label" parent="." unique_id=1631668698]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 244.0
+offset_top = 260.0
+offset_right = -244.0
+offset_bottom = 430.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_story")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Knight" type="Sprite2D" parent="." unique_id=1034634347]
+modulate = Color(0.560784, 0.443137, 0.447059, 0.55)
+texture_filter = 1
+position = Vector2(1090, 506)
+scale = Vector2(5.5, 5.5)
+texture = ExtResource("4_knight")
+
+[node name="Progress" type="Label" parent="." unique_id=643486756]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 502.0
+offset_bottom = 530.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="AdvanceHint" type="Label" parent="." unique_id=175483339]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 620.0
+offset_bottom = 644.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1

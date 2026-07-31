@@ -3716,7 +3716,7 @@ blend_mode = 2
 shadow_enabled = true
 
 [node name="PlayerStartPosition" type="Marker2D" parent="." unique_id=2011610962]
-position = Vector2(-126, 354)
+position = Vector2(-126, 353)
 
 [node name="DungeonAmbienceSound" type="AudioStreamPlayer2D" parent="." unique_id=686928459]
 stream = ExtResource("8_wi8qh")

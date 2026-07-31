@@ -6,11 +6,12 @@ const secret_room: PackedScene = preload("res://scenes/secret_room.tscn")
 @onready var game_menu: GameMenu = $GameMenu
 @onready var pause_menu = $PauseMenu
 @onready var resume_button: Button = $PauseMenu/ResumeButton
+@onready var opening_story: OpeningStory = $OpeningStory
 
 var current_phase: Node
+var is_starting_game := false
 	
 func _ready():
-	#AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), true)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	pause_menu.process_mode = Node.PROCESS_MODE_ALWAYS
 	game_menu.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -71,7 +72,14 @@ func restart_phase() -> void:
 
 
 func _on_game_menu_start_game() -> void:
-	start_game()
+	if is_starting_game:
+		return
+
+	is_starting_game = true
+	game_menu.hide_menu()
+	await opening_story.play_story()
+	await start_game()
+	is_starting_game = false
 
 func _on_game_quit() -> void:
 	get_tree().quit()

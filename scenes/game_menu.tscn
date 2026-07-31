@@ -1,183 +1,226 @@
-[gd_scene format=3 uid="uid://ce5cyr56n8bf4"]
+[gd_scene format=3 uid="uid://nakw7yhfg6cs"]
 
-[ext_resource type="Script" uid="uid://dgsxfimml0udg" path="res://scripts/game_menu.gd" id="1_qdaa4"]
-[ext_resource type="Texture2D" uid="uid://ds0suu43acxwc" path="res://assets/menu_screen.png" id="2_aru3y"]
-[ext_resource type="FontFile" uid="uid://dte1v3ghcwv75" path="res://assets/fonts/m5x7.ttf" id="2_vrsc2"]
-[ext_resource type="Texture2D" uid="uid://c0o614m8d54j" path="res://assets/UI/white.png" id="4_yr8n5"]
-[ext_resource type="Texture2D" uid="uid://dgxsame24ije" path="res://assets/UI/grey.png" id="5_ldg7d"]
-[ext_resource type="Texture2D" uid="uid://dmoj42q3n6h3e" path="res://assets/UI/white_pressed.png" id="7_yr8n5"]
-[ext_resource type="AudioStream" uid="uid://b4ff41jr536w5" path="res://assets/audio/dungeon_ambience.mp3" id="9_u3xmg"]
-[ext_resource type="Texture2D" uid="uid://drviscsmtjjde" path="res://assets/loreon_knight/sword_1/stand_up_1.png" id="34_b6akc"]
+[ext_resource type="Script" uid="uid://d1bxs125b8l3a" path="res://scripts/game_menu.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://ds0suu43acxwc" path="res://assets/menu_screen.png" id="2_background"]
+[ext_resource type="FontFile" uid="uid://dte1v3ghcwv75" path="res://assets/fonts/m5x7.ttf" id="3_font"]
+[ext_resource type="Texture2D" uid="uid://c0o614m8d54j" path="res://assets/UI/white.png" id="4_button_hover"]
+[ext_resource type="Texture2D" uid="uid://dgxsame24ije" path="res://assets/UI/grey.png" id="5_button_normal"]
+[ext_resource type="Texture2D" uid="uid://dmoj42q3n6h3e" path="res://assets/UI/white_pressed.png" id="6_button_pressed"]
+[ext_resource type="AudioStream" uid="uid://b4ff41jr536w5" path="res://assets/audio/dungeon_ambience.mp3" id="7_music"]
+[ext_resource type="Texture2D" uid="uid://drviscsmtjjde" path="res://assets/loreon_knight/sword_1/stand_up_1.png" id="8_knight"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_ysvk1"]
-font = ExtResource("2_vrsc2")
-font_size = 30
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("3_font")
+font_size = 108
+font_color = Color(0.84, 0.64, 0.33, 1)
+outline_size = 7
+outline_color = Color(0.11, 0.065, 0.04, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_offset = Vector2(4, 5)
 
-[sub_resource type="LabelSettings" id="LabelSettings_mw6r2"]
-font = ExtResource("2_vrsc2")
-font_size = 29
+[sub_resource type="LabelSettings" id="LabelSettings_subtitle"]
+font = ExtResource("3_font")
+font_size = 22
+font_color = Color(0.83, 0.76, 0.62, 1)
+outline_size = 3
+outline_color = Color(0.08, 0.05, 0.035, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_3wx75"]
-font = ExtResource("2_vrsc2")
-font_size = 90
-font_color = Color(0.73674965, 0.5244332, 0.43488476, 1)
-outline_size = 5
-outline_color = Color(0.1922378, 0.20197913, 0.18418887, 1)
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aru3y"]
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(52.325, 0, 0)
-emission_shape_scale = Vector3(25.72, 9.48, 1)
-emission_shape = 3
-emission_box_extents = Vector3(26.775, 33.605, 1)
-radial_velocity_min = -2.2351742e-05
-radial_velocity_max = 1.9999776
-gravity = Vector3(0, 11.255, 0)
-scale_min = 0.19999999
-scale_max = 3.99
-
-[sub_resource type="LabelSettings" id="LabelSettings_aru3y"]
-font = ExtResource("2_vrsc2")
-font_size = 25
-font_color = Color(0.75744814, 0.50861347, 0.32224965, 1)
+[sub_resource type="LabelSettings" id="LabelSettings_meta"]
+font = ExtResource("3_font")
+font_size = 15
+font_color = Color(0.67, 0.57, 0.42, 0.9)
 outline_size = 2
-outline_color = Color(0, 0, 0, 1)
+outline_color = Color(0.06, 0.035, 0.025, 0.9)
 
-[node name="GameMenu" type="CanvasLayer" unique_id=222706555]
-script = ExtResource("1_qdaa4")
+[sub_resource type="LabelSettings" id="LabelSettings_button"]
+font = ExtResource("3_font")
+font_size = 24
+font_color = Color(0.16, 0.11, 0.075, 1)
+outline_size = 2
+outline_color = Color(0.9, 0.84, 0.7, 0.65)
 
-[node name="ColorRect" type="TextureRect" parent="." unique_id=616860228]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_menu"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(210, 120, 1)
+direction = Vector3(0, -1, 0)
+spread = 35.0
+initial_velocity_min = 10.0
+initial_velocity_max = 24.0
+gravity = Vector3(0, -12, 0)
+scale_min = 1.5
+scale_max = 3.0
+color = Color(1, 0.55, 0.2, 0.6)
+
+[node name="GameMenu" type="CanvasLayer" unique_id=1127378947]
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="." unique_id=138612468]
 texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -9.0
-offset_top = -1.0
-offset_right = -1.0
-offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_aru3y")
+texture = ExtResource("2_background")
 expand_mode = 1
+stretch_mode = 6
 
-[node name="PlayButton" type="TextureButton" parent="." unique_id=135075554]
-self_modulate = Color(0.19215687, 0.16470589, 0.1764706, 1)
-texture_filter = 1
-offset_left = 633.0
-offset_top = 444.0
-offset_right = 751.0
-offset_bottom = 492.0
-texture_normal = ExtResource("5_ldg7d")
-texture_hover = ExtResource("4_yr8n5")
-stretch_mode = 0
-
-[node name="Label" type="Label" parent="PlayButton" unique_id=144142105]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Play"
-label_settings = SubResource("LabelSettings_ysvk1")
-
-[node name="ExitButton" type="TextureButton" parent="." unique_id=594931811]
-self_modulate = Color(0.19228476, 0.16385478, 0.17764229, 1)
-texture_filter = 1
-offset_left = 634.0
-offset_top = 503.0
-offset_right = 750.0
-offset_bottom = 551.0
-texture_normal = ExtResource("5_ldg7d")
-texture_hover = ExtResource("7_yr8n5")
-stretch_mode = 0
-
-[node name="Label" type="Label" parent="ExitButton" unique_id=392425558]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Exit"
-label_settings = SubResource("LabelSettings_mw6r2")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="GameName" type="Label" parent="." unique_id=1361357564]
-texture_filter = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -164.0
-offset_top = 94.0
-offset_right = 212.0
-offset_bottom = 196.0
-grow_horizontal = 2
-text = "Ashbound "
-label_settings = SubResource("LabelSettings_3wx75")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Particles" type="Node2D" parent="." unique_id=1373896208]
-
-[node name="MapParticlesSmall" type="GPUParticles2D" parent="Particles" unique_id=1191294048]
-self_modulate = Color(0.4162521, 0.24623057, 0.17816174, 1)
-texture_filter = 2
-position = Vector2(630, 339)
-amount = 300
-lifetime = 21.84
-trail_lifetime = 9.15
-process_material = SubResource("ParticleProcessMaterial_aru3y")
-
-[node name="MapParticlesBig" type="GPUParticles2D" parent="Particles" unique_id=278795414]
-modulate = Color(0.48178947, 0.48178947, 0.48178947, 1)
-texture_filter = 2
-position = Vector2(630, 339)
-emitting = false
-amount = 120
-lifetime = 12.0
-explosiveness = 1.0
-randomness = 1.0
-trail_lifetime = 2.24
-process_material = SubResource("ParticleProcessMaterial_aru3y")
-
-[node name="Author" type="Label" parent="." unique_id=413272541]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
+[node name="Atmosphere" type="ColorRect" parent="." unique_id=1505575195]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -191.0
-offset_top = -30.0
-offset_right = -22.0
-offset_bottom = -7.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "Game by Guilherme China"
-label_settings = SubResource("LabelSettings_aru3y")
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.035, 0.02, 0.018, 0.42)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=909595610]
-modulate = Color(0.16924515, 0.16924536, 0.16924527, 1)
+[node name="ReadingShade" type="ColorRect" parent="." unique_id=1276222012]
+anchors_preset = -1
+anchor_right = 0.56
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.014, 0.012, 0.72)
+
+[node name="TitleRule" type="ColorRect" parent="." unique_id=545070816]
+offset_left = 116.0
+offset_top = 250.0
+offset_right = 420.0
+offset_bottom = 254.0
+mouse_filter = 2
+color = Color(0.87, 0.5, 0.21, 0.9)
+
+[node name="GameName" type="Label" parent="." unique_id=665013732]
+offset_left = 108.0
+offset_top = 104.0
+offset_right = 680.0
+offset_bottom = 232.0
+text = "ASHBOUND"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="StoryHook" type="Label" parent="." unique_id=1106413210]
+offset_left = 116.0
+offset_top = 274.0
+offset_right = 580.0
+offset_bottom = 352.0
+text = "LOREON FORGOT THE DEAD.
+THE DEAD DID NOT FORGET LOREON."
+label_settings = SubResource("LabelSettings_subtitle")
+
+[node name="JourneyPrompt" type="Label" parent="." unique_id=958726491]
+offset_left = 116.0
+offset_top = 403.0
+offset_right = 450.0
+offset_bottom = 429.0
+text = "CHOOSE YOUR FATE"
+label_settings = SubResource("LabelSettings_meta")
+
+[node name="PlayButton" type="TextureButton" parent="." unique_id=628746051]
 texture_filter = 1
-position = Vector2(437, 281)
-scale = Vector2(4.2, 4.2)
-texture = ExtResource("34_b6akc")
+offset_left = 112.0
+offset_top = 438.0
+offset_right = 418.0
+offset_bottom = 505.0
+texture_normal = ExtResource("5_button_normal")
+texture_pressed = ExtResource("6_button_pressed")
+texture_hover = ExtResource("4_button_hover")
+ignore_texture_size = true
 
-[node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=487210644]
-stream = ExtResource("9_u3xmg")
+[node name="Label" type="Label" parent="PlayButton" unique_id=620618492]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "BEGIN JOURNEY"
+label_settings = SubResource("LabelSettings_button")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExitButton" type="TextureButton" parent="." unique_id=73787241]
+texture_filter = 1
+offset_left = 112.0
+offset_top = 518.0
+offset_right = 418.0
+offset_bottom = 576.0
+texture_normal = ExtResource("5_button_normal")
+texture_pressed = ExtResource("6_button_pressed")
+texture_hover = ExtResource("4_button_hover")
+ignore_texture_size = true
+
+[node name="Label" type="Label" parent="ExitButton" unique_id=296903175]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "QUIT"
+label_settings = SubResource("LabelSettings_button")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ControlsHint" type="Label" parent="." unique_id=1698066386]
+offset_left = 116.0
+offset_top = 594.0
+offset_right = 480.0
+offset_bottom = 620.0
+text = "ENTER TO BEGIN  •  ARROWS TO NAVIGATE"
+label_settings = SubResource("LabelSettings_meta")
+
+[node name="Knight" type="Sprite2D" parent="." unique_id=1813309137]
+modulate = Color(1, 0.91, 0.76, 1)
+texture_filter = 1
+position = Vector2(1034, 477)
+scale = Vector2(8, 8)
+texture = ExtResource("8_knight")
+
+[node name="KnightCaption" type="Label" parent="." unique_id=2109053237]
+offset_left = 844.0
+offset_top = 702.0
+offset_right = 1218.0
+offset_bottom = 728.0
+text = "THE LAST KNIGHT OF LOREON"
+label_settings = SubResource("LabelSettings_meta")
+horizontal_alignment = 1
+
+[node name="Particles" type="Node2D" parent="." unique_id=1466550033]
+
+[node name="MapParticlesSmall" type="GPUParticles2D" parent="Particles" unique_id=1606697410]
+position = Vector2(928, 366)
+amount = 34
+lifetime = 4.0
+process_material = SubResource("ParticleProcessMaterial_menu")
+
+[node name="MapParticlesBig" type="GPUParticles2D" parent="Particles" unique_id=102003712]
+position = Vector2(1080, 560)
+amount = 22
+lifetime = 5.5
+process_material = SubResource("ParticleProcessMaterial_menu")
+
+[node name="Author" type="Label" parent="." unique_id=1835080108]
+offset_left = 32.0
+offset_top = 725.0
+offset_right = 410.0
+offset_bottom = 756.0
+text = "A GAME BY GUILHERME CHINA"
+label_settings = SubResource("LabelSettings_meta")
+
+[node name="Build" type="Label" parent="." unique_id=2103622483]
+offset_left = 1122.0
+offset_top = 725.0
+offset_right = 1332.0
+offset_bottom = 756.0
+text = "PRELUDE // v0.1"
+label_settings = SubResource("LabelSettings_meta")
+horizontal_alignment = 2
+
+[node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=1834562523]
+stream = ExtResource("7_music")
 volume_db = -9.768
 pitch_scale = 0.89
 autoplay = true
