@@ -43,6 +43,7 @@ func prepare_for_intro() -> void:
 	skeleton_knight.state = BaseEnemy.State.IDLE
 	skeleton_knight.set_process(false)
 	skeleton_knight.set_physics_process(false)
+	skeleton_knight.set_shadow_visible(false)
 	walk_timer.stop()
 
 	body_collision.disabled = true
@@ -66,6 +67,7 @@ func get_focus_position() -> Vector2:
 
 func play_revival() -> void:
 	var generation := intro_generation
+	skeleton_knight.set_shadow_visible(false)
 	animated_sprite.speed_scale = 0.55
 	animated_sprite.play_backwards(&"die")
 	await animated_sprite.animation_finished
@@ -87,6 +89,7 @@ func play_intro_walk(target_position: Vector2) -> void:
 		skeleton_knight.flip_to_right()
 
 	animated_sprite.play(&"walk")
+	skeleton_knight.set_shadow_visible(true)
 	if not running_sound.playing:
 		running_sound.play()
 	intro_walk_tween = create_tween()
@@ -100,6 +103,7 @@ func play_intro_walk(target_position: Vector2) -> void:
 	await intro_walk_tween.finished
 	if intro_skipped or generation != intro_generation:
 		running_sound.stop()
+		skeleton_knight.set_shadow_visible(false)
 		return
 
 	skeleton_knight.global_position = target_position
@@ -107,6 +111,7 @@ func play_intro_walk(target_position: Vector2) -> void:
 	skeleton_knight.velocity = Vector2.ZERO
 	animated_sprite.play(&"idle")
 	running_sound.stop()
+	skeleton_knight.set_shadow_visible(false)
 	intro_walk_tween = null
 
 
@@ -120,6 +125,7 @@ func cancel_intro() -> void:
 	animated_sprite.stop()
 	animated_sprite.speed_scale = 1.0
 	skeleton_knight.velocity = Vector2.ZERO
+	skeleton_knight.set_shadow_visible(false)
 	running_sound.stop()
 
 
@@ -133,6 +139,7 @@ func stop_battle() -> void:
 	skeleton_knight.set_physics_process(false)
 	skeleton_knight.clear_attack()
 	skeleton_knight.velocity = Vector2.ZERO
+	skeleton_knight.set_shadow_visible(false)
 	walk_timer.stop()
 	running_sound.stop()
 	skeleton_knight.sword_hit_sound.stop()

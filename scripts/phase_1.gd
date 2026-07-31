@@ -27,6 +27,12 @@ var blue_golem: PackedScene = preload("res://scenes/enemies/blue_golem.tscn")
 @onready var leave_light: PointLight2D = $World/DungeonMap/Lights/LeaveLight
 @onready var leave_trigger: Area2D = $World/DungeonMap/LeaveTrigger
 @onready var exit_prompt: CanvasLayer = $ExitPrompt
+@onready var gate_message: CanvasLayer = $GateMessage
+@onready var gate_message_label: Label = $GateMessage/Label
+@onready var boss_access_gate: BossAccessGate = $World/DungeonMap/BossAccessGate
+@onready var boss_access_gate_collision: CollisionShape2D = $World/DungeonMap/BossAccessGate/StaticBody2D/CollisionShape2D
+@onready var arena_gate: Node2D = $World/DungeonMap/ArenaGate
+@onready var arena_gate_collision: CollisionShape2D = $World/DungeonMap/ArenaGate/StaticBody2D/CollisionShape2D
 
 var last_position_on_dungeon_map: Vector2 = Vector2.ZERO
 var boss_intro_started := false
@@ -39,6 +45,7 @@ var boss_intro_player_target := Vector2.ZERO
 var boss_intro_generation := 0
 var has_completed := false
 var awaiting_exit := false
+var gate_message_generation := 0
 
 
 func _ready() -> void:
@@ -48,9 +55,13 @@ func _ready() -> void:
 	phase_1_boss.defeated.connect(_on_phase_1_boss_defeated)
 	boss_cutscene_trigger.body_entered.connect(_on_boss_cutscene_trigger_body_entered)
 	leave_trigger.body_entered.connect(_on_leave_trigger_body_entered)
+	boss_access_gate.locked_touched.connect(_on_boss_access_gate_touched)
+	boss_access_gate.unlocked.connect(_unlock_boss_access_gate)
 	secret_room.hide()
 	leave_light.energy = 0.0
 	exit_prompt.hide()
+	gate_message.hide()
+	set_arena_gate_sealed(false)
 
 
 func _input(event: InputEvent) -> void:
@@ -244,6 +255,31 @@ func finish_boss_intro() -> void:
 
 	player.change_state(Player.State.IDLE)
 	phase_1_boss.start_battle()
+	set_arena_gate_sealed(true)
+
+
+func _on_boss_access_gate_touched() -> void:
+	show_gate_message("THE CORRIDOR IS SEALED.\nTHE CORRUPTED KEY LIES BEYOND THE RUNE TRIAL.")
+
+
+func _unlock_boss_access_gate() -> void:
+	boss_access_gate_collision.set_deferred("disabled", true)
+	boss_access_gate.hide()
+
+
+func show_gate_message(message: String) -> void:
+	gate_message_generation += 1
+	var generation := gate_message_generation
+	gate_message_label.text = message
+	gate_message.show()
+	await get_tree().create_timer(3.0).timeout
+	if generation == gate_message_generation:
+		gate_message.hide()
+
+
+func set_arena_gate_sealed(sealed: bool) -> void:
+	arena_gate.visible = sealed
+	arena_gate_collision.set_deferred("disabled", not sealed)
 
 
 func is_boss_battle_active() -> bool:
@@ -332,6 +368,7 @@ func respawn_after_boss_death() -> void:
 	exit_prompt.hide()
 
 	phase_1_boss.reset_for_intro()
+	set_arena_gate_sealed(false)
 	player_camera.position = boss_intro_camera_position
 	player_camera.zoom = boss_intro_camera_zoom
 	player.respawn(boss_respawn_position.global_position)

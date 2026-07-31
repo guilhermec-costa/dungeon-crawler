@@ -36,13 +36,8 @@ func update_animation(new_animation: String) -> void:
 		play(target_animation)
 
 func get_directional_animation(base_animation: String) -> String:
-	if base_animation != "run" and base_animation != "walk":
-		return base_animation
-
-	if abs(movement_direction.y) > abs(movement_direction.x):
-		var vertical_direction := "down" if movement_direction.y > 0 else "up"
-		return "%s_%s" % [base_animation, vertical_direction]
-
+	# The player sprite only has the original side-facing locomotion set. Keeping
+	# movement vertical changes the facing direction, but never swaps the art.
 	return base_animation
 
 func _on_animation_changed():

@@ -14,12 +14,33 @@ var random_move_timer := 0.0
 var movement_offset := Vector2.ZERO
 var combat_maneuver_timer := 0.0
 var orbit_direction := 1.0
+var shadow_visible := false
 
 const MANEUVER_CHANCE := 0.5
 const MANEUVER_DURATION_MIN := 0.65
 const MANEUVER_DURATION_MAX := 0.95
 const MANEUVER_SPEED_MULTIPLIER := 1.55
 const DEATH_ANIMATION_SPEED := 0.48
+
+
+func _draw() -> void:
+	if shadow_visible:
+		super._draw()
+
+
+func set_shadow_visible(value: bool) -> void:
+	if shadow_visible == value:
+		return
+	shadow_visible = value
+	queue_redraw()
+
+
+func _process(delta: float) -> void:
+	super._process(delta)
+	# During combat, the shadow follows real movement instead of remaining under
+	# a stationary attacker. The intro walk is handled explicitly by Phase1Boss.
+	if state != State.DEAD:
+		set_shadow_visible(velocity.length_squared() > 1.0)
 
 func process_special_movement(delta: float) -> void:
 	if state == State.CHASING:
@@ -175,6 +196,7 @@ func reset_boss_combat_state() -> void:
 	$AnimatedSprite2D.modulate = Color.WHITE
 	$RunningSound.stop()
 	sword_hit_sound.stop()
+	set_shadow_visible(false)
 
 
 func die() -> void:
@@ -186,6 +208,7 @@ func die() -> void:
 	$HealthBar.hide_health_ui()
 	state = State.DEAD
 	velocity = Vector2.ZERO
+	set_shadow_visible(false)
 	$RunningSound.stop()
 	sword_hit_sound.stop()
 	$DieSound.play()
