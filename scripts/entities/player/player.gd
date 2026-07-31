@@ -13,6 +13,7 @@ const MESSAGE_LABEL_SCENE := preload("res://scenes/UI/message_label.tscn")
 @onready var running_sound: AudioStreamPlayer2D = $RunningSound
 @onready var walk_sound: AudioStreamPlayer2D = $WalkSound
 @onready var take_damage_sound: AudioStreamPlayer2D = $TakeDamageSound
+@onready var death_sound: AudioStreamPlayer2D = $DeathSound
 @onready var drink_potion_life: AudioStreamPlayer2D = $PotionDrinkSound
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var raycast: RayCast2D = $CollisionRay
@@ -42,7 +43,7 @@ var is_sprinting: bool = false:
 		return is_sprinting and velocity.length() > 0
 	set(value):
 		is_sprinting = value
-		
+
 var stamina_cost := {
 	"roll": 24.0
 }
@@ -152,6 +153,7 @@ func respawn(respawn_position: Vector2) -> void:
 
 func die():
 	change_state(State.DEAD)
+	death_sound.play()
 	animated_sprite.play("death")
 
 	await animated_sprite.animation_finished

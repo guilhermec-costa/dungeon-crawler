@@ -1,6 +1,8 @@
 class_name Phase1Boss
 extends Node2D
 
+signal defeated
+
 @export var player: Player
 
 @onready var skeleton_knight: BaseSkeleton = $SkeletonKnight
@@ -14,6 +16,7 @@ extends Node2D
 @onready var sword_area: Area2D = $SkeletonKnight/SwordArea
 @onready var walk_timer: Timer = $SkeletonKnight/WalkTimer
 @onready var running_sound: AudioStreamPlayer2D = $SkeletonKnight/RunningSound
+@onready var death_sound: AudioStreamPlayer2D = $SkeletonKnight/DieSound
 @onready var boss_music: AudioStreamPlayer = $BossMusic
 
 var battle_started := false
@@ -21,6 +24,7 @@ var intro_skipped := false
 var intro_walk_tween: Tween
 var intro_start_position := Vector2.ZERO
 var intro_generation := 0
+var defeat_reported := false
 
 const INTRO_WALK_DURATION := 5.75
 
@@ -142,6 +146,7 @@ func stop_battle() -> void:
 func reset_for_intro() -> void:
 	intro_generation += 1
 	intro_skipped = false
+	defeat_reported = false
 	if intro_walk_tween and intro_walk_tween.is_valid():
 		intro_walk_tween.kill()
 	intro_walk_tween = null
@@ -195,7 +200,17 @@ func _process(_delta: float) -> void:
 
 	boss_health_bar.value = skeleton_knight.health
 	if skeleton_knight.state == BaseEnemy.State.DEAD:
+		if not defeat_reported:
+			defeat_reported = true
+			defeated.emit()
 		stop_battle()
+
+
+func wait_for_death_presentation() -> void:
+	if animated_sprite.animation == &"die" and animated_sprite.is_playing():
+		await animated_sprite.animation_finished
+	if death_sound.playing:
+		await death_sound.finished
 
 
 func _set_dungeon_ambience_paused(paused: bool) -> void:

@@ -7,6 +7,7 @@ const secret_room: PackedScene = preload("res://scenes/secret_room.tscn")
 @onready var pause_menu = $PauseMenu
 @onready var resume_button: Button = $PauseMenu/ResumeButton
 @onready var opening_story: OpeningStory = $OpeningStory
+@onready var ending_screen: EndingScreen = $EndingScreen
 
 var current_phase: Node
 var is_starting_game := false
@@ -17,13 +18,18 @@ func _ready():
 	game_menu.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	resume_button.pressed.connect(_on_resume_button_pressed)
+	ending_screen.return_to_title.connect(_on_ending_return_to_title)
 	pause_menu.hide()
 	
 func _on_resume_button_pressed():
 	pause_menu.hide()
-	current_phase.get_tree().paused = false
+	if is_instance_valid(current_phase):
+		current_phase.get_tree().paused = false
 	
 func _on_player_died() -> void:
+	if not is_instance_valid(current_phase):
+		return
+
 	if current_phase is Phase1 and current_phase.is_boss_battle_active():
 		await current_phase.respawn_after_boss_death()
 		return
@@ -31,7 +37,7 @@ func _on_player_died() -> void:
 	await restart_phase()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause_game"):
+	if event.is_action_pressed("pause_game") and is_instance_valid(current_phase):
 		var tree = current_phase.get_tree()
 		tree.paused = !tree.paused
 		if tree.paused:
@@ -54,7 +60,29 @@ func create_phase() -> Phase1:
 	current_phase.process_mode = Node.PROCESS_MODE_PAUSABLE
 	add_child(phase1)
 	phase1.player.player_dead.connect(_on_player_died)
+	phase1.phase_completed.connect(_on_phase_completed)
 	return phase1
+
+
+func _on_phase_completed() -> void:
+	if not is_instance_valid(current_phase):
+		return
+
+	pause_menu.hide()
+	await TransitionManager.fade_out(0.65)
+
+	var completed_phase := current_phase
+	current_phase = null
+	completed_phase.queue_free()
+	await completed_phase.tree_exited
+
+	ending_screen.show_ending()
+	await TransitionManager.fade_in(0.65)
+
+
+func _on_ending_return_to_title() -> void:
+	ending_screen.hide_ending()
+	game_menu.show_menu()
 
 
 func restart_phase() -> void:

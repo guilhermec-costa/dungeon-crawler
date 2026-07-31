@@ -19,6 +19,7 @@ const MANEUVER_CHANCE := 0.5
 const MANEUVER_DURATION_MIN := 0.65
 const MANEUVER_DURATION_MAX := 0.95
 const MANEUVER_SPEED_MULTIPLIER := 1.55
+const DEATH_ANIMATION_SPEED := 0.48
 
 func process_special_movement(delta: float) -> void:
 	if state == State.CHASING:
@@ -174,3 +175,22 @@ func reset_boss_combat_state() -> void:
 	$AnimatedSprite2D.modulate = Color.WHITE
 	$RunningSound.stop()
 	sword_hit_sound.stop()
+
+
+func die() -> void:
+	if state == State.DEAD:
+		return
+
+	# The boss remains as a body in the arena for the victory cutscene.
+	clear_attack()
+	$HealthBar.hide_health_ui()
+	state = State.DEAD
+	velocity = Vector2.ZERO
+	$RunningSound.stop()
+	sword_hit_sound.stop()
+	$DieSound.play()
+	$AnimatedSprite2D.speed_scale = DEATH_ANIMATION_SPEED
+	$AnimatedSprite2D.play(&"die")
+
+	await $AnimatedSprite2D.animation_finished
+	$AnimatedSprite2D.speed_scale = 1.0

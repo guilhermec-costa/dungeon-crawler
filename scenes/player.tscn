@@ -45,6 +45,7 @@
 [ext_resource type="Script" uid="uid://kucebo152p4r" path="res://scripts/entities/player/animated_sprite_2d.gd" id="37_cs1tg"]
 [ext_resource type="AudioStream" uid="uid://benesukbqq1r6" path="res://assets/audio/walking_concrete.mp3" id="39_j2b1d"]
 [ext_resource type="AudioStream" uid="uid://vca04hgmqb81" path="res://assets/audio/player_take_damage.mp3" id="42_fdfoy"]
+[ext_resource type="AudioStream" path="res://assets/audio/player_dying.mp3" id="43_player_dying"]
 [ext_resource type="AudioStream" uid="uid://cwjdn0v51d6gc" path="res://assets/audio/potion_drink.wav" id="44_hhpqf"]
 [ext_resource type="Script" uid="uid://fcpanwfhgkib" path="res://scripts/entities/player/shadow.gd" id="45_g5jhy"]
 
@@ -614,6 +615,10 @@ volume_db = -13.679
 [node name="TakeDamageSound" type="AudioStreamPlayer2D" parent="." unique_id=1325334966]
 stream = ExtResource("42_fdfoy")
 volume_db = -10.917
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("43_player_dying")
+volume_db = -7.0
 
 [node name="WalkSound" type="AudioStreamPlayer2D" parent="." unique_id=296688781]
 stream = ExtResource("39_j2b1d")

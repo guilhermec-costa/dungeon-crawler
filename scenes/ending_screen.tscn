@@ -1,0 +1,146 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ending_screen.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://ds0suu43acxwc" path="res://assets/menu_screen.png" id="2_background"]
+[ext_resource type="FontFile" uid="uid://dte1v3ghcwv75" path="res://assets/fonts/m5x7.ttf" id="3_font"]
+[ext_resource type="Texture2D" uid="uid://dgxsame24ije" path="res://assets/UI/grey.png" id="4_button_normal"]
+[ext_resource type="Texture2D" uid="uid://c0o614m8d54j" path="res://assets/UI/white.png" id="5_button_hover"]
+[ext_resource type="Texture2D" uid="uid://dmoj42q3n6h3e" path="res://assets/UI/white_pressed.png" id="6_button_pressed"]
+[ext_resource type="Texture2D" uid="uid://drviscsmtjjde" path="res://assets/loreon_knight/sword_1/stand_up_1.png" id="7_knight"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("3_font")
+font_size = 72
+font_color = Color(0.84, 0.64, 0.33, 1)
+outline_size = 5
+outline_color = Color(0.11, 0.065, 0.04, 1)
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 0.65)
+shadow_offset = Vector2(3, 4)
+
+[sub_resource type="LabelSettings" id="LabelSettings_body"]
+font = ExtResource("3_font")
+font_size = 26
+font_color = Color(0.92, 0.85, 0.68, 1)
+outline_size = 2
+outline_color = Color(0.05, 0.03, 0.025, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_small"]
+font = ExtResource("3_font")
+font_size = 17
+font_color = Color(0.7, 0.57, 0.42, 1)
+outline_size = 1
+outline_color = Color(0.05, 0.03, 0.025, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_button"]
+font = ExtResource("3_font")
+font_size = 24
+font_color = Color(0.16, 0.11, 0.075, 1)
+outline_size = 2
+outline_color = Color(0.9, 0.84, 0.7, 0.65)
+
+[node name="EndingScreen" type="CanvasLayer"]
+layer = 6
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Atmosphere" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.015, 0.025, 0.76)
+
+[node name="ReadingShade" type="ColorRect" parent="."]
+anchors_preset = -1
+anchor_right = 0.63
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.014, 0.012, 0.62)
+
+[node name="Eyebrow" type="Label" parent="."]
+offset_left = 128.0
+offset_top = 152.0
+offset_right = 600.0
+offset_bottom = 178.0
+text = "THE ASHES OF LOREON"
+label_settings = SubResource("LabelSettings_small")
+
+[node name="TitleRule" type="ColorRect" parent="."]
+offset_left = 128.0
+offset_top = 196.0
+offset_right = 472.0
+offset_bottom = 200.0
+mouse_filter = 2
+color = Color(0.87, 0.5, 0.21, 0.9)
+
+[node name="Title" type="Label" parent="."]
+offset_left = 120.0
+offset_top = 212.0
+offset_right = 760.0
+offset_bottom = 300.0
+text = "VICTORY"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="Message" type="Label" parent="."]
+offset_left = 128.0
+offset_top = 322.0
+offset_right = 670.0
+offset_bottom = 414.0
+text = "THE RUNES ARE SILENT. THE GUARDIAN HAS FALLEN.\n\nFOR NOW, LOREON LETS YOU LEAVE."
+label_settings = SubResource("LabelSettings_body")
+autowrap_mode = 2
+
+[node name="ReturnButton" type="TextureButton" parent="."]
+texture_filter = 1
+offset_left = 128.0
+offset_top = 490.0
+offset_right = 452.0
+offset_bottom = 556.0
+texture_normal = ExtResource("4_button_normal")
+texture_pressed = ExtResource("6_button_pressed")
+texture_hover = ExtResource("5_button_hover")
+ignore_texture_size = true
+
+[node name="Label" type="Label" parent="ReturnButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "RETURN TO TITLE"
+label_settings = SubResource("LabelSettings_button")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hint" type="Label" parent="."]
+offset_left = 132.0
+offset_top = 578.0
+offset_right = 600.0
+offset_bottom = 604.0
+text = "ENTER TO RETURN"
+label_settings = SubResource("LabelSettings_small")
+
+[node name="Knight" type="Sprite2D" parent="."]
+modulate = Color(1, 0.91, 0.76, 1)
+texture_filter = 1
+position = Vector2(1004, 472)
+scale = Vector2(9, 9)
+texture = ExtResource("7_knight")

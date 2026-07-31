@@ -2,8 +2,12 @@ extends Node
 
 class_name Phase1
 
+signal phase_completed
+signal exit_reached
+
 const BOSS_BATTLE_FADE_OUT_DURATION := 0.25
 const BOSS_BATTLE_FADE_IN_DURATION := 0.65
+const LEAVE_LIGHT_ENERGY := 2.2
 
 var yellowSkeletonScene: PackedScene = preload("res://scenes/enemies/yellow_skeleton.tscn")
 var whiteSkeletonScene: PackedScene = preload("res://scenes/enemies/white_skeleton.tscn")
@@ -20,6 +24,9 @@ var blue_golem: PackedScene = preload("res://scenes/enemies/blue_golem.tscn")
 @onready var boss_battle_position: Marker2D = $World/DungeonMap/BossBattlePosition
 @onready var boss_respawn_position: Marker2D = $World/DungeonMap/BossRespawnPosition
 @onready var player_camera: Camera2D = $World/Entities/Player/Camera2D
+@onready var leave_light: PointLight2D = $World/DungeonMap/Lights/LeaveLight
+@onready var leave_trigger: Area2D = $World/DungeonMap/LeaveTrigger
+@onready var exit_prompt: CanvasLayer = $ExitPrompt
 
 var last_position_on_dungeon_map: Vector2 = Vector2.ZERO
 var boss_intro_started := false
@@ -30,14 +37,20 @@ var boss_intro_camera_position := Vector2.ZERO
 var boss_intro_camera_zoom := Vector2.ONE
 var boss_intro_player_target := Vector2.ZERO
 var boss_intro_generation := 0
+var has_completed := false
+var awaiting_exit := false
 
 
 func _ready() -> void:
 	player.current_room = dungeon_map
 	player.room_change_requested.connect(_on_player_room_change_request)
 	phase_1_boss.setup(player)
+	phase_1_boss.defeated.connect(_on_phase_1_boss_defeated)
 	boss_cutscene_trigger.body_entered.connect(_on_boss_cutscene_trigger_body_entered)
+	leave_trigger.body_entered.connect(_on_leave_trigger_body_entered)
 	secret_room.hide()
+	leave_light.energy = 0.0
+	exit_prompt.hide()
 
 
 func _input(event: InputEvent) -> void:
@@ -237,6 +250,73 @@ func is_boss_battle_active() -> bool:
 	return phase_1_boss.battle_started
 
 
+func _on_phase_1_boss_defeated() -> void:
+	if has_completed:
+		return
+
+	has_completed = true
+	player.change_state(Player.State.CUTSCENE)
+	player.velocity = Vector2.ZERO
+	player.stop_movement_sounds()
+
+	# The boss death is deliberately slow and remains visible on the arena floor.
+	# Do not reveal the exit until both its animation and death sound have ended.
+	await phase_1_boss.wait_for_death_presentation()
+	await get_tree().create_timer(0.35).timeout
+	await play_boss_victory_epilogue()
+	phase_completed.emit()
+
+
+func play_boss_victory_epilogue() -> void:
+	var camera_rest_position := player_camera.position
+	var leave_camera_position := player.to_local(leave_light.global_position) \
+		- player_camera.offset
+
+	var reveal_tween := create_tween().set_parallel()
+	reveal_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	reveal_tween.tween_property(
+		player_camera,
+		"position",
+		leave_camera_position,
+		1.25
+	)
+	reveal_tween.tween_property(
+		leave_light,
+		"energy",
+		LEAVE_LIGHT_ENERGY,
+		1.4
+	)
+	await reveal_tween.finished
+	await get_tree().create_timer(0.3).timeout
+
+	var return_camera_tween := create_tween()
+	return_camera_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	return_camera_tween.tween_property(
+		player_camera,
+		"position",
+		camera_rest_position,
+		0.55
+	)
+	await return_camera_tween.finished
+
+	player.change_state(Player.State.IDLE)
+	awaiting_exit = true
+	exit_prompt.show()
+	await exit_reached
+
+
+func _on_leave_trigger_body_entered(body: Node2D) -> void:
+	if body != player or not awaiting_exit:
+		return
+
+	awaiting_exit = false
+	exit_prompt.hide()
+	player.change_state(Player.State.CUTSCENE)
+	player.velocity = Vector2.ZERO
+	player.stop_movement_sounds()
+	exit_reached.emit()
+
+
 func respawn_after_boss_death() -> void:
 	phase_1_boss.stop_battle()
 	player.stop_movement_sounds()
@@ -248,6 +328,8 @@ func respawn_after_boss_death() -> void:
 	boss_intro_playing = false
 	boss_intro_skipped = false
 	boss_intro_tween = null
+	awaiting_exit = false
+	exit_prompt.hide()
 
 	phase_1_boss.reset_for_intro()
 	player_camera.position = boss_intro_camera_position
