@@ -93,6 +93,9 @@ var state := State.	IDLE
 
 
 func change_state(new_state: State):
+	if new_state == State.CUTSCENE or new_state == State.DEAD:
+		stop_movement_sounds()
+
 	if state == new_state:
 		return
 
@@ -105,10 +108,6 @@ func change_state(new_state: State):
 	if new_state == State.CUTSCENE:
 		set_process_input(false)
 		
-	if new_state == State.DEAD:
-		running_sound.stop()
-		walk_sound.stop()
-	
 	if new_state == State.WALKING:
 		running_sound.stop()
 		is_sprinting = false
@@ -122,10 +121,15 @@ func change_state(new_state: State):
 		
 	state = new_state
 
+
+func stop_movement_sounds() -> void:
+	running_sound.stop()
+	walk_sound.stop()
+
+
 func die():
 	change_state(State.DEAD)
 	animated_sprite.play("death")
-	running_sound.stop()
 
 	await animated_sprite.animation_finished
 	await get_tree().create_timer(0.5).timeout

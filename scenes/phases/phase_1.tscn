@@ -3700,7 +3700,6 @@ script = ExtResource("1_5xy5e")
 player = NodePath("../World/Entities/Player")
 
 [node name="PhaseLight" type="DirectionalLight2D" parent="." unique_id=815560919]
-visible = false
 light_mask = 0
 position = Vector2(-17, 36)
 rotation = -3.1415927
@@ -3711,7 +3710,6 @@ range_item_cull_mask = 3
 shadow_enabled = true
 
 [node name="Atmosphere" type="DirectionalLight2D" parent="." unique_id=17210541]
-visible = false
 position = Vector2(322, 260)
 color = Color(0.20020434, 0.07859359, 0.033259902, 1)
 blend_mode = 2
@@ -4190,17 +4188,15 @@ energy = 1.97
 texture = ExtResource("14_lie7o")
 
 [node name="BossArenaLight3" type="PointLight2D" parent="World/DungeonMap/Lights" unique_id=1088805247]
-position = Vector2(1077.5, 437.99997)
+position = Vector2(1079.0001, 362)
 scale = Vector2(0.873047, 0.5351563)
-color = Color(0.83144027, 0.40996677, 0.18082458, 1)
-energy = 2.24
+color = Color(0.78301114, 0.3031595, 0.1265229, 1)
 texture = ExtResource("14_lie7o")
 
 [node name="BossArenaLight4" type="PointLight2D" parent="World/DungeonMap/Lights" unique_id=1115415332]
-position = Vector2(1058.5, 264)
+position = Vector2(1047.0001, 336)
 scale = Vector2(0.794922, 0.5351563)
-color = Color(0.5333058, 0.36225027, 0.56326145, 1)
-energy = 2.15
+color = Color(0.4667682, 0.14702544, 0.37167326, 1)
 texture = ExtResource("14_lie7o")
 
 [node name="RuneSlotGrey" parent="World/DungeonMap" unique_id=460938298 instance=ExtResource("22_fgifm")]

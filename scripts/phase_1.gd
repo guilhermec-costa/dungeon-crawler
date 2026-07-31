@@ -2,6 +2,9 @@ extends Node
 
 class_name Phase1
 
+const BOSS_BATTLE_FADE_OUT_DURATION := 0.25
+const BOSS_BATTLE_FADE_IN_DURATION := 0.65
+
 var yellowSkeletonScene: PackedScene = preload("res://scenes/enemies/yellow_skeleton.tscn")
 var whiteSkeletonScene: PackedScene = preload("res://scenes/enemies/white_skeleton.tscn")
 var blue_golem: PackedScene = preload("res://scenes/enemies/blue_golem.tscn")
@@ -193,8 +196,7 @@ func skip_boss_intro() -> void:
 	if boss_intro_tween and boss_intro_tween.is_valid():
 		boss_intro_tween.kill()
 
-	phase_1_boss.skip_intro(boss_battle_position.global_position)
-	player.global_position = boss_intro_player_target
+	phase_1_boss.cancel_intro()
 	finish_boss_intro()
 
 
@@ -204,9 +206,22 @@ func finish_boss_intro() -> void:
 
 	boss_intro_playing = false
 	boss_intro_tween = null
-	player_camera.position = boss_intro_camera_position
-	player_camera.zoom = boss_intro_camera_zoom
 	player.velocity = Vector2.ZERO
 	player.animated_sprite.update_animation("idle")
+	player.stop_movement_sounds()
+
+	await TransitionManager.fade_out(BOSS_BATTLE_FADE_OUT_DURATION)
+
+	if boss_intro_skipped:
+		phase_1_boss.place_at_battle_position(
+			boss_battle_position.global_position
+		)
+		player.global_position = boss_intro_player_target
+
+	player_camera.position = boss_intro_camera_position
+	player_camera.zoom = boss_intro_camera_zoom
+
+	await TransitionManager.fade_in(BOSS_BATTLE_FADE_IN_DURATION)
+
 	player.change_state(Player.State.IDLE)
 	phase_1_boss.start_battle()

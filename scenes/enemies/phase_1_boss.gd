@@ -96,7 +96,7 @@ func play_intro_walk(target_position: Vector2) -> void:
 	intro_walk_tween = null
 
 
-func skip_intro(target_position: Vector2) -> void:
+func cancel_intro() -> void:
 	intro_skipped = true
 	if intro_walk_tween and intro_walk_tween.is_valid():
 		intro_walk_tween.kill()
@@ -104,10 +104,19 @@ func skip_intro(target_position: Vector2) -> void:
 
 	animated_sprite.stop()
 	animated_sprite.speed_scale = 1.0
+	skeleton_knight.velocity = Vector2.ZERO
+
+
+func place_at_battle_position(target_position: Vector2) -> void:
 	skeleton_knight.global_position = target_position
 	skeleton_knight.spawn_origin = target_position
 	skeleton_knight.velocity = Vector2.ZERO
 	animated_sprite.play(&"idle")
+
+
+func skip_intro(target_position: Vector2) -> void:
+	cancel_intro()
+	place_at_battle_position(target_position)
 
 
 func start_battle() -> void:
