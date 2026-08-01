@@ -91,9 +91,9 @@ func show_next_page() -> void:
 
 func update_advance_hint() -> void:
 	if current_page == STORY_PAGES.size() - 1:
-		advance_hint.text = tr("CLICK OR ENTER TO BEGIN  •  ESC TO SKIP")
+		advance_hint.text = tr("CLICK OR ENTER TO BEGIN  -  ESC TO SKIP")
 	else:
-		advance_hint.text = tr("CLICK OR ENTER TO CONTINUE  •  ESC TO SKIP")
+		advance_hint.text = tr("CLICK OR ENTER TO CONTINUE  -  ESC TO SKIP")
 
 
 func finish_story() -> void:

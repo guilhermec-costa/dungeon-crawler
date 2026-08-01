@@ -196,7 +196,7 @@ offset_left = 116.0
 offset_top = 594.0
 offset_right = 480.0
 offset_bottom = 620.0
-text = "ENTER TO BEGIN  •  ARROWS TO NAVIGATE"
+text = "ENTER TO BEGIN  -  ARROWS TO NAVIGATE"
 label_settings = SubResource("LabelSettings_meta")
 
 [node name="Knight" type="Sprite2D" parent="." unique_id=1813309137]

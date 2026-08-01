@@ -63,7 +63,7 @@ theme_override_colors/font_outline_color = Color(0.0509804, 0.0470588, 0.0627451
 theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 18
-text = "PROLOGUE  •  THE ASHES OF LOREON"
+text = "PROLOGUE  -  THE ASHES OF LOREON"
 horizontal_alignment = 1
 
 [node name="Title" type="Label" parent="." unique_id=850592863]

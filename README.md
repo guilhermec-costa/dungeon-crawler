@@ -2,15 +2,28 @@
 
 ![Game Screenshot](docs/hud.jpeg)
 
-A dark fantasy dungeon crawler built with Godot 4. Descend into a cursed dungeon, fight the undead, collect gold, and face the final boss.
+A dark fantasy dungeon crawler built with Godot 4. Descend into Loreon's cursed ruins, recover the runes, and face the final guardian.
 
 ## Gameplay
 
-- Explore a hand-crafted dungeon with secret rooms and hidden paths
+- Explore a hand-crafted dungeon with secret rooms, rune trials, and hidden paths
 - Fight skeletons, golems, and a powerful final boss
-- Collect gold from enemies and spend it at the prisoner merchant
 - Manage your health and stamina — every hit counts
-- Find chests with potions and items to aid your survival
+- Find the Corrupted Key to unlock the sealed boss corridor
+
+## Screenshots
+
+| Exploration | Combat |
+|---|---|
+| ![Exploring the dungeon](docs/game_screen.png) | ![Skeleton combat](docs/combat_skeleton.png) |
+
+| Hidden passage | Secret room |
+|---|---|
+| ![A hidden passage opens](docs/secret_passage_message.png) | ![The secret room](docs/secret_room.png) |
+
+| Final boss | HUD |
+|---|---|
+| ![The final boss](docs/boss.png) | ![Player HUD](docs/hud.jpeg) |
 
 ## Controls
 
@@ -31,7 +44,7 @@ A dark fantasy dungeon crawler built with Godot 4. Descend into a cursed dungeon
 - Stamina system affecting movement and combat
 - Inventory and hotbar system
 - Secret rooms with unique encounters
-- Gold drop and merchant system
+- Rune puzzle that opens the hidden route
 - Boss fight with multiple attack patterns
 
 ## Built With
